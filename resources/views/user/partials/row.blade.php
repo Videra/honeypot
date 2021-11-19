@@ -1,6 +1,6 @@
 <tr>
     <td style="width: 40px;">
-        <img class="rounded-circle img-responsive" width="40" src="{{ asset('/storage/avatars/'. $user->avatar) }}" alt="👤">
+        <img class="rounded-circle img-responsive" width="40" src="{{ asset('/'. $user->avatar) }}" alt="👤">
     </td>
     <td class="align-middle">{{ $user->name }}</td>
     <td class="align-middle">{{ $user->is_admin ? 'Admin' : 'User' }}</td>
