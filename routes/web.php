@@ -24,9 +24,9 @@ Auth::routes([
     'verify' => false,
 ]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::post('/home',[App\Http\Controllers\HomeController::class, 'upload'])->name('upload');
+Route::get('/home', [App\Http\Controllers\UserController::class, 'show'])->name('home');
+Route::post('/home',[App\Http\Controllers\UserController::class, 'upload'])->name('upload');
 
 Route::group(['middleware' => ['admin']], function () {
-    Route::get('admin', [App\Http\Controllers\HomeController::class, 'admin'])->name('admin');
+    Route::get('/admin', [App\Http\Controllers\AdminController::class, 'show'])->name('admin');
 });

@@ -17,7 +17,7 @@ class UserFactory extends Factory
         return [
             'user' => $this->faker->name(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'image' => 'user.png',
+            'avatar' => 'user.png',
             'is_admin' => null,
         ];
     }
