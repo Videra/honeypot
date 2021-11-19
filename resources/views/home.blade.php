@@ -13,8 +13,17 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
+                    @if(Auth::user()->image)
+                        <img class="image rounded-circle" src="{{asset('/storage/images/'.Auth::user()->image)}}" alt="profile_image" style="width: 80px;height: 80px; padding: 10px; margin: 0px; ">
+                    @endif
                     {{ __('You are logged in!') }}
+                </div>
+                <div class="card-body">
+                    <form action="{{route('home')}}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <input type="file" name="image">
+                        <input type="submit" value="Upload">
+                    </form>
                 </div>
             </div>
         </div>
