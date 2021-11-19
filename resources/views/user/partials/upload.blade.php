@@ -8,9 +8,13 @@
             </ul>
         </div>
     @endif
+
     <form action="{{route('home')}}" method="POST" enctype="multipart/form-data">
         @csrf
-        <input type="file" name="avatar">
-        <input type="submit" value="Upload">
+        <label for="name">Upload avatar</label>
+        <div class="input-group">
+            <input type="file" name="avatar" class="form-control">
+            <input type="submit" value="Upload" class="btn btn-primary">
+        </div>
     </form>
 </div>
