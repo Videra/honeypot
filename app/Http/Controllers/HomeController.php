@@ -19,10 +19,14 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return \Illuminate\Contracts\Support\Renderable|\Illuminate\Http\RedirectResponse
      */
     public function index()
     {
+        if (auth()->user()->is_admin == 1) {
+            return redirect()->to('admin');
+        }
+
         return view('home');
     }
 
@@ -34,5 +38,10 @@ class HomeController extends Controller
             Auth()->user()->update(['image'=>$filename]);
         }
         return redirect()->back();
+    }
+
+    public function admin()
+    {
+        return view('admin');
     }
 }

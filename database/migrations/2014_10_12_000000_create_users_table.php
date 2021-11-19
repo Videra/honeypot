@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name')->unique();
             $table->string('password');
             $table->string('image')->default('user.png');
+            $table->boolean('is_admin')->nullable();
             $table->timestamps();
         });
     }

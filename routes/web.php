@@ -27,3 +27,6 @@ Auth::routes([
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/home',[App\Http\Controllers\HomeController::class, 'upload'])->name('upload');
 
+Route::group(['middleware' => ['admin']], function () {
+    Route::get('admin', [App\Http\Controllers\HomeController::class, 'admin'])->name('admin');
+});
