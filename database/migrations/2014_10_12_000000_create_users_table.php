@@ -18,7 +18,8 @@ class CreateUsersTable extends Migration
             $table->string('name')->unique();
             $table->string('password');
             $table->string('avatar')->default('user.png');
-            $table->boolean('is_admin')->nullable();
+            $table->boolean('is_admin')->default(false);
+            $table->boolean('is_enabled')->default(true);
             $table->timestamps();
         });
     }

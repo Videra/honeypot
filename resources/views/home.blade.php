@@ -4,27 +4,17 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card text-center">
                 <div class="card-header">{{ __('User Profile') }}</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-                    @if(Auth::user()->avatar)
-                        <img class="image rounded-circle" src="{{asset('/storage/avatars/'.Auth::user()->avatar)}}" alt="👤" style="width: 80px;height: 80px; padding: 10px; margin: 0px; ">
-                        @endif
-                    {{ __('You are logged in!') }}
+                    <img class="image rounded-circle" src="{{ asset('/'.Auth::user()->avatar)}}" alt="👤" style="width: 80px;height: 80px; padding: 10px; margin: 0px; ">
+                    <h5 class="card-title">{{ Auth::user()->name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ Auth::user()->is_admin ? 'Admin' : 'User' }}</h6>
                 </div>
-                <div class="card-body">
-                    <form action="{{route('home')}}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <input type="file" name="avatar">
-                        <input type="submit" value="Upload">
-                    </form>
-                </div>
+
+                @include('user.partials.upload')
+
             </div>
         </div>
     </div>

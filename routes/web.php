@@ -25,7 +25,10 @@ Auth::routes([
 ]);
 
 Route::get('/home', [App\Http\Controllers\UserController::class, 'show'])->name('home');
-Route::post('/home',[App\Http\Controllers\UserController::class, 'upload'])->name('upload');
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::post('/home', [App\Http\Controllers\UploadController::class, 'upload'])->name('upload');
+});
 
 Route::group(['middleware' => ['admin']], function () {
     Route::get('/admin', [App\Http\Controllers\AdminController::class, 'show'])->name('admin');
