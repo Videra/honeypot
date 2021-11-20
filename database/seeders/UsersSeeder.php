@@ -18,17 +18,20 @@ class UsersSeeder extends Seeder
             [
                 'name' => 'admin',
                 'password' => 'admin1234',
-                'is_admin' => '1',
+                'is_admin' => true,
+                'is_enabled' => true
             ],
             [
                 'name' => 'user',
                 'password' => 'user1234',
-                'is_admin' => null,
+                'is_admin' => false,
+                'is_enabled' => true
             ],
             [
                 'name' => 'client',
                 'password' => 'client1234',
-                'is_admin' => null,
+                'is_admin' => false,
+                'is_enabled' => false
             ]
         ];
 
@@ -37,7 +40,8 @@ class UsersSeeder extends Seeder
             User::create([
                 'name' => $user['name'],
                 'password' => Hash::make($user['password']),
-                'is_admin' => $user['is_admin']
+                'is_admin' => $user['is_admin'],
+                'is_enabled' => $user['is_enabled'],
             ]);
         }
 
