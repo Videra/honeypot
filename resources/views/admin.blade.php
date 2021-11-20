@@ -7,7 +7,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Admin Panel') }}</div>
+                <div class="card-header">Users Management</div>
                 <div class="card-body">
 
                     <div class="table-responsive">

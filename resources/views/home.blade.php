@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-5">
             <div class="card text-center">
-                <div class="card-header">{{ __('User Profile') }}</div>
+                <div class="card-header">Profile</div>
 
                 <div class="card-body">
                     <img class="image rounded-circle" src="{{ asset('/'.Auth::user()->avatar)}}" alt="" style="width: 80px;height: 80px; padding: 10px; margin: 0px; ">
