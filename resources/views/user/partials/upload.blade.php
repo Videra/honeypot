@@ -13,7 +13,7 @@
         @csrf
         <label for="name">Upload avatar</label>
         <div class="input-group">
-            <input type="file" name="avatar" class="form-control">
+            <input required type="file" accept="image/png, image/jpeg" name="avatar" class="form-control">
             <input type="submit" value="Upload" class="btn btn-primary">
         </div>
     </form>
