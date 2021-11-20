@@ -3,10 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class IsAdmin
+class CheckIfAdmin
 {
     /**
      * Handle an incoming request.
@@ -17,7 +15,7 @@ class IsAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user() && Auth::user()->is_admin == 1) {
+        if ($request->user() && $request->user()->isAdmin()) {
             return $next($request);
         }
 

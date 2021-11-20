@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Vanguard\Support\Enum\UserStatus;
 
 /**
  * @method static all()
@@ -34,11 +35,13 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
-    protected $casts = [
-    ];
+    public function isActive()
+    {
+        return $this->is_admin == 1;
+    }
+
+    public function isEnabled()
+    {
+        return $this->is_enabled == 1;
+    }
 }

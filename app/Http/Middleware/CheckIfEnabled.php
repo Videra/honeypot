@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
-class IsEnabled
+class CheckIfEnabled
 {
     /**
      * Handle an incoming request.
@@ -18,10 +18,10 @@ class IsEnabled
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->is_enabled == 0) {
+        if ($request->user() && !$request->user()->isEnabled()) {
             Session::flush();
             Auth::logout();
-            return redirect('/login')->with('error', 'Your account is disabled.');
+            return redirect('/login')->with('error', 'Your account was disabled by the administrators.');
         }
 
         return $next($request);
