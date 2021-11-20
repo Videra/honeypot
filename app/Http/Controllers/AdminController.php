@@ -8,12 +8,14 @@ class AdminController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'enabled']);
+        $this->middleware(['auth', 'admin', 'enabled']);
     }
 
     public function show()
     {
-        return view('admin', ['users' => User::all()]);
+        $users = User::all();
+
+        return view('admin', ['users' => $users]);
     }
 
     public function enable($id)
