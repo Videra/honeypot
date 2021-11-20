@@ -12,8 +12,8 @@ class CheckIfEnabled
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param Request $request
+     * @param Closure $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
@@ -21,6 +21,7 @@ class CheckIfEnabled
         if ($request->user() && !$request->user()->isEnabled()) {
             Session::flush();
             Auth::logout();
+
             return redirect('/login')->with('error', 'Your account was disabled by the administrators.');
         }
 

@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+
 
 class AdminController extends Controller
 {
@@ -11,6 +16,9 @@ class AdminController extends Controller
         $this->middleware(['auth', 'admin', 'enabled']);
     }
 
+    /**
+     * @return Application|Factory|View
+     */
     public function show()
     {
         $users = User::all();
@@ -18,7 +26,11 @@ class AdminController extends Controller
         return view('admin', ['users' => $users]);
     }
 
-    public function enable($id)
+    /**
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function enable($id): RedirectResponse
     {
         $user = User::find($id);
         $user->is_enabled = true;
@@ -27,9 +39,14 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function disable($id)
+    /**
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function disable($id): RedirectResponse
     {
         $user = User::find($id);
+        $user->sessions()->delete();
         $user->is_enabled = false;
         $user->save();
 
