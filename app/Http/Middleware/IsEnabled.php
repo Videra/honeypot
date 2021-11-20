@@ -5,8 +5,9 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
-class IsAdmin
+class IsEnabled
 {
     /**
      * Handle an incoming request.
@@ -15,12 +16,16 @@ class IsAdmin
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
-        if (Auth::user() && Auth::user()->is_admin == 1) {
-            return $next($request);
+        if (Auth::user() && Auth::user()->is_enabled == 0) {
+
+            Session::flush();
+            Auth::logout();
+
+            return redirect('/');
         }
 
-        return redirect('home')->with('error','You have not admin access');
+        return $next($request);
     }
 }

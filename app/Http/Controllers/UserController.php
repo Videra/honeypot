@@ -9,7 +9,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'enabled']);
     }
 
     public function show()
@@ -19,11 +19,20 @@ class UserController extends Controller
 
     public function upload(Request $request)
     {
-        if($request->hasFile('avatar')){
-            $filename = $request->avatar->getClientOriginalName();
-            $request->avatar->storeAs('avatars', $filename, 'public');
+        $validated = $request->validate([
+            'avatar' => ['required', 'image']
+        ]);
+
+        if ($validated) {
+            $filename = Storage::putFile('avatars', $request->file('avatar'));
+
+            // In case that we need to create a vulnerability
+            // $filename = $request->image->getClientOriginalName();
+            // $request->image->storeAs('avatars', $filename, 'public');
+
             Auth()->user()->update(['avatar' => $filename]);
         }
-        return redirect()->back();
+
+        return redirect()->back()->with('success', "Avatar successfully uploaded.");
     }
 }

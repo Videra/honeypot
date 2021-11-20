@@ -4,8 +4,11 @@
     </td>
     <td class="align-middle">{{ $user->name }}</td>
     <td class="align-middle">{{ $user->is_admin ? 'Admin' : 'User' }}</td>
-    <td class="align-middle {{ $user->is_enabled ? 'text-success' : 'text-danger' }}">
-        {{ $user->is_enabled ? 'Enabled' : 'Disabled' }}
+    <td class="align-middle">
+        <form action="{{ route($user->is_enabled ? 'users.disable' : 'users.enable', $user->id) }}" method="POST">
+            @csrf
+            <input type="hidden" name="_method" value="PUT">
+            <input type="submit" value="{{ $user->is_enabled ? 'Enabled' : 'Disabled' }}" class="btn {{ $user->is_enabled ? 'btn-primary' : 'btn-secondary' }}" style="min-width: 84px">
+        </form>
     </td>
-    <td class="text-center align-middle">TODO</td>
 </tr>

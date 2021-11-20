@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UploadController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -15,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect('home');
+    return view('layouts.app');
 });
 
 Auth::routes([
@@ -24,12 +27,9 @@ Auth::routes([
     'verify' => false,
 ]);
 
-Route::get('/home', [App\Http\Controllers\UserController::class, 'show'])->name('home');
+Route::get('home', [UserController::class, 'show'])->name('home');
+Route::post('home', [UserController::class, 'upload'])->name('upload');
 
-Route::group(['middleware' => ['auth']], function () {
-    Route::post('/home', [App\Http\Controllers\UploadController::class, 'upload'])->name('upload');
-});
-
-Route::group(['middleware' => ['admin']], function () {
-    Route::get('/admin', [App\Http\Controllers\AdminController::class, 'show'])->name('admin');
-});
+Route::get('admin', [AdminController::class, 'show'])->name('admin');
+Route::put('admin/users/{id}/enable', [AdminController::class, 'enable'])->name('users.enable');
+Route::put('admin/users/{id}/disable', [AdminController::class, 'disable'])->name('users.disable');
