@@ -18,12 +18,10 @@ class IsEnabled
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user() && Auth::user()->is_enabled == 0) {
-
+        if (Auth::user()->is_enabled == 0) {
             Session::flush();
             Auth::logout();
-
-            return redirect('/');
+            return redirect('/login')->with('error', 'Your account is disabled.');
         }
 
         return $next($request);
