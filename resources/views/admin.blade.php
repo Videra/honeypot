@@ -17,6 +17,7 @@
                                     <th></th>
                                     <th>Name</th>
                                     <th>Role</th>
+                                    <th>Registration date</th>
                                     <th>Latest activity</th>
                                     <th>Status</th>
                                     <th>Access</th>

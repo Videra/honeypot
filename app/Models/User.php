@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -14,6 +15,7 @@ use Illuminate\Notifications\Notifiable;
  * @method static create(array $array)
  * @property mixed $is_enabled
  * @property mixed $is_admin
+ * @property mixed $created_at
  */
 class User extends Authenticatable
 {
@@ -49,21 +51,38 @@ class User extends Authenticatable
         return $this->is_enabled == 1;
     }
 
-    /**
-     * Get the sessions for the user.
-     */
     public function sessions(): HasMany
     {
         return $this->hasMany(Session::class);
     }
 
-    /**
-     * Get the latest session for the user.
-     */
     public function latestSession()
     {
         return $this->sessions()
             ->orderBy('last_activity', 'desc')
             ->first();
+    }
+
+    public function role(): string
+    {
+        return $this->isAdmin() ? 'Admin' : 'User';
+    }
+
+    public function status(): string
+    {
+        return $this->latestActivity() ? 'Logged in' : 'Logged out';
+    }
+
+    public function latestActivity(): string
+    {
+        if($this->latestSession()) {
+            return Carbon::parse($this->latestSession()->last_activity)->diffForHumans();
+        }
+        return '';
+    }
+
+    public function registrationDate(): string
+    {
+        return Carbon::parse($this->created_at)->format('Y-m-d');
     }
 }
