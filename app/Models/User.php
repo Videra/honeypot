@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Vanguard\Support\Enum\UserStatus;
 
 /**
  * @method static all()
@@ -35,7 +34,7 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function isActive()
+    public function isAdmin()
     {
         return $this->is_admin == 1;
     }
