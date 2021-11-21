@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Session;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 
 class SessionsController extends Controller
@@ -12,7 +13,7 @@ class SessionsController extends Controller
         $this->middleware(['auth', 'enabled']);
     }
 
-    public function show()
+    public function index()
     {
         if (Auth()->user()->isAdmin()) {
             $sessions = Session::paginate(5);
@@ -21,6 +22,12 @@ class SessionsController extends Controller
         }
 
         return view('sessions')->with(compact('sessions'));
+    }
+
+    public function show($user_id) {
+        $sessions = Session::where('user_id', $user_id)->paginate(5);
+
+        return view('sessions')->with(compact('sessions', 'user_id'));
     }
 
     public function delete($id): RedirectResponse

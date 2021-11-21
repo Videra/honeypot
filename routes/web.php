@@ -30,8 +30,11 @@ Auth::routes([
 Route::get('home', [UserController::class, 'show'])->name('home');
 Route::post('home', [UserController::class, 'upload'])->name('upload');
 
-Route::get('sessions', [SessionsController::class, 'show'])->name('sessions');
+Route::get('sessions', [SessionsController::class, 'index'])->name('sessions');
 Route::delete('sessions/{id}', [SessionsController::class, 'delete'])->name('sessions.delete');
+
+Route::get('sessions/user/{user_id}', [SessionsController::class, 'show'])->name('sessions.user')
+    ->middleware('admin');
 
 Route::get('users', [AdminController::class, 'show'])->name('users');
 Route::get('users/user', [AdminController::class, 'showUser'])->name('users.user');

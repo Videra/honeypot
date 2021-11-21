@@ -1,4 +1,13 @@
 <div class="table-responsive">
+    @isset($user_id)
+        <form action="" method="POST">
+            @csrf
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit" value="" class="btn btn-outline-dark">
+                <i class="bi bi-box-arrow-right"></i> Close all sessions from this user
+            </button>
+        </form>
+    @endisset
     <table class="table table-borderless table-striped">
         <thead>
             <tr>
