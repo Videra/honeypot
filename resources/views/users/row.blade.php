@@ -3,7 +3,13 @@
         <img class="rounded-circle img-responsive" width="40" src="{{ asset('/'. $user->avatar) }}" alt="">
     </td>
 
-    <td class="align-middle">{{ $user->name }}</td>
+    <td class="align-middle">
+        @if($user->isEnabled())
+            {!! $user->name !!}
+        @else
+            {{ $user->name }}
+        @endif
+    </td>
 
     <td class="align-middle">{{ $user->role() }}</td>
 
