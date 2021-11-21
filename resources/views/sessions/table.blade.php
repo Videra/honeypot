@@ -2,6 +2,9 @@
     <table class="table table-borderless table-striped">
         <thead>
             <tr>
+                @if (Auth::user()->is_admin)
+                    <th>User Name</th>
+                @endif
                 <th>IP Address</th>
                 <th>Device</th>
                 <th>Browser</th>

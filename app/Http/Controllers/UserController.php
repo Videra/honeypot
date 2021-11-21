@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Session;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -19,15 +18,7 @@ class UserController extends Controller
         return view('home');
     }
 
-    public function sessions()
-    {
-        $sessions = Session::where('user_id', Auth::user()->id)
-            ->paginate(5);
-
-        return view('sessions')->with(compact('sessions'));
-    }
-
-    public function upload(Request $request)
+    public function upload(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'avatar' => ['required', 'image']

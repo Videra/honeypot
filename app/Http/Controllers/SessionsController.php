@@ -12,16 +12,27 @@ class SessionsController extends Controller
         $this->middleware(['auth', 'enabled']);
     }
 
-    public function index()
+    public function show()
     {
-        $sessions = Session::all();
+        if (Auth()->user()->isAdmin()) {
+            $sessions = Session::paginate(5);
+        } else {
+            $sessions = Session::where('user_id', Auth()->user()->id)->paginate(5);
+        }
 
-        return view('sessions.index')->with('sessions', $sessions);
+        return view('sessions')->with(compact('sessions'));
     }
 
     public function delete($id): RedirectResponse
     {
-        Session::find($id)->delete();
+        if (Auth()->user()->isAdmin()) {
+            $session = Session::where('id', $id);
+        } else {
+            $session = Session::where('user_id', Auth()->user()->id)
+                ->where('id', $id);
+        }
+
+        $session->delete();
 
         return redirect()->back();
     }

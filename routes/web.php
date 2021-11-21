@@ -30,7 +30,7 @@ Auth::routes([
 Route::get('home', [UserController::class, 'show'])->name('home');
 Route::post('home', [UserController::class, 'upload'])->name('upload');
 
-Route::get('sessions', [UserController::class, 'sessions'])->name('sessions');
+Route::get('sessions', [SessionsController::class, 'show'])->name('sessions');
 Route::delete('sessions/{id}', [SessionsController::class, 'delete'])->name('sessions.delete');
 
 Route::get('users', [AdminController::class, 'show'])->name('users');

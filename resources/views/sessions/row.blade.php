@@ -1,4 +1,7 @@
 <tr>
+    @if (Auth::user()->is_admin)
+        <td class="align-middle">{{ $session->user ? $session->user->name : ''}}</td>
+    @endif
     <td class="align-middle">{{ $session->ip_address }}</td>
     <td class="align-middle">{{ $session->device() }}</td>
     <td class="align-middle">{{ $session->browser() }}</td>
