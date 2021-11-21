@@ -5,7 +5,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-header">Users Management</div>
                 <div class="card-body">
@@ -21,6 +21,7 @@
                                     <th>Latest activity</th>
                                     <th>Status</th>
                                     <th>Access</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>

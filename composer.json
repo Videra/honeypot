@@ -10,7 +10,8 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.65",
         "laravel/tinker": "^2.5",
-        "laravel/ui": "^3.3"
+        "laravel/ui": "^3.3",
+        "twbs/bootstrap-icons": "^1.7"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

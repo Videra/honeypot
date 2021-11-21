@@ -32,3 +32,4 @@ Route::post('home', [UserController::class, 'upload'])->name('upload');
 Route::get('admin', [AdminController::class, 'show'])->name('admin');
 Route::put('admin/users/{id}/enable', [AdminController::class, 'enable'])->name('users.enable');
 Route::put('admin/users/{id}/disable', [AdminController::class, 'disable'])->name('users.disable');
+Route::delete('admin/users/{id}/delete', [AdminController::class, 'delete'])->name('users.delete');

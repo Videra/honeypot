@@ -20,4 +20,13 @@
             <input type="submit" value="{{ $user->is_enabled ? 'Enabled' : 'Disabled' }}" class="btn {{ $user->is_enabled ? 'btn-primary' : 'btn-secondary' }}" style="min-width: 84px">
         </form>
     </td>
+    <td class="align-middle">
+        <form action="{{ route('users.delete', $user->id) }}" method="POST">
+            @csrf
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit" class="btn btn-outline-danger">
+                <i class="bi bi-trash-fill align-middle"></i>
+            </button>
+        </form>
+    </td>
 </tr>
