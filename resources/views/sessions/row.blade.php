@@ -15,7 +15,7 @@
             @csrf
             <input type="hidden" name="_method" value="DELETE">
             <button type="submit" value="{{ $session->id }}" class="btn btn-outline-dark">
-                <i class="bi bi-x-lg"></i> Close session
+                <i class="bi bi-x-lg"></i>
             </button>
         </form>
     </td>
