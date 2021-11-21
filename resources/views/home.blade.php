@@ -13,7 +13,7 @@
                     <h6 class="card-subtitle mb-2 text-muted">{{ Auth::user()->is_admin ? 'Admin' : 'User' }}</h6>
                 </div>
 
-                @include('user.partials.upload')
+                @include('user.upload')
 
             </div>
         </div>

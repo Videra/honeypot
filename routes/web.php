@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -28,8 +29,9 @@ Auth::routes([
 
 Route::get('home', [UserController::class, 'show'])->name('home');
 Route::post('home', [UserController::class, 'upload'])->name('upload');
-Route::get('sessions', [UserController::class, 'sessions'])->name('sessions');
 
+Route::get('sessions', [UserController::class, 'sessions'])->name('sessions');
+Route::delete('sessions/{id}', [SessionsController::class, 'delete'])->name('sessions.delete');
 
 Route::get('users', [AdminController::class, 'show'])->name('users');
 Route::get('users/admin', [AdminController::class, 'showAdmin'])->name('users.admin');
