@@ -17,9 +17,13 @@
         <form action="{{ route($user->is_enabled ? 'users.disable' : 'users.enable', $user->id) }}" method="POST">
             @csrf
             <input type="hidden" name="_method" value="PUT">
-            <input type="submit" value="{{ $user->is_enabled ? 'Enabled' : 'Disabled' }}" class="btn {{ $user->is_enabled ? 'btn-primary' : 'btn-secondary' }}" style="min-width: 84px">
+            <input type="submit"
+                   value="{{ $user->is_enabled ? 'Enabled' : 'Disabled' }}"
+                   class="btn {{ $user->is_enabled ? 'btn-primary' : 'btn-secondary' }}"
+                   style="min-width: 84px">
         </form>
     </td>
+
     <td class="align-middle">
         <form action="{{ route('users.delete', $user->id) }}" method="POST">
             @csrf

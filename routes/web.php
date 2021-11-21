@@ -28,6 +28,8 @@ Auth::routes([
 
 Route::get('home', [UserController::class, 'show'])->name('home');
 Route::post('home', [UserController::class, 'upload'])->name('upload');
+Route::get('sessions', [UserController::class, 'sessions'])->name('sessions');
+
 
 Route::get('users', [AdminController::class, 'show'])->name('users');
 Route::get('users/admin', [AdminController::class, 'showAdmin'])->name('users.admin');
