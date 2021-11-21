@@ -29,10 +29,11 @@ Auth::routes([
 Route::get('home', [UserController::class, 'show'])->name('home');
 Route::post('home', [UserController::class, 'upload'])->name('upload');
 
-Route::get('admin', [AdminController::class, 'show'])->name('admin');
-Route::get('admin/active', [AdminController::class, 'showActive'])->name('users.active');
-Route::get('admin/enabled', [AdminController::class, 'showEnabled'])->name('users.enabled');
-Route::get('admin/disabled', [AdminController::class, 'showDisabled'])->name('users.disabled');
-Route::put('admin/users/{id}/enable', [AdminController::class, 'enable'])->name('users.enable');
-Route::put('admin/users/{id}/disable', [AdminController::class, 'disable'])->name('users.disable');
-Route::delete('admin/users/{id}/delete', [AdminController::class, 'delete'])->name('users.delete');
+Route::get('users', [AdminController::class, 'show'])->name('users');
+Route::get('users/admin', [AdminController::class, 'showAdmin'])->name('users.admin');
+Route::get('users/active', [AdminController::class, 'showActive'])->name('users.active');
+Route::get('users/enabled', [AdminController::class, 'showEnabled'])->name('users.enabled');
+Route::get('users/disabled', [AdminController::class, 'showDisabled'])->name('users.disabled');
+Route::put('users/{id}/enable', [AdminController::class, 'enable'])->name('users.enable');
+Route::put('users/{id}/disable', [AdminController::class, 'disable'])->name('users.disable');
+Route::delete('users/{id}/delete', [AdminController::class, 'delete'])->name('users.delete');
