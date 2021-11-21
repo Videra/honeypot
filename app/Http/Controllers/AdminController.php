@@ -28,13 +28,20 @@ class AdminController extends Controller
         return view('admin', compact('users'));
     }
 
-    public function search(Request $request)
+    public function showEnabled()
     {
-        $search = $request->input('search');
-        $users = User::where('name', 'LIKE', "%{$search}%")->get();
+        $users = User::where('is_enabled', true)->paginate(5);
 
-        return view('admin', ['users' => $users]);
+        return view('admin', compact('users'));
     }
+
+    public function showDisabled()
+    {
+        $users = User::where('is_enabled', false)->paginate(5);
+
+        return view('admin', compact('users'));
+    }
+
 
     public function enable($id): RedirectResponse
     {
