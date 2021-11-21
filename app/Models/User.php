@@ -18,6 +18,9 @@ use Illuminate\Notifications\Notifiable;
  * @property mixed $is_enabled
  * @property mixed $is_admin
  * @property mixed $created_at
+ * @property mixed $id
+ * @property mixed $name
+ * @property mixed|string $avatar
  */
 class User extends Authenticatable
 {
