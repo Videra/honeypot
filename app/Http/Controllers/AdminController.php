@@ -16,16 +16,16 @@ class AdminController extends Controller
 
     public function show()
     {
-        $users = User::all();
+        $users = User::paginate(5);
 
-        return view('admin', ['users' => $users]);
+        return view('admin', compact('users'));
     }
 
     public function showActive()
     {
-        $users = User::has('sessions')->get();
+        $users = User::has('sessions')->paginate(5);
 
-        return view('admin', ['users' => $users]);
+        return view('admin', compact('users'));
     }
 
     public function search(Request $request)

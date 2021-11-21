@@ -11,8 +11,8 @@
                 <div class="card-body">
 
                     <div class="btn-group mb-2">
-                        <a href="{{ route('admin') }}" type="submit" class="btn btn-outline-dark">Show all</a>
-                        <a href="{{ route('users.active') }}" type="submit" class="btn btn-outline-dark">Show active</a>
+                        <a href="{{ route('admin') }}" class="btn btn-outline-dark">Show all</a>
+                        <a href="{{ route('users.active') }}" class="btn btn-outline-dark">Show active</a>
                     </div>
 
                     <div class="table-responsive">
@@ -35,17 +35,20 @@
                                     @include('user.partials.row')
                                 @empty
                                     <tr>
-                                        <td colspan="4"><em>'No users found'</em></td>
+                                        <td colspan="8"><em>'No users found'</em></td>
                                     </tr>
                                 @endforelse
                             @endisset
                             </tbody>
                         </table>
-                    </div>
 
+                        {!! $users->links() !!}
+
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 @endsection
