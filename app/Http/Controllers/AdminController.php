@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 
 class AdminController extends Controller
@@ -61,6 +61,10 @@ class AdminController extends Controller
 
     public function disable($id): RedirectResponse
     {
+        if (Auth::user()->id == $id) {
+            return redirect()->back()->with('error', "You can't disable your current user");
+        }
+
         $user = User::find($id);
         $user->sessions()->delete();
         $user->is_enabled = false;
@@ -71,6 +75,10 @@ class AdminController extends Controller
 
     public function delete($id): RedirectResponse
     {
+        if (Auth::user()->id == $id) {
+            return redirect()->back()->with('error', "You can't delete your current user");
+        }
+
         $user = User::find($id);
         $user->sessions()->delete();
         $user->delete();

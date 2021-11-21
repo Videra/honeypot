@@ -10,6 +10,12 @@
                 <div class="card-header">Users</div>
                 <div class="card-body">
 
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
                     <div class="btn-group mb-2">
                         <button disabled class="btn btn-dark">Show</button>
                         <a href="{{ route('users') }}"
