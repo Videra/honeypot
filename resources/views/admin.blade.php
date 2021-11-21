@@ -7,8 +7,13 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">Users Management</div>
+                <div class="card-header">Users</div>
                 <div class="card-body">
+
+                    <div class="btn-group mb-2">
+                        <a href="{{ route('admin') }}" type="submit" class="btn btn-outline-dark">Show all</a>
+                        <a href="{{ route('users.active') }}" type="submit" class="btn btn-outline-dark">Show active</a>
+                    </div>
 
                     <div class="table-responsive">
                         <table class="table table-borderless table-striped">

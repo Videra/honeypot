@@ -13,6 +13,7 @@ use Illuminate\Notifications\Notifiable;
  * @method static where(string $string, $id)
  * @method static find($id)
  * @method static create(array $array)
+ * @method static has(string $string)
  * @property mixed $is_enabled
  * @property mixed $is_admin
  * @property mixed $created_at

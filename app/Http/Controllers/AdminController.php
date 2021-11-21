@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 
 class AdminController extends Controller
@@ -16,6 +17,21 @@ class AdminController extends Controller
     public function show()
     {
         $users = User::all();
+
+        return view('admin', ['users' => $users]);
+    }
+
+    public function showActive()
+    {
+        $users = User::has('sessions')->get();
+
+        return view('admin', ['users' => $users]);
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        $users = User::where('name', 'LIKE', "%{$search}%")->get();
 
         return view('admin', ['users' => $users]);
     }
