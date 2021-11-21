@@ -28,6 +28,13 @@ class AdminController extends Controller
         return view('admin', compact('users'));
     }
 
+    public function showUser()
+    {
+        $users = User::where('is_admin', false)->paginate(5);
+
+        return view('admin', compact('users'));
+    }
+
     public function showActive()
     {
         $users = User::has('sessions')->paginate(5);

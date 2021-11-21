@@ -34,6 +34,7 @@ Route::get('sessions', [SessionsController::class, 'show'])->name('sessions');
 Route::delete('sessions/{id}', [SessionsController::class, 'delete'])->name('sessions.delete');
 
 Route::get('users', [AdminController::class, 'show'])->name('users');
+Route::get('users/user', [AdminController::class, 'showUser'])->name('users.user');
 Route::get('users/admin', [AdminController::class, 'showAdmin'])->name('users.admin');
 Route::get('users/active', [AdminController::class, 'showActive'])->name('users.active');
 Route::get('users/enabled', [AdminController::class, 'showEnabled'])->name('users.enabled');

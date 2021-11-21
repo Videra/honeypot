@@ -20,6 +20,8 @@
                         <button disabled class="btn btn-dark">Show</button>
                         <a href="{{ route('users') }}"
                            class="btn {{ Request::is('users') ? 'btn-dark' : 'btn-outline-dark'}}">all</a>
+                        <a href="{{ route('users.user') }}"
+                           class="btn {{ Request::is('users.user') ? 'btn-dark' : 'btn-outline-dark'}}">user</a>
                         <a href="{{ route('users.admin') }}"
                            class="btn {{ Request::is('users/admin') ? 'btn-dark' : 'btn-outline-dark'}}">admin</a>
                         <a href="{{ route('users.active') }}"
