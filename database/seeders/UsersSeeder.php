@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UsersSeeder extends Seeder
@@ -17,7 +16,7 @@ class UsersSeeder extends Seeder
         $users = [
             [
                 'name' => 'admin',
-                'password' => 'admin1234',
+                'password' => '1234567890',
                 'is_admin' => true,
                 'is_enabled' => true
             ],
