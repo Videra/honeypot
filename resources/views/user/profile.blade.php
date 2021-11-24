@@ -10,7 +10,9 @@
                     <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
                     <div class="col-md-6">
-                        <input autofocus id="name" type="text"
+                        <input autofocus
+                               id="name"
+                               type="text"
                                class="form-control @error('name') is-invalid @enderror"
                                name="name"
                                value="{{ Auth()->user()->name }}"
@@ -22,7 +24,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="avatar" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                    <label for="avatar" class="col-md-4 col-form-label text-md-right">Profile image</label>
 
                     <div class="col-md-6">
                         <input id="avatar" type="file"

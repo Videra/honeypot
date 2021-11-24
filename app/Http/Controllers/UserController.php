@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\XSSAttackDetected;
 use App\Models\User;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
-use function Symfony\Component\String\b;
 
 class UserController extends Controller
 {
@@ -22,23 +21,30 @@ class UserController extends Controller
     {
         /** @var User $user */
         $user = Auth()->user();
-        $user_ip_add = \Request::getClientIp(true);
+        $user_ip_add = Request()->getClientIp();
         Log::info("The user $user->name at Home page from IP address $user_ip_add");
         return view('home');
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function save(Request $request)
     {
         /** @var User $user */
         $user = Auth()->user();
 
+        if ($this->isXSS($request->name)) {
+            $this->blockXSS($user);
+        }
+
         $validated = $request->validate([
             'name' => 'required|min:4|unique:users,name,' . $user->id,
-            // @TODO Vulnerability File Upload:
-            // 'avatar' => 'image'
+            'avatar' => 'image'
         ]);
 
         if ($validated) {
+
             DB::enableQueryLog();
 
             if ($request->name) {
@@ -67,5 +73,33 @@ class UserController extends Controller
         return redirect('home')
             ->withErrors($validated)
             ->withInput();
+    }
+
+    /**
+     * We detect XSS by asking the DOM engine if the loaded string loads children
+     *
+     * @param $string
+     * @return bool
+     */
+    private function isXSS($string): bool
+    {
+        libxml_use_internal_errors(true);
+
+        if ($xml = simplexml_load_string("<root>$string</root>")) {
+            return $xml->children()->count() !== 0;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param User $user
+     * @throws AuthorizationException
+     */
+    private function blockXSS(User $user) {
+        User::where('id', $user->id)->update(['is_enabled' => 0]);
+        Auth::logout();
+        event(new XSSAttackDetected($user, $user->name));
+        throw new AuthorizationException('Hacking attempt detected!');
     }
 }
