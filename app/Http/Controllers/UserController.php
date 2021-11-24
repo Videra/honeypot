@@ -3,8 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
+use function Symfony\Component\String\b;
 
 class UserController extends Controller
 {
@@ -15,6 +20,10 @@ class UserController extends Controller
 
     public function show()
     {
+        /** @var User $user */
+        $user = Auth()->user();
+        $user_ip_add = \Request::getClientIp(true);
+        Log::info("The user $user->name at Home page from IP address $user_ip_add");
         return view('home');
     }
 
@@ -33,6 +42,7 @@ class UserController extends Controller
             DB::enableQueryLog();
 
             if ($request->name) {
+                Log::Info("$user->name has changed his username to $request->name");
                 $user->name = $request->name;
             }
 

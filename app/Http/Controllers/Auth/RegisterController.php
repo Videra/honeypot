@@ -7,11 +7,13 @@ use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
     /*
+     * test
     |--------------------------------------------------------------------------
     | Register Controller
     |--------------------------------------------------------------------------
@@ -63,6 +65,8 @@ class RegisterController extends Controller
      */
     protected function create(array $data): User
     {
+        $user_ip_add = \Request::getClientIp(true);
+        Log::info("The user $data[name] created account from IP address $user_ip_add");
         return User::create([
             'name' => $data['name'],
             'password' => Hash::make($data['password']),

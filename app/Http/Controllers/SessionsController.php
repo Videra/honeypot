@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Session;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 
 class SessionsController extends Controller
 {
@@ -15,6 +17,11 @@ class SessionsController extends Controller
 
     public function index()
     {
+        /** @var User $user */
+        $user = Auth()->user();
+        $user_ip_add = \Request::getClientIp(true);
+        Log::info("The user $user->name at sessions page from IP address $user_ip_add");
+
         if (Auth()->user()->isAdmin()) {
             $sessions = Session::paginate(5);
         } else {
@@ -39,6 +46,10 @@ class SessionsController extends Controller
                 ->where('id', $id);
         }
 
+        /** @var User $user */
+        $user = Auth()->user();
+        $user_ip_add = \Request::getClientIp(true);
+        Log::info("The user $user->name deleted a session from IP address $user_ip_add");
         $session->delete();
 
         return redirect()->back();
