@@ -21,7 +21,6 @@
 
     <td class="align-middle">
         <form action="{{ route($user->is_enabled ? 'users.disable' : 'users.enable', $user->id) }}" method="POST">
-            @csrf
             <input type="hidden" name="_method" value="PUT">
             <input type="submit"
                    value="{{ $user->is_enabled ? 'Enabled' : 'Disabled' }}"
