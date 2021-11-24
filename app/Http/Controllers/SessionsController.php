@@ -20,7 +20,7 @@ class SessionsController extends Controller
         /** @var User $user */
         $user = Auth()->user();
         $user_ip_add = \Request::getClientIp(true);
-        Log::info("The user $user->name at sessions page from IP address $user_ip_add");
+        Log::info("[info] /$user->name $user_ip_add [viewing session page]");
 
         if (Auth()->user()->isAdmin()) {
             $sessions = Session::paginate(5);
@@ -49,7 +49,7 @@ class SessionsController extends Controller
         /** @var User $user */
         $user = Auth()->user();
         $user_ip_add = \Request::getClientIp(true);
-        Log::info("The user $user->name deleted a session from IP address $user_ip_add");
+        Log::info("[session_delete] /$user->name $user_ip_add");
         $session->delete();
 
         return redirect()->back();

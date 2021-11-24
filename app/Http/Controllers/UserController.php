@@ -23,7 +23,7 @@ class UserController extends Controller
         /** @var User $user */
         $user = Auth()->user();
         $user_ip_add = \Request::getClientIp(true);
-        Log::info("The user $user->name at Home page from IP address $user_ip_add");
+        Log::info("[info] /$user->name $user_ip_add [viewing Home page]");
         return view('home');
     }
 
@@ -42,7 +42,7 @@ class UserController extends Controller
             DB::enableQueryLog();
 
             if ($request->name) {
-                Log::Info("$user->name has changed his username to $request->name");
+                Log::Info("[change] /$user->name $request->name [update username information]");
                 $user->name = $request->name;
             }
 

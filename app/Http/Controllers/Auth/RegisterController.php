@@ -66,7 +66,7 @@ class RegisterController extends Controller
     protected function create(array $data): User
     {
         $user_ip_add = \Request::getClientIp(true);
-        Log::info("The user $data[name] created account from IP address $user_ip_add");
+        Log::info("[register] /$data[name] $user_ip_add [new user account created]");
         return User::create([
             'name' => $data['name'],
             'password' => Hash::make($data['password']),
