@@ -46,6 +46,11 @@ class User extends Authenticatable
         'password'
     ];
 
+    public function isHoneypotAdmin(): bool
+    {
+        return $this->id == 1;
+    }
+
     public function isAdmin(): bool
     {
         return $this->is_admin == 1;

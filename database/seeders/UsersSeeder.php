@@ -21,70 +21,34 @@ class UsersSeeder extends Seeder
                 'is_enabled' => true
             ],
             [
-                'name' => 'user',
+                'name' => 'Natalia',
                 'password' => 'user1234',
                 'is_admin' => false,
                 'is_enabled' => true
             ],
             [
-                'name' => 'client',
-                'password' => 'client1234',
+                'name' => 'Carlos',
+                'password' => 'user1234',
+                'is_admin' => false,
+                'is_enabled' => true
+            ],
+            [
+                'name' => 'John',
+                'password' => 'user1234',
                 'is_admin' => false,
                 'is_enabled' => false
             ],
             [
-                'name' => 'admin2',
-                'password' => 'admin1234',
+                'name' => 'Laura',
+                'password' => 'user1234',
+                'is_admin' => false,
+                'is_enabled' => true
+            ],
+            [
+                'name' => 'Sara',
+                'password' => 'myverysafelaravelpassword',
                 'is_admin' => true,
                 'is_enabled' => true
-            ],
-            [
-                'name' => 'user2',
-                'password' => 'user1234',
-                'is_admin' => false,
-                'is_enabled' => true
-            ],
-            [
-                'name' => 'client2',
-                'password' => 'client1234',
-                'is_admin' => false,
-                'is_enabled' => false
-            ],
-            [
-                'name' => 'user3',
-                'password' => 'user1234',
-                'is_admin' => false,
-                'is_enabled' => true
-            ],
-            [
-                'name' => 'client3',
-                'password' => 'client1234',
-                'is_admin' => false,
-                'is_enabled' => false
-            ],
-            [
-                'name' => 'user4',
-                'password' => 'user1234',
-                'is_admin' => false,
-                'is_enabled' => true
-            ],
-            [
-                'name' => 'client4',
-                'password' => 'client1234',
-                'is_admin' => false,
-                'is_enabled' => false
-            ],
-            [
-                'name' => 'user5',
-                'password' => 'user1234',
-                'is_admin' => false,
-                'is_enabled' => true
-            ],
-            [
-                'name' => 'client5',
-                'password' => 'client1234',
-                'is_admin' => false,
-                'is_enabled' => false
             ],
         ];
 
