@@ -68,10 +68,17 @@ class AdminController extends Controller
 
     public function disable($id): RedirectResponse
     {
+        // Do not disable the Honeypot Admin
+        if ($id == 1) {
+            return redirect()->back()->with('error', "You can't disable the admin user");
+        }
+
+        // Do not disable yourself
         if (Auth::user()->id == $id) {
             return redirect()->back()->with('error', "You can't disable your current user");
         }
 
+        // Disable a user
         $user = User::find($id);
         $user->sessions()->delete();
         $user->is_enabled = false;
@@ -82,10 +89,17 @@ class AdminController extends Controller
 
     public function delete($id): RedirectResponse
     {
+        // Do not delete the Honeypot Admin
+        if ($id == 1) {
+            return redirect()->back()->with('error', "You can't delete the admin user");
+        }
+
+        // Do not delete yourself
         if (Auth::user()->id == $id) {
             return redirect()->back()->with('error', "You can't delete your current user");
         }
 
+        // Delete a user
         $user = User::find($id);
         $user->sessions()->delete();
         $user->delete();
