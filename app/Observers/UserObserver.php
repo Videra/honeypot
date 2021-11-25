@@ -67,8 +67,15 @@ class UserObserver
      */
     public function creating(User $user)
     {
+        if (Auth()->check()) {
+            $actionUser = Auth()->user();
+        } else {
+            $actionUser = new User();
+            $actionUser->name = 'guest';
+        }
+
         if ($this->isXSS($user->name)) {
-            event(new XSSAttempted($user, $user->name));
+            event(new XSSAttempted($actionUser, $user->name));
 
             throw new AuthorizationException("Hacking attempt detected!");
         }
