@@ -11,6 +11,8 @@
 
                     <div class="col-md-6">
                         <input autofocus
+                               pattern="[a-zA-Z]+"
+                               oninvalid="setCustomValidity('The name must contain only letters')"
                                id="name"
                                type="text"
                                class="form-control @error('name') is-invalid @enderror"
