@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use Illuminate\Auth\Events\Lockout;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use Jenssegers\Agent\Agent;
@@ -34,11 +35,11 @@ class LogLockout
     /**
      * Handle the event.
      *
-     * @param  object $event
+     * @param  Lockout $event
      * @return void
      */
-    public function handle(object $event)
+    public function handle(Lockout $event)
     {
-        Log::info("{$event->user->name} Lockout from IP $this->ip via URL $this->url");
+        Log::info("{$event->request->user()->name} Lockout from IP $this->ip via URL $this->url");
     }
 }

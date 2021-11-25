@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Events\XSSDetected;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use Jenssegers\Agent\Agent;
@@ -34,13 +35,11 @@ class LogXSSDetected
     /**
      * Handle the event.
      *
-     * @param  object $event
+     * @param  XSSDetected $event
      * @return void
      */
-    public function handle(object $event)
+    public function handle(XSSDetected $event)
     {
-        $name = $event->user ? $event->user->name : 'unknown';
-
-        Log::info("$name XSSDetected from IP $this->ip via URL $this->url");
+        Log::info("{$event->user->name} XSSDetected from IP $this->ip via URL $this->url and PAYLOAD {$event->payload}");
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use Jenssegers\Agent\Agent;
@@ -34,10 +35,10 @@ class LogPasswordReset
     /**
      * Handle the event.
      *
-     * @param  object $event
+     * @param  PasswordReset $event
      * @return void
      */
-    public function handle(object $event)
+    public function handle(PasswordReset $event)
     {
         Log::info("{$event->user->name} PasswordReset from IP $this->ip via URL $this->url");
     }

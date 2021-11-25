@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use Illuminate\Auth\Events\Authenticated;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use Jenssegers\Agent\Agent;
@@ -34,10 +35,10 @@ class LogAuthenticated
     /**
      * Handle the event.
      *
-     * @param  object $event
+     * @param  Authenticated $event
      * @return void
      */
-    public function handle(object $event)
+    public function handle(Authenticated $event)
     {
         Log::info("{$event->user->name} Authenticated from IP $this->ip via URL $this->url");
     }

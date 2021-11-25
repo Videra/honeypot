@@ -54,7 +54,11 @@ class RegisterController extends Controller
     protected function validator(array $data): \Illuminate\Contracts\Validation\Validator
     {
         if ($this->isXSS($data['name'])) {
-            event(new XSSDetected(new User(), $data['name']));
+            $user = new User();
+            $user->name = 'guest';
+
+            event(new XSSDetected($user, $data['name']));
+
             throw new AuthorizationException('Hacking attempt detected!');
         }
 

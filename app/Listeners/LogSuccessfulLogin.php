@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use Jenssegers\Agent\Agent;
@@ -34,10 +35,10 @@ class LogSuccessfulLogin
     /**
      * Handle the event.
      *
-     * @param  object $event
+     * @param  Login $event
      * @return void
      */
-    public function handle(object $event)
+    public function handle(Login $event)
     {
         Log::info("{$event->user->name} SuccessfulLogin from IP $this->ip via URL $this->url");
     }

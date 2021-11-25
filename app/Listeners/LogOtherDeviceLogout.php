@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use Illuminate\Auth\Events\OtherDeviceLogout;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use Jenssegers\Agent\Agent;
@@ -34,10 +35,10 @@ class LogOtherDeviceLogout
     /**
      * Handle the event.
      *
-     * @param  object $event
+     * @param  OtherDeviceLogout $event
      * @return void
      */
-    public function handle(object $event)
+    public function handle(OtherDeviceLogout $event)
     {
         Log::info("{$event->user->name} OtherDeviceLogout from IP $this->ip via URL $this->url");
     }

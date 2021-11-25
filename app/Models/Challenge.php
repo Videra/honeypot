@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 /**
  * @method static where(string $string, int $int)
+ * @property mixed $name
  */
 class Challenge extends Model
 {

@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use Jenssegers\Agent\Agent;
@@ -34,13 +35,11 @@ class LogVerified
     /**
      * Handle the event.
      *
-     * @param  object $event
+     * @param  Verified $event
      * @return void
      */
-    public function handle(object $event)
+    public function handle(Verified $event)
     {
-        $name = $event->user ? $event->user->name : 'guest';
-
-        Log::info("$name Verified from IP $this->ip via URL $this->url");
+        Log::info("{$event->user->getEmailForVerification()} Verified from IP $this->ip via URL $this->url");
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use Jenssegers\Agent\Agent;
@@ -34,10 +35,10 @@ class LogValidated
     /**
      * Handle the event.
      *
-     * @param  object $event
+     * @param  Validated $event
      * @return void
      */
-    public function handle(object $event)
+    public function handle(Validated $event)
     {
         Log::info("{$event->user->name} Validated from IP $this->ip via URL $this->url");
     }

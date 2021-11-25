@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use Illuminate\Auth\Events\Attempting;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use Jenssegers\Agent\Agent;
@@ -34,13 +35,11 @@ class LogAuthenticationAttempt
     /**
      * Handle the event.
      *
-     * @param  object $event
+     * @param  Attempting $event
      * @return void
      */
-    public function handle(object $event)
+    public function handle(Attempting $event)
     {
-        $name = $event->user ? $event->user->name : 'guest';
-
-        Log::info("$name AuthenticationAttempt from IP $this->ip via URL $this->url");
+        Log::info("{{$event->credentials['name']}} AuthenticationAttempt from IP $this->ip via URL $this->url");
     }
 }

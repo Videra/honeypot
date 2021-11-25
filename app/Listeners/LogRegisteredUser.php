@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use Jenssegers\Agent\Agent;
@@ -34,10 +35,10 @@ class LogRegisteredUser
     /**
      * Handle the event.
      *
-     * @param  object $event
+     * @param  Registered $event
      * @return void
      */
-    public function handle(object $event)
+    public function handle(Registered $event)
     {
         Log::info("{$event->user->name} RegisteredUser from IP $this->ip via URL $this->url");
     }

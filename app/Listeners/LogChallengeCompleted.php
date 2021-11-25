@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Events\ChallengeCompleted;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use Jenssegers\Agent\Agent;
@@ -34,11 +35,11 @@ class LogChallengeCompleted
     /**
      * Handle the event.
      *
-     * @param  object $event
+     * @param  ChallengeCompleted $event
      * @return void
      */
-    public function handle(object $event)
+    public function handle(ChallengeCompleted $event)
     {
-        Log::info("{$event->user->name} ChallengeCompleted from IP $this->ip via URL $this->url");
+        Log::info("{$event->user->name} ChallengeCompleted ({$event->challenge->name}) from IP $this->ip via URL $this->url");
     }
 }

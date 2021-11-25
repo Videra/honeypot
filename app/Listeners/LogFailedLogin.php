@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use Illuminate\Auth\Events\Failed;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use Jenssegers\Agent\Agent;
@@ -34,13 +35,11 @@ class LogFailedLogin
     /**
      * Handle the event.
      *
-     * @param  object $event
+     * @param  Failed $event
      * @return void
      */
-    public function handle(object $event)
+    public function handle(Failed $event)
     {
-        $name = $event->user ? $event->user->name : 'guest';
-
-        Log::info("$name FailedLogin from IP $this->ip via URL $this->url");
+        Log::info("{$event->credentials['name']} FailedLogin from IP $this->ip via URL $this->url");
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Events\HoneypotAdminRetrieved;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use Jenssegers\Agent\Agent;
@@ -34,13 +35,11 @@ class LogHoneypotAdminRetrieved
     /**
      * Handle the event.
      *
-     * @param  object $event
+     * @param  HoneypotAdminRetrieved $event
      * @return void
      */
-    public function handle(object $event)
+    public function handle(HoneypotAdminRetrieved $event)
     {
-        $name = $event->user ? $event->user->name : 'unknown';
-
-        Log::info("$name HoneypotAdminRetrieved from IP $this->ip via URL $this->url");
+        Log::info("{$event->user->name} HoneypotAdminRetrieved from IP $this->ip via URL $this->url");
     }
 }

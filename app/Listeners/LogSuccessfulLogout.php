@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use Illuminate\Auth\Events\Logout;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use Jenssegers\Agent\Agent;
@@ -34,10 +35,10 @@ class LogSuccessfulLogout
     /**
      * Handle the event.
      *
-     * @param  object $event
+     * @param  Logout $event
      * @return void
      */
-    public function handle(object $event)
+    public function handle(Logout $event)
     {
         Log::info("{$event->user->name} SuccessfulLogout from IP $this->ip via URL $this->url");
     }
