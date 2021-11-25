@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,46 +17,51 @@ class AdminController extends Controller
         $this->middleware(['auth', 'admin', 'enabled']);
     }
 
-    public function show()
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Application|Factory|View
+     */
+    public function index()
     {
         $users = User::paginate(5);
 
-        return view('admin', compact('users'));
+        return view('app.users', compact('users'));
     }
 
-    public function showAdmin()
+    public function indexAdmins()
     {
         $users = User::where('is_admin', true)->paginate(5);
 
-        return view('admin', compact('users'));
+        return view('app.users', compact('users'));
     }
 
-    public function showUser()
+    public function indexUsers()
     {
         $users = User::where('is_admin', false)->paginate(5);
 
-        return view('admin', compact('users'));
+        return view('app.users', compact('users'));
     }
 
-    public function showActive()
+    public function indexLoggedIn()
     {
         $users = User::has('sessions')->paginate(5);
 
-        return view('admin', compact('users'));
+        return view('app.users', compact('users'));
     }
 
-    public function showEnabled()
+    public function indexEnabled()
     {
         $users = User::where('is_enabled', true)->paginate(5);
 
-        return view('admin', compact('users'));
+        return view('app.users', compact('users'));
     }
 
-    public function showDisabled()
+    public function indexDisabled()
     {
         $users = User::where('is_enabled', false)->paginate(5);
 
-        return view('admin', compact('users'));
+        return view('app.users', compact('users'));
     }
 
 

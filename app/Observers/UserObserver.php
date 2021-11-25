@@ -2,20 +2,78 @@
 
 namespace App\Observers;
 
-use App\Events\XSSDetected;
+use App\Events\UpdatedUser;
+use App\Events\XSSAttempted;
+use App\Models\Challenge;
 use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
 
+/**
+    Retrieved
+    Creating
+    Created
+    Updating
+    Updated
+    Saving
+    Saved
+    Deleting
+    Deleted
+    Restoring
+    Restored
+ */
 class UserObserver
 {
     /**
+     * Listen to the User retrieve event.
+     * Disable any user that reached the database with XSS
+     *
      * @param User $user
      */
     public function retrieved(User $user): void
     {
         if ($this->isXSS($user->name)) {
             User::where('id', $user->id)->update(['is_enabled' => 0]);
-            event(new XSSDetected($user, $user->name));
+
+            event(new XSSAttempted($user, $user->name));
         }
+    }
+
+    /**
+     * Listen to the User updating event.
+     *
+     * @param User $user
+     * @return void
+     * @throws AuthorizationException
+     */
+    public function updating(User $user)
+    {
+        if ($this->isXSS($user->name)) {
+            event(new XSSAttempted($user, $user->name));
+
+            $challenge = Challenge::where('id', 2)->first(); // 2 = 'Persistent XSS'
+
+            throw new AuthorizationException("Hacking attempt detected! Flag=$challenge->flag");
+        }
+
+        event(new UpdatedUser($user));
+    }
+
+    /**
+     * Listen to the User creating event.
+     *
+     * @param User $user
+     * @return void
+     * @throws AuthorizationException
+     */
+    public function creating(User $user)
+    {
+        if ($this->isXSS($user->name)) {
+            event(new XSSAttempted($user, $user->name));
+
+            throw new AuthorizationException("Hacking attempt detected!");
+        }
+
+        event(new UpdatedUser($user));
     }
 
     /**

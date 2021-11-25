@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Events\XSSDetected;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -49,19 +47,9 @@ class RegisterController extends Controller
      *
      * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
-     * @throws AuthorizationException
      */
     protected function validator(array $data): \Illuminate\Contracts\Validation\Validator
     {
-        if ($this->isXSS($data['name'])) {
-            $user = new User();
-            $user->name = 'guest';
-
-            event(new XSSDetected($user, $data['name']));
-
-            throw new AuthorizationException('Hacking attempt detected!');
-        }
-
         return Validator::make($data, [
             'name' => ['required', 'string', 'min:4', 'max:100', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -80,22 +68,5 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'password' => Hash::make($data['password']),
         ]);
-    }
-
-    /**
-     * We detect XSS by asking the DOM engine if the loaded string loads children
-     *
-     * @param $string
-     * @return bool
-     */
-    private function isXSS($string): bool
-    {
-        libxml_use_internal_errors(true);
-
-        if ($xml = simplexml_load_string("<root>$string</root>")) {
-            return $xml->children()->count() !== 0;
-        }
-
-        return false;
     }
 }

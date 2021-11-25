@@ -15,7 +15,7 @@
         <tbody>
         @isset($users)
             @forelse ($users as $user)
-                @include('users.row')
+                @include('app.users.row')
             @empty
                 <tr>
                     <td colspan="8"><em>'No users found'</em></td>

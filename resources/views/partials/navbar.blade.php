@@ -40,7 +40,7 @@
                             <a class="dropdown-item" href="{{ route('sessions') }}">Sessions</a>
 
                             @if (Auth()->user()->is_admin)
-                                <a class="dropdown-item" href="{{ route('users') }}">Users</a>
+                                <a class="dropdown-item" href="{{ route('users.index') }}">Users</a>
                             @endif
 
                             <a class="dropdown-item" href="{{ route('logout') }}"

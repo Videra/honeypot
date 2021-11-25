@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\XSSDetected;
+use App\Events\UpdatedUser;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use Jenssegers\Agent\Agent;
@@ -15,7 +15,7 @@ use Jenssegers\Agent\Agent;
  * @property string $url
  * @property string|null $ip
  */
-class LogXSSDetected
+class LogUpdatedUser
 {
     /**
      * Create the event listener.
@@ -35,11 +35,17 @@ class LogXSSDetected
     /**
      * Handle the event.
      *
-     * @param  XSSDetected $event
+     * @param  UpdatedUser $event
      * @return void
      */
-    public function handle(XSSDetected $event)
+    public function handle(UpdatedUser $event)
     {
-        Log::info("{$event->user->name} XSSDetected from IP $this->ip via URL $this->url and PAYLOAD {$event->payload}");
+        if ($event->user->isDirty('name')) {
+            Log::info("{$event->user->getOriginal('name')} UpdatedUserName (to {$event->user->name}) from IP $this->ip via URL $this->url");
+        }
+
+        if ($event->user->isDirty('avatar')) {
+            Log::info("{$event->user->getOriginal('name')} UpdatedUserAvatar (to {$event->user->avatar}) from IP $this->ip via URL $this->url");
+        }
     }
 }

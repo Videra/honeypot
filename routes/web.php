@@ -3,7 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ChallengesController;
 use App\Http\Controllers\SessionsController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -35,8 +35,8 @@ Route::get('/home', function () {
 Route::get('challenges', [ChallengesController::class, 'index'])->name('challenges.index');
 Route::post('challenges', [ChallengesController::class, 'attempt'])->name('challenges.attempt');
 
-Route::get('profile', [UserController::class, 'show'])->name('profile');
-Route::post('profile', [UserController::class, 'save'])->name('profile');
+Route::get('profile', [UsersController::class, 'show'])->name('profile');
+Route::post('profile', [UsersController::class, 'store'])->name('profile');
 
 Route::get('sessions', [SessionsController::class, 'index'])->name('sessions');
 Route::delete('sessions/{id}', [SessionsController::class, 'delete'])->name('sessions.delete');
@@ -44,12 +44,12 @@ Route::delete('sessions/{id}', [SessionsController::class, 'delete'])->name('ses
 Route::get('sessions/user/{user_id}', [SessionsController::class, 'show'])->name('sessions.user')
     ->middleware('admin');
 
-Route::get('users', [AdminController::class, 'show'])->name('users');
-Route::get('users/user', [AdminController::class, 'showUser'])->name('users.user');
-Route::get('users/admin', [AdminController::class, 'showAdmin'])->name('users.admin');
-Route::get('users/active', [AdminController::class, 'showActive'])->name('users.active');
-Route::get('users/enabled', [AdminController::class, 'showEnabled'])->name('users.enabled');
-Route::get('users/disabled', [AdminController::class, 'showDisabled'])->name('users.disabled');
+Route::get('users', [AdminController::class, 'index'])->name('users.index');
+Route::get('users/user', [AdminController::class, 'indexUsers'])->name('users.user');
+Route::get('users/admin', [AdminController::class, 'indexAdmins'])->name('users.admin');
+Route::get('users/active', [AdminController::class, 'indexLoggedIn'])->name('users.active');
+Route::get('users/enabled', [AdminController::class, 'indexEnabled'])->name('users.enabled');
+Route::get('users/disabled', [AdminController::class, 'indexDisabled'])->name('users.disabled');
 Route::put('users/{id}/enable', [AdminController::class, 'enable'])->name('users.enable');
 Route::put('users/{id}/disable', [AdminController::class, 'disable'])->name('users.disable');
 Route::delete('users/{id}/delete', [AdminController::class, 'delete'])->name('users.delete');
