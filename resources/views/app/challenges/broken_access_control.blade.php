@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card mb-2">
     <div class="card-body">
         <h4 class="card-title">Broken Access Control</h4>
         <p class="card-text">Login with the default administrator account using brute force and submit here the flag
@@ -8,7 +8,7 @@
                 <h5 class="alert-heading">You successfully solved this challenge</h5>
             </div>
         @else
-            <form action="{{route('challenges.attempt')}}" method="POST">
+            <form class="form-inline" action="{{route('challenges.attempt')}}" method="POST">
                 @csrf
                 <div class="form-inline my-1 mr-sm-2">
                     <label for="challenge_id" class="sr-only">Flag</label>

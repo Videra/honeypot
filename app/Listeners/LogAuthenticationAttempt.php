@@ -40,6 +40,6 @@ class LogAuthenticationAttempt
      */
     public function handle(Attempting $event)
     {
-        Log::info("{{$event->credentials['name']}} AuthenticationAttempt from IP $this->ip via URL $this->url");
+        Log::info("{$event->credentials['name']} AuthenticationAttempt from IP $this->ip via URL $this->url");
     }
 }

@@ -14,7 +14,8 @@
                         </div>
                     </div>
                 @else
-                    @include('app.challenges.broken-auth')
+                    @include('app.challenges.broken_access_control')
+                    @include('app.challenges.persistent_xss')
                 @endguest
             </div>
         </div>

@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Events\XSSDetected;
+use App\Models\Challenge;
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -19,29 +18,29 @@ class UserController extends Controller
 
     public function show()
     {
-        return view('home');
+        return view('app.profile');
     }
 
     /**
      * @throws AuthorizationException
      */
-    public function save(Request $request)
+    public function save(Request $request): RedirectResponse
     {
         /** @var User $user */
         $user = Auth()->user();
 
         if ($this->isXSS($request->name)) {
-            $this->blockXSS($user);
+            event(new XSSDetected($user, $request->name));
+            $challenge = Challenge::where('id', 2)->first(); // 2 = 'Persistent XSS'
+            throw new AuthorizationException("Hacking attempt detected! Flag=$challenge->flag");
         }
 
         $validated = $request->validate([
-            'name' => 'required|min:4|unique:users,name,' . $user->id,
+            'name' => 'nullable|min:4|unique:users,name,' . $user->id,
             'avatar' => 'image'
         ]);
 
         if ($validated) {
-
-            DB::enableQueryLog();
 
             if ($request->name) {
                 $user->name = $request->name;
@@ -59,13 +58,10 @@ class UserController extends Controller
 
             $user->save();
 
-            $sql = DB::getQueryLog();
-            $sql = end($sql);
-
-            return redirect('home')->with(compact('sql'));
+            return redirect()->back();
         }
 
-        return redirect('home')
+        return redirect()->back()
             ->withErrors($validated)
             ->withInput();
     }
@@ -85,16 +81,5 @@ class UserController extends Controller
         }
 
         return false;
-    }
-
-    /**
-     * @param User $user
-     * @throws AuthorizationException
-     */
-    private function blockXSS(User $user) {
-        User::where('id', $user->id)->update(['is_enabled' => 0]);
-        Auth::logout();
-        event(new XSSDetected($user, $user->name));
-        throw new AuthorizationException('Hacking attempt detected!');
     }
 }

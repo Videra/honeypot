@@ -16,7 +16,12 @@ class ChallengesSeeder extends Seeder
         $challenges = [
             [
                 'name' => 'Broken Access Control',
-                'description' => 'Login with the default administrator account using brute force and submit here the flag that you found.',
+                'description' => 'Login with the default administrator account by brute-forcing the password.',
+                'flag' => Str::random(10)
+            ],
+            [
+                'name' => 'Persistent XSS',
+                'description' => 'A persistent XSS is possible when a web includes untrusted data in a new web page without proper validation or escaping.',
                 'flag' => Str::random(10)
             ],
         ];

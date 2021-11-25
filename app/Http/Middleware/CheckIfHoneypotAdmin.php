@@ -28,9 +28,10 @@ class CheckIfHoneypotAdmin
         if ($user && $user->isHoneypotAdmin()) {
             Auth::logout();
             Session::flush();
-            event(new HoneypotAdminRetrieved($user));
-            $challenge = Challenge::where('id', 1)->first();
 
+            event(new HoneypotAdminRetrieved($user));
+
+            $challenge = Challenge::where('id', 1)->first(); // 1 = 'Broken Access Control'
             throw new AuthorizationException("Hacking attempt detected! Flag=$challenge->flag");
         }
 
