@@ -39,6 +39,8 @@ class LogFailedLogin
      */
     public function handle(object $event)
     {
-        Log::info("FailedLogin USER {$event->user->name} from IP $this->ip BROWSER $this->browser DEVICE $this->device URL $this->url");
+        $name = $event->user ? $event->user->name : 'guest';
+
+        Log::info("$name FailedLogin from IP $this->ip via URL $this->url");
     }
 }

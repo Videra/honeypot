@@ -39,6 +39,6 @@ class LogRegisteredUser
      */
     public function handle(object $event)
     {
-        Log::info("RegisteredUser USER {$event->user->name} from IP $this->ip BROWSER $this->browser DEVICE $this->device URL $this->url");
+        Log::info("{$event->user->name} RegisteredUser from IP $this->ip via URL $this->url");
     }
 }

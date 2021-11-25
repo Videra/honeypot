@@ -39,6 +39,8 @@ class LogXSSDetected
      */
     public function handle(object $event)
     {
-        Log::info("XSSDetected USER {$event->user->name} from IP $this->ip BROWSER $this->browser DEVICE $this->device URL $this->url");
+        $name = $event->user ? $event->user->name : 'unknown';
+
+        Log::info("$name XSSDetected from IP $this->ip via URL $this->url");
     }
 }
