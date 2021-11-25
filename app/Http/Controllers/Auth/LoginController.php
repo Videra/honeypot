@@ -59,6 +59,6 @@ class LoginController extends Controller
         $user = Auth()->user();
         $user_ip_add = \Request::getClientIp(true);
         Log::info("The user $user->name at logged in from IP address $user_ip_add");
-        return redirect('home');
+        return redirect('challenges');
     }
 }

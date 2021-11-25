@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ChallengesController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('layouts.app');
+    return view('app');
 });
 
 Auth::routes([
@@ -27,8 +28,15 @@ Auth::routes([
     'verify' => false,
 ]);
 
-Route::get('home', [UserController::class, 'show'])->name('home');
-Route::post('home', [UserController::class, 'save'])->name('save');
+Route::get('/home', function () {
+    return redirect()->to('challenges');
+})->name('home');
+
+Route::get('challenges', [ChallengesController::class, 'index'])->name('challenges.index');
+Route::post('challenges', [ChallengesController::class, 'attempt'])->name('challenges.attempt');
+
+Route::get('profile', [UserController::class, 'show'])->name('profile');
+Route::post('profile', [UserController::class, 'save'])->name('profile');
 
 Route::get('sessions', [SessionsController::class, 'index'])->name('sessions');
 Route::delete('sessions/{id}', [SessionsController::class, 'delete'])->name('sessions.delete');
