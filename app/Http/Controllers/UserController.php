@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\XSSAttackDetected;
+use App\Events\XSSDetected;
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
@@ -19,10 +19,6 @@ class UserController extends Controller
 
     public function show()
     {
-        /** @var User $user */
-        $user = Auth()->user();
-        $user_ip_add = Request()->getClientIp();
-        Log::info("The user $user->name at Home page from IP address $user_ip_add");
         return view('home');
     }
 
@@ -48,7 +44,6 @@ class UserController extends Controller
             DB::enableQueryLog();
 
             if ($request->name) {
-                Log::Info("$user->name has changed his username to $request->name");
                 $user->name = $request->name;
             }
 
@@ -99,7 +94,7 @@ class UserController extends Controller
     private function blockXSS(User $user) {
         User::where('id', $user->id)->update(['is_enabled' => 0]);
         Auth::logout();
-        event(new XSSAttackDetected($user, $user->name));
+        event(new XSSDetected($user, $user->name));
         throw new AuthorizationException('Hacking attempt detected!');
     }
 }

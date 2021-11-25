@@ -10,7 +10,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
 
-class XSSAttackDetected
+class XSSDetected
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 

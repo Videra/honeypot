@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use App\Events\XSSAttackDetected;
+use App\Events\XSSDetected;
 use App\Models\User;
 
 class UserObserver
@@ -14,7 +14,7 @@ class UserObserver
     {
         if ($this->isXSS($user->name)) {
             User::where('id', $user->id)->update(['is_enabled' => 0]);
-            event(new XSSAttackDetected($user, $user->name));
+            event(new XSSDetected($user, $user->name));
         }
     }
 
