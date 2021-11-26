@@ -41,11 +41,11 @@ class LogUpdatedUser
     public function handle(UpdatedUser $event)
     {
         if ($event->user->isDirty('name')) {
-            Log::info("{$event->user->getOriginal('name')} UpdatedUserName (to {$event->user->name}) from IP $this->ip via URL $this->url");
+            Log::info("{$event->authUser->name} UpdatedUserName ({$event->user->getOriginal('name')} -> {$event->user->name}) from IP $this->ip via URL $this->url");
         }
 
         if ($event->user->isDirty('avatar')) {
-            Log::info("{$event->user->getOriginal('name')} UpdatedUserAvatar (to {$event->user->avatar}) from IP $this->ip via URL $this->url");
+            Log::info("{$event->authUser->name} UpdatedUserAvatar ({$event->user->getOriginal('name')} -> {$event->user->name}) from IP $this->ip via URL $this->url");
         }
 
         if ($event->user->isDirty('is_enabled')) {

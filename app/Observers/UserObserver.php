@@ -119,8 +119,6 @@ class UserObserver
             if (Auth::user()->id == $user->id) {
                 throw new ObservableException("You can't disable this user");
             }
-
-            event(new UpdatedUser(Auth()->user(), $user));
         }
     }
 
