@@ -31,6 +31,11 @@ class ChallengesSeeder extends Seeder
                 'description' => 'Achieve a Mass Assignment vulnerability by passing an unexpected parameter in a form that will escalate the user to admin.',
                 'flag' => Str::random(10)
             ],
+            [
+                'name' => 'SQL Injection',
+                'description' => 'Use SQL injection to login with the default administrator account.',
+                'flag' => Str::random(10)
+            ],
         ];
 
         foreach($challenges as $challenge)
