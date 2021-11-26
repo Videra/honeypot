@@ -48,7 +48,17 @@ class UsersController extends Controller
     {
         // @TODO CRITICAL: This creates the "Persistent XSS" vulnerability
         $validation = Validator::make($request->all(), [
-            'name' => 'string|nullable|min:4|unique:users,name,' . Auth()->user()->id,
+            'name' => [
+                function ($attribute, $value, $fail) {
+                    if (is_sql_injection($value)) {
+                        $fail('SQL Injection failed, a kitten died.');
+                    }
+                },
+                'string',
+                'nullable',
+                'min:4',
+                'unique:users,name,' . Auth()->user()->id,
+            ],
             'avatar' => 'image|max:2048'
         ]);
 

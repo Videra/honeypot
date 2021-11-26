@@ -4,10 +4,12 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card text-center">
+            <div class="card">
                 <div class="card-header">Profile</div>
                 <div class="card-body border-bottom">
-                    <img class="image rounded-circle" src="{{ asset('/'.Auth()->user()->avatar)}}" alt="" style="width: 80px;height: 80px; padding: 10px; margin: 0px; ">
+                    <div class="text-center">
+                        <img class="image rounded-circle" src="{{ asset('/'.Auth()->user()->avatar)}}" alt="" style="width: 80px;height: 80px; padding: 10px; margin: 0px; ">
+                    </div>
 
                     <form class="m-2" action="{{route('user.show')}}" method="POST" enctype="multipart/form-data">
                         @csrf
@@ -16,8 +18,6 @@
 
                             <div class="col-md-6">
                                 <input autofocus
-{{--                                       pattern="[a-zA-Z]+"--}}
-{{--                                       oninvalid="setCustomValidity('The name must contain only letters')"--}}
                                        id="name"
                                        type="text"
                                        class="form-control @error('name') is-invalid @enderror"
@@ -43,8 +43,9 @@
                                 @enderror
                             </div>
                         </div>
-
-                        <button type="submit" class="btn btn-primary mt-3 col-8">Save</button>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary mt-3 col-8">Save</button>
+                        </div>
                     </form>
                 </div>
             </div>

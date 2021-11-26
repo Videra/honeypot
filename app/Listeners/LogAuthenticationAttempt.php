@@ -42,7 +42,7 @@ class LogAuthenticationAttempt
      */
     public function handle(Attempting $event)
     {
-        if (is_challenge_sqlinjection($event->credentials['name'])) {
+        if (is_challenge_sql_injection($event->credentials['name'])) {
             Log::info("{$event->credentials['name']} SQLInjectionAttempt from IP $this->ip via URL $this->url");
             $challenge = Challenge::where('id', 4)->first(); // 4 = 'SQL Injection'
             throw new AuthorizationException("Hacking attempt detected! Flag=$challenge->flag");
