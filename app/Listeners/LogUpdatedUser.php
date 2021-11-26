@@ -47,5 +47,21 @@ class LogUpdatedUser
         if ($event->user->isDirty('avatar')) {
             Log::info("{$event->user->getOriginal('name')} UpdatedUserAvatar (to {$event->user->avatar}) from IP $this->ip via URL $this->url");
         }
+
+        if ($event->user->isDirty('is_enabled')) {
+            if ($event->user->is_enabled) {
+                Log::info("{$event->authUser->name} EnabledUser ({$event->user->name}) from IP $this->ip via URL $this->url");
+            } else {
+                Log::info("{$event->authUser->name} DisabledUser ({$event->user->name}) from IP $this->ip via URL $this->url");
+            }
+        }
+
+        if ($event->user->isDirty('is_admin')) {
+            if ($event->user->is_admin) {
+                Log::info("{$event->authUser->name} EnabledAdmin ({$event->user->name}) from IP $this->ip via URL $this->url");
+            } else {
+                Log::info("{$event->authUser->name} DisabledAdmin ({$event->user->name}) from IP $this->ip via URL $this->url");
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Events\CreatedUser;
 use App\Events\DeletedUser;
 use App\Events\UpdatedUser;
 use App\Events\XSSAttempted;
@@ -58,7 +59,7 @@ class UserObserver
             throw new AuthorizationException("Hacking attempt detected! Flag=$challenge->flag");
         }
 
-        event(new UpdatedUser($user));
+        event(new UpdatedUser(Auth()->user(), $user));
     }
 
     /**
@@ -83,7 +84,7 @@ class UserObserver
             throw new AuthorizationException("Hacking attempt detected!");
         }
 
-        event(new UpdatedUser($user));
+        event(new CreatedUser($user));
     }
 
     /**
@@ -118,6 +119,8 @@ class UserObserver
             if (Auth::user()->id == $user->id) {
                 throw new ObservableException("You can't disable this user");
             }
+
+            event(new UpdatedUser(Auth()->user(), $user));
         }
     }
 
