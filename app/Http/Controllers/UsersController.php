@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Success;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -47,8 +46,9 @@ class UsersController extends Controller
      */
     public function update(Request $request): RedirectResponse
     {
+        // @TODO CRITICAL: This creates the "Persistent XSS" vulnerability
         $validation = Validator::make($request->all(), [
-            'name' => 'nullable|min:4|unique:users,name,' . Auth()->user()->id,
+            'name' => 'string|nullable|min:4|unique:users,name,' . Auth()->user()->id,
             'avatar' => 'image|max:2048'
         ]);
 
