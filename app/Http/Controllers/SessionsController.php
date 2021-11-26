@@ -42,9 +42,4 @@ class SessionsController extends Controller
 
         return redirect()->back();
     }
-
-    public function invalidateAllSessionsForUser($userId)
-    {
-        Session::where('user_id', $userId)->delete();
-    }
 }
