@@ -72,8 +72,9 @@ class UserObserver
     public function creating(User $user)
     {
         if ($user->is_admin == 1) {
-            throw new AuthorizationException("Creating is_admin=1 detected");
+            throw new AuthorizationException("Hacking attempt detected!");
         }
+
         if (Auth()->check()) {
             $actionUser = Auth()->user();
         } else {
