@@ -1,8 +1,7 @@
 <div class="card mb-2">
     <div class="card-body">
         <h4 class="card-title">Broken Access Control</h4>
-        <p class="card-text">Login with the default administrator account using brute force and submit here the flag
-            that you found.</p>
+        <p class="card-text">Login using the default administrator account by brute-forcing the password.</p>
         @if ($successes->contains('challenge_id', 1))
             <div class="alert alert-success" role="alert">
                 <h5 class="alert-heading">You successfully solved this challenge</h5>
