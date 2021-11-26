@@ -9,7 +9,7 @@
                 <div class="card">
                     <h4 class="card-header">Sessions</h4>
                     <div class="card-body">
-                        @include('sessions.table')
+                        @include('app.sessions.table')
                     </div>
                 </div>
             </div>

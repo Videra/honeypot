@@ -10,11 +10,11 @@
 </head>
 <body>
     <div id="app">
-        @include('partials.navbar')
+        @include('app.partials.navbar')
         <main class="py-4">
             @yield('content')
         </main>
-        @include('partials.footer')
+        @include('app.partials.footer')
     </div>
 </body>
 </html>

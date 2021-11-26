@@ -24,7 +24,7 @@
         <tbody>
         @isset($sessions)
             @forelse ($sessions as $session)
-                @include('sessions.row')
+                @include('app.sessions.row')
             @empty
                 <tr>
                     <td colspan="5"><em>'No sessions found'</em></td>
