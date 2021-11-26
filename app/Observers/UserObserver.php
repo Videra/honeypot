@@ -89,7 +89,6 @@ class UserObserver
     /**
      * Listen to the User deleting event.
      *
-     * @param User $user
      * @return void
      * @throws ObservableException()
      */
@@ -99,7 +98,7 @@ class UserObserver
             throw new ObservableException("You can't delete this user");
         }
 
-        event(new DeletedUser($user));
+        event(new DeletedUser(Auth()->user(), $user));
     }
 
     /**
@@ -116,7 +115,7 @@ class UserObserver
                 throw new ObservableException("You can't disable this user");
             }
 
-            if (Auth()->user()->id == $user->id) {
+            if (Auth::user()->id == $user->id) {
                 throw new ObservableException("You can't disable this user");
             }
         }

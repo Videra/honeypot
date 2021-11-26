@@ -54,12 +54,14 @@ class UsersSeeder extends Seeder
 
         foreach($users as $user)
         {
-            User::create([
-                'name' => $user['name'],
-                'password' => Hash::make($user['password']),
-                'is_admin' => $user['is_admin'],
-                'is_enabled' => $user['is_enabled'],
-            ]);
+            User::withoutEvents(function () use ($user) {
+                User::create([
+                    'name' => $user['name'],
+                    'password' => Hash::make($user['password']),
+                    'is_admin' => $user['is_admin'],
+                    'is_enabled' => $user['is_enabled'],
+                ]);
+            });
         }
 
     }

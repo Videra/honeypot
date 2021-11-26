@@ -3,7 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\Challenge;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class ChallengesSeeder extends Seeder
@@ -28,11 +30,13 @@ class ChallengesSeeder extends Seeder
 
         foreach($challenges as $challenge)
         {
-            Challenge::create([
-                'name' => $challenge['name'],
-                'description' => $challenge['description'],
-                'flag' => $challenge['flag']
-            ]);
+            Challenge::withoutEvents(function () use ($challenge) {
+                Challenge::create([
+                    'name' => $challenge['name'],
+                    'description' => $challenge['description'],
+                    'flag' => $challenge['flag']
+                ]);
+            });
         }
 
     }

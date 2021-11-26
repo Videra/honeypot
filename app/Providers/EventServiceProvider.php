@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Events\ChallengeAttempted;
 use App\Events\ChallengeCompleted;
 use App\Events\CreatedUser;
+use App\Events\DeletedUser;
 use App\Events\HoneypotAdminRetrieved;
 use App\Events\UpdatedUser;
 use App\Events\XSSAttempted;
@@ -14,6 +15,7 @@ use App\Listeners\LogChallengeAttempted;
 use App\Listeners\LogChallengeCompleted;
 use App\Listeners\LogCreatedUser;
 use App\Listeners\LogCurrentDeviceLogout;
+use App\Listeners\LogDeletedUser;
 use App\Listeners\LogFailedLogin;
 use App\Listeners\LogHoneypotAdminRetrieved;
 use App\Listeners\LogLockout;
@@ -104,6 +106,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         CreatedUser::class => [
             LogCreatedUser::class,
+        ],
+        DeletedUser::class => [
+            LogDeletedUser::class,
         ],
     ];
 
