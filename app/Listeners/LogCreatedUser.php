@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Events\CreatedUser;
 use App\Events\UpdatedUser;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
@@ -35,10 +36,10 @@ class LogCreatedUser
     /**
      * Handle the event.
      *
-     * @param  UpdatedUser $event
+     * @param  CreatedUser $event
      * @return void
      */
-    public function handle(UpdatedUser $event)
+    public function handle(CreatedUser $event)
     {
         Log::info("{$event->user->name} CreatedUser from IP $this->ip via URL $this->url");
     }
