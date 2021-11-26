@@ -25,9 +25,10 @@ class ChallengesController extends Controller
      */
     public function index()
     {
+        $challenges = Challenge::all();
         $successes = Auth()->user()->successes()->get();
 
-        return view('app.challenges', compact('successes'));
+        return view('app.challenges', compact('successes', 'challenges'));
     }
 
     /**

@@ -7,20 +7,22 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card mb-4">
-                    <div class="card-body text-center alert-info">
                     @guest
-                        <h5 class="card-title">Welcome, guest</h5>
-                        <p class="card-text">Please login or register to access our CTF challenges</p>
+                        <div class="card-body text-center alert-warning">
+                            <h5 class="card-title">Welcome, guest</h5>
+                            <p class="card-text">Please login or register to access our CTF challenges</p>
+                        </div>
                     @else
-                        <h5 class="card-title">Welcome, {{ Auth()->user()->name }}</h5>
-                        <p class="card-text">You have solved {{ count(Auth()->user()->successes) }} challenge/s.</p>
+                        <div class="card-body text-center alert-info">
+                            <h5 class="card-title">Welcome, {{ Auth()->user()->name }}</h5>
+                            <p class="card-text">You have solved {{ count(Auth()->user()->successes) }} challenge/s.</p>
+                        </div>
                     @endguest
-                    </div>
                 </div>
                 <div class="card text-center">
                     <h5 class="card-header">Ranking</h5>
                     <div class="card-body border-bottom">
-                @include('app.users.ranking')
+                        @include('app.users.ranking')
                     </div>
                 </div>
             </div>

@@ -35,7 +35,7 @@ class UserObserver
      */
     public function retrieved(User $user): void
     {
-        if ($this->isXSS($user->name)) {
+        if (is_challenge_xss($user->name)) {
             User::where('id', $user->id)->update(['is_enabled' => 0]);
 
             event(new XSSAttempt($user, $user->name));
@@ -51,7 +51,7 @@ class UserObserver
      */
     public function updating(User $user)
     {
-        if ($this->isXSS($user->name)) {
+        if (is_challenge_xss($user->name)) {
             event(new XSSAttempt($user, $user->name));
 
             $challenge = Challenge::where('id', 2)->first(); // 2 = 'Persistent XSS'
@@ -82,7 +82,7 @@ class UserObserver
             $actionUser->name = 'guest';
         }
 
-        if ($this->isXSS($user->name)) {
+        if (is_challenge_xss($user->name)) {
             event(new XSSAttempt($actionUser, $user->name));
 
             throw new AuthorizationException("Hacking attempt detected!");
@@ -130,22 +130,5 @@ class UserObserver
                 throw new ObservableException("You can't disable this user");
             }
         }
-    }
-
-    /**
-     * We detect XSS by asking the DOM engine if the loaded string loads children
-     *
-     * @param $string
-     * @return bool
-     */
-    private function isXSS($string): bool
-    {
-        libxml_use_internal_errors(true);
-
-        if ($xml = simplexml_load_string("<root>$string</root>")) {
-            return $xml->children()->count() !== 0;
-        }
-
-        return false;
     }
 }

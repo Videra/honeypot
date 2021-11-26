@@ -14,13 +14,19 @@
                         </div>
                     </div>
                 @else
-                    <div class="card-deck mb-4">
-                        @include('app.challenges.broken_access_control')
-                        @include('app.challenges.persistent_xss')
-                        @include('app.challenges.mass_assignment')
-                    </div>
-                    <div class="card-deck">
-                        @include('app.challenges.sql_injection')
+                    <div class="row d-flex justify-content-center">
+                        @forelse($challenges as $challenge)
+                            <div class="col-sm-4 mb-4">
+                                @include('app.challenges.challenge')
+                            </div>
+                        @empty
+                            <div class="card mb-2">
+                                <div class="card-body text-center alert-danger">
+                                    <h4 class="card-title">Challenges not found</h4>
+                                    <p class="card-text">This is not suppose to happen, an attacker must have deleted them.</p>
+                                </div>
+                            </div>
+                        @endforelse
                     </div>
                 @endguest
             </div>
