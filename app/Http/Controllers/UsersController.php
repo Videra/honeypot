@@ -7,6 +7,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UsersController extends Controller
 {
@@ -35,8 +36,8 @@ class UsersController extends Controller
     {
         $validated = $request->validate([
             'name' => 'nullable|min:4|unique:users,name,' . Auth()->user()->id,
-            'avatar' => 'image'
-        ]);
+            'avatar' => 'image|max:2048'
+            ], ['max' => 'The image exceeds max size of 2MB.']);
 
         if ($validated) {
 
@@ -45,13 +46,8 @@ class UsersController extends Controller
             }
 
             if ($request->file('avatar')) {
-
-                 // @TODO Vulnerability File Upload:
-                 // $filename = Storage::putFile('avatars', $request->file('avatar'));
-
-                $filename = 'avatars/'. $request->avatar->getClientOriginalName();
-                $request->avatar->storeAs('', $filename);
-                Auth()->user()->avatar = $filename;
+                $pathToFile = Storage::putFile('avatars', $request->file('avatar'));
+                Auth()->user()->avatar = $pathToFile;
             }
 
             Auth()->user()->save();
