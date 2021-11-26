@@ -10,7 +10,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
 
-class XSSAttempted
+class XSSAttempt
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 

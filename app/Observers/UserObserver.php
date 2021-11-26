@@ -5,7 +5,7 @@ namespace App\Observers;
 use App\Events\CreatedUser;
 use App\Events\DeletedUser;
 use App\Events\UpdatedUser;
-use App\Events\XSSAttempted;
+use App\Events\XSSAttempt;
 use App\Exceptions\ObservableException;
 use App\Models\Challenge;
 use App\Models\User;
@@ -38,7 +38,7 @@ class UserObserver
         if ($this->isXSS($user->name)) {
             User::where('id', $user->id)->update(['is_enabled' => 0]);
 
-            event(new XSSAttempted($user, $user->name));
+            event(new XSSAttempt($user, $user->name));
         }
     }
 
@@ -52,7 +52,7 @@ class UserObserver
     public function updating(User $user)
     {
         if ($this->isXSS($user->name)) {
-            event(new XSSAttempted($user, $user->name));
+            event(new XSSAttempt($user, $user->name));
 
             $challenge = Challenge::where('id', 2)->first(); // 2 = 'Persistent XSS'
 
@@ -83,7 +83,7 @@ class UserObserver
         }
 
         if ($this->isXSS($user->name)) {
-            event(new XSSAttempted($actionUser, $user->name));
+            event(new XSSAttempt($actionUser, $user->name));
 
             throw new AuthorizationException("Hacking attempt detected!");
         }

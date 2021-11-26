@@ -8,7 +8,7 @@ use App\Events\CreatedUser;
 use App\Events\DeletedUser;
 use App\Events\HoneypotAdminRetrieved;
 use App\Events\UpdatedUser;
-use App\Events\XSSAttempted;
+use App\Events\XSSAttempt;
 use App\Listeners\LogAuthenticated;
 use App\Listeners\LogAuthenticationAttempt;
 use App\Listeners\LogChallengeAttempted;
@@ -27,7 +27,7 @@ use App\Listeners\LogSuccessfulLogout;
 use App\Listeners\LogUpdatedUser;
 use App\Listeners\LogValidated;
 use App\Listeners\LogVerified;
-use App\Listeners\LogXSSAttempted;
+use App\Listeners\LogXSSAttempt;
 use Illuminate\Auth\Events\Attempting;
 use Illuminate\Auth\Events\Authenticated;
 use Illuminate\Auth\Events\CurrentDeviceLogout;
@@ -98,8 +98,8 @@ class EventServiceProvider extends ServiceProvider
         HoneypotAdminRetrieved::class => [
             LogHoneypotAdminRetrieved::class,
         ],
-        XSSAttempted::class => [
-            LogXSSAttempted::class,
+        XSSAttempt::class => [
+            LogXSSAttempt::class,
         ],
         UpdatedUser::class => [
             LogUpdatedUser::class,

@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\XSSAttempted;
+use App\Events\XSSAttempt;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use Jenssegers\Agent\Agent;
@@ -15,7 +15,7 @@ use Jenssegers\Agent\Agent;
  * @property string $url
  * @property string|null $ip
  */
-class LogXSSAttempted
+class LogXSSAttempt
 {
     /**
      * Create the event listener.
@@ -35,11 +35,11 @@ class LogXSSAttempted
     /**
      * Handle the event.
      *
-     * @param  XSSAttempted $event
+     * @param  XSSAttempt $event
      * @return void
      */
-    public function handle(XSSAttempted $event)
+    public function handle(XSSAttempt $event)
     {
-        Log::info("{$event->user->getOriginal('name')} XSSAttempted from IP $this->ip via URL $this->url with PAYLOAD {$event->payload}");
+        Log::info("{$event->user->getOriginal('name')} XSSAttempt from IP $this->ip via URL $this->url with PAYLOAD {$event->payload}");
     }
 }

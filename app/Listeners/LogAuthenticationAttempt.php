@@ -2,6 +2,8 @@
 
 namespace App\Listeners;
 
+use App\Models\Challenge;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\Events\Attempting;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
@@ -40,6 +42,63 @@ class LogAuthenticationAttempt
      */
     public function handle(Attempting $event)
     {
+        if ($this->isChallengeSQLInjection($event->credentials['name'])) {
+            Log::info("{$event->credentials['name']} SQLInjectionAttempt from IP $this->ip via URL $this->url");
+            $challenge = Challenge::where('id', 4)->first(); // 4 = 'SQL Injection'
+            throw new AuthorizationException("Hacking attempt detected! Flag=$challenge->flag");
+        }
+
         Log::info("{$event->credentials['name']} AuthenticationAttempt from IP $this->ip via URL $this->url");
+    }
+
+    private function isChallengeSQLInjection(string $payload): bool {
+        $payloads = [
+            "admin' --",
+            "admin' #",
+            "admin'/*",
+            "admin' or '1'='1",
+            "admin' or '1'='1'--",
+            "admin' or '1'='1'#",
+            "admin' or '1'='1'/*",
+            "admin'or 1=1 or ''='",
+            "admin' or 1=1",
+            "admin' or 1=1--",
+            "admin' or 1=1#",
+            "admin' or 1=1/*",
+            "admin') or ('1'='1",
+            "admin') or ('1'='1'--",
+            "admin') or ('1'='1'#",
+            "admin') or ('1'='1'/*",
+            "admin') or '1'='1",
+            "admin') or '1'='1'--",
+            "admin') or '1'='1'#",
+            "admin') or '1'='1'/*",
+            "1234 ' AND 1=0 UNION ALL SELECT 'admin',
+            '81dc9bdb52d04dc20036dbd8313ed055",
+            "admin\" --",
+            "admin\" #",
+            "admin\"/*",
+            "admin\" or \"1\"=\"1",
+            "admin\" or \"1\"=\"1\"--",
+            "admin\" or \"1\"=\"1\"#",
+            "admin\" or \"1\"=\"1\"/*",
+            "admin\"or 1=1 or \"\"=\"",
+            "admin\" or 1=1",
+            "admin\" or 1=1--",
+            "admin\" or 1=1#",
+            "admin\" or 1=1/*",
+            "admin\") or (\"1\"=\"1",
+            "admin\") or (\"1\"=\"1\"--",
+            "admin\") or (\"1\"=\"1\"#",
+            "admin\") or (\"1\"=\"1\"/*",
+            "admin\") or \"1\"=\"1",
+            "admin\") or \"1\"=\"1\"--",
+            "admin\") or \"1\"=\"1\"#",
+            "admin\") or \"1\"=\"1\"/*",
+            "1234 \" AND 1=0 UNION ALL SELECT \"admin\",
+            \"81dc9bdb52d04dc20036dbd8313ed055"
+        ];
+
+        return in_array($payload, $payloads);
     }
 }
