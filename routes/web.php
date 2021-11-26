@@ -35,8 +35,8 @@ Route::get('/home', function () {
 Route::get('challenges', [ChallengesController::class, 'index'])->name('challenges.index');
 Route::post('challenges', [ChallengesController::class, 'attempt'])->name('challenges.attempt');
 
-Route::get('profile', [UsersController::class, 'show'])->name('profile');
-Route::post('profile', [UsersController::class, 'store'])->name('profile');
+Route::get('profile', [UsersController::class, 'show'])->name('user.show');
+Route::post('profile', [UsersController::class, 'update'])->name('user.update');
 
 Route::get('sessions', [SessionsController::class, 'index'])->name('sessions');
 Route::delete('sessions/{id}', [SessionsController::class, 'delete'])->name('sessions.delete');

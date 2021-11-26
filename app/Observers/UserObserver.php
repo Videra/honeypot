@@ -71,6 +71,9 @@ class UserObserver
      */
     public function creating(User $user)
     {
+        if ($user->is_admin == 1) {
+            throw new AuthorizationException("Creating is_admin=1 detected");
+        }
         if (Auth()->check()) {
             $actionUser = Auth()->user();
         } else {
@@ -107,10 +110,16 @@ class UserObserver
      *
      * @param User $user
      * @return void
-     * @throws ObservableException()
+     * @throws AuthorizationException
+     * @throws ObservableException
      */
     public function saving(User $user)
     {
+        if ($user->is_admin == 1) {
+            $challenge = Challenge::where('id', 3)->first(); // 3 = 'Mass Assignation'
+            throw new AuthorizationException("Hacking attempt detected! Flag=$challenge->flag");
+        }
+
         if ($user->isDirty('is_enabled')) {
             if ($user->id == 1) {
                 throw new ObservableException("You can't disable this user");

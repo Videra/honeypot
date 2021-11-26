@@ -12,6 +12,7 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
+        // @TODO CRITICAL: This creates the "Broken Access Control" vulnerability
         'login'
     ];
 }

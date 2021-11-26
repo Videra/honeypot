@@ -9,7 +9,7 @@
                 <div class="card-body border-bottom">
                     <img class="image rounded-circle" src="{{ asset('/'.Auth()->user()->avatar)}}" alt="" style="width: 80px;height: 80px; padding: 10px; margin: 0px; ">
 
-                    <form class="m-2" action="{{route('profile')}}" method="POST" enctype="multipart/form-data">
+                    <form class="m-2" action="{{route('user.show')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>

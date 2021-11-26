@@ -23,7 +23,12 @@ class ChallengesSeeder extends Seeder
             ],
             [
                 'name' => 'Persistent XSS',
-                'description' => 'A persistent XSS is possible when a web includes untrusted data in a new web page without proper validation or escaping.',
+                'description' => 'Persistent XSS occurs when a page outputs untrusted stored data without proper validation or escaping.',
+                'flag' => Str::random(10)
+            ],
+            [
+                'name' => 'Mass Assignment',
+                'description' => 'Achieve a Mass Assignment vulnerability by passing an unexpected parameter in a form that will escalate the user to admin.',
                 'flag' => Str::random(10)
             ],
         ];

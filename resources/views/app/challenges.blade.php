@@ -16,6 +16,7 @@
                 @else
                     @include('app.challenges.broken_access_control')
                     @include('app.challenges.persistent_xss')
+                    @include('app.challenges.mass_assignment')
                 @endguest
             </div>
         </div>
