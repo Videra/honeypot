@@ -15,6 +15,7 @@ use Illuminate\Notifications\Notifiable;
  * @method static create(array $array)
  * @method static has(string $string)
  * @method static paginate(int $int)
+ * @method static withCount(string $string)
  * @property mixed $is_enabled
  * @property mixed $is_admin
  * @property mixed $created_at

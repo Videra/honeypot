@@ -9,9 +9,11 @@
 
     <td class="align-middle">{{ $user->registrationDate() }}</td>
 
+    <td class="align-middle">{{ $user->status() }} </td>
+
     <td class="align-middle">{{ $user->latestActivity() }}</td>
 
-    <td class="align-middle">{{ $user->status() }} </td>
+    <td class="align-middle">{{ count($user->successes) }} </td>
 
     <td class="align-middle">
         <form action="{{ route($user->is_enabled ? 'users.disable' : 'users.enable', $user->id) }}" method="POST">

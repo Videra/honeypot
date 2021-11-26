@@ -21,6 +21,12 @@ class UsersSeeder extends Seeder
                 'is_enabled' => true
             ],
             [
+                'name' => 'Hacker',
+                'password' => 'myverysafelaravelpassword',
+                'is_admin' => true,
+                'is_enabled' => true
+            ],
+            [
                 'name' => 'Natalia',
                 'password' => 'user1234',
                 'is_admin' => false,
@@ -43,13 +49,7 @@ class UsersSeeder extends Seeder
                 'password' => 'user1234',
                 'is_admin' => false,
                 'is_enabled' => true
-            ],
-            [
-                'name' => 'Sara',
-                'password' => 'myverysafelaravelpassword',
-                'is_admin' => true,
-                'is_enabled' => true
-            ],
+            ]
         ];
 
         foreach($users as $user)

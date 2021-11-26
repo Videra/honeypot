@@ -5,18 +5,15 @@
                 <th></th>
                 <th>Name</th>
                 <th>Role</th>
-                <th>Registration date</th>
                 <th>Status</th>
                 <th>Latest activity</th>
-                <th>Challenges</th>
-                <th>Access</th>
-                <th>Actions</th>
+                <th>Solved Challenges</th>
             </tr>
         </thead>
         <tbody>
         @isset($users)
             @forelse ($users as $user)
-                @include('app.users.row')
+                @include('app.users.ranking_row')
             @empty
                 <tr>
                     <td colspan="8"><em>No users found</em></td>

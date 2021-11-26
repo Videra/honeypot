@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Success;
+use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -15,6 +17,16 @@ class UsersController extends Controller
     public function __construct()
     {
         $this->middleware(['auth', 'enabled']);
+    }
+
+    public function index()
+    {
+        $users = User::withCount('successes')
+            ->whereNotIn('id', [1,2])
+            ->orderBy('successes_count', 'desc')
+            ->paginate(5);
+
+        return view('app.honeypot')->with(compact('users'));
     }
 
     /**

@@ -40,6 +40,6 @@ class LogXSSAttempted
      */
     public function handle(XSSAttempted $event)
     {
-        Log::info("{$event->user->name} XSSAttempted from IP $this->ip via URL $this->url and PAYLOAD {$event->payload}");
+        Log::info("{$event->user->getOriginal('name')} XSSAttempted from IP $this->ip via URL $this->url with PAYLOAD {$event->payload}");
     }
 }
