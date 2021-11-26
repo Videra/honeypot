@@ -51,9 +51,9 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         if ($user->isAdmin()) {
-            return redirect('users');
+            return redirect()->route('users.index');
         }
 
-        return redirect('challenges');
+        return redirect()->route('challenges.index');
     }
 }
