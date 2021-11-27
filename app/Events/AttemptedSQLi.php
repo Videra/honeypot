@@ -15,23 +15,19 @@ class AttemptedSQLi
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
-     * @var string|null
-     */
-    public $payload;
-    /**
-     * @var User|Authenticatable
-     */
-    public $user;
-    /**
      * @var array
      */
     public $attempt;
+    /**
+     * @var User|Authenticatable|null
+     */
+    public $user;
 
     /**
-     * @param User|Authenticatable $user
-     * @param string|null $payload
+     * @param User|Authenticatable|null $user
+     * @param string $payload
      */
-    public function __construct($user, ?string $payload)
+    public function __construct($user, string $payload)
     {
         $this->user = $user;
         $this->attempt = [

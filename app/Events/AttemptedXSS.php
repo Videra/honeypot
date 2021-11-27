@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
@@ -19,19 +20,15 @@ class AttemptedXSS
      */
     public $attempt;
     /**
-     * @var string|null
-     */
-    public $payload;
-    /**
-     * @var User
+     * @var User|Authenticatable|null
      */
     public $user;
 
     /**
-     * @param User $user
-     * @param string|null $payload
+     * @param User|Authenticatable|null $user
+     * @param string $payload
      */
-    public function __construct(User $user, ?string $payload)
+    public function __construct($user, string $payload)
     {
         $this->user = $user;
         $this->payload = $payload;

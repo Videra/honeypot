@@ -5,16 +5,7 @@ namespace App\Listeners;
 use App\Events\AttemptedXSS;
 use App\Models\Attempt;
 use Illuminate\Support\Facades\Log;
-use Jenssegers\Agent\Agent;
 
-/**
- * @property Agent $agent
- * @property string $userAgent
- * @property bool|string $device
- * @property bool|string $browser
- * @property string $url
- * @property string|null $ip
- */
 class LogAttemptedXSS
 {
     /**
@@ -35,8 +26,9 @@ class LogAttemptedXSS
      */
     public function handle(AttemptedXSS $event)
     {
+        $name = $event->user ? $event->user->getOriginal('name') : 'guest';
         $attempt = Attempt::create($event->attempt);
 
-        Log::info("{$event->user->getOriginal('name')} AttemptedXSS from IP $attempt->ip_address via URL $attempt->url with PAYLOAD {$attempt->payload}");
+        Log::info("$name AttemptedMassAssignment from IP $attempt->ip_address via URL $attempt->url with PAYLOAD $attempt->payload");
     }
 }
