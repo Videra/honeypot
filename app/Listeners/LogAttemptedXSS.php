@@ -29,6 +29,6 @@ class LogAttemptedXSS
         $name = $event->user ? $event->user->getOriginal('name') : 'guest';
         $attempt = Attempt::create($event->attempt);
 
-        Log::info("/$name /AttemptedXSS from IP $attempt->ip_address via URL $attempt->url with PAYLOAD $attempt->payload");
+        Log::info("/$name /AttemptedXSS from IP $attempt->ip_address via URL $attempt->url with PAYLOAD [$attempt->payload]");
     }
 }

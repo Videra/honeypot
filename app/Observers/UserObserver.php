@@ -116,7 +116,7 @@ class UserObserver
     public function saving(User $user)
     {
         if ($user->is_admin == 1) {
-            event(new AchievedMassAssignment(Auth()->user()));
+            event(new AchievedMassAssignment(Auth()->user(), "$user->name became an admin"));
             $challenge = Challenge::where('id', id_mass_assignment())->first();
             throw new AuthorizationException("Mass Assignment achieved! Flag=$challenge->flag");
         }
