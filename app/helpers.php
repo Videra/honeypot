@@ -1,7 +1,7 @@
 <?php
 
 /**
- * We check against the top list of SQL Injection commands used for 'admin' Auth exploitation
+ * We check against the top list of SQL Injection commands used for 'admin' login (we consider them successes)
  *
  * @param string $payload
  * @return bool
@@ -60,6 +60,12 @@ if (!function_exists('is_challenge_sql_injection')) {
     }
 }
 
+/**
+ * We check against the top list of SQL Injection commands (we consider them attempts)
+ *
+ * @param string $payload
+ * @return bool
+ */
 if (!function_exists('is_sql_injection')) {
     function is_sql_injection(string $payload): bool
     {
@@ -954,10 +960,14 @@ if (!function_exists('is_challenge_xss')) {
 if (!function_exists('is_mass_assignment')) {
     function is_mass_assignment(array $inputs): string
     {
-        $invalidInputs = array_diff_key($inputs,array_flip(['name', 'avatar', '_token', 'is_admin']));
+        $invalidInputs = array_diff_key(
+            $inputs,array_flip(['_token', 'name', 'avatar', 'is_admin', 'password', 'password_confirmation'])
+        );
+
         if ($invalidInputs) {
             return implode(",", $invalidInputs);
         }
+
         return '';
     }
 }

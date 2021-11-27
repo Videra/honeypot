@@ -2,11 +2,11 @@
 
 namespace App\Listeners;
 
-use App\Events\AttemptedXSS;
+use App\Events\AttemptedBrokenAccessControl;
 use App\Models\Attempt;
 use Illuminate\Support\Facades\Log;
 
-class LogAttemptedXSS
+class LogAttemptedBrokenAccessControl
 {
     /**
      * Create the event listener.
@@ -21,14 +21,13 @@ class LogAttemptedXSS
     /**
      * Handle the event.
      *
-     * @param  AttemptedXSS $event
+     * @param AttemptedBrokenAccessControl $event
      * @return void
      */
-    public function handle(AttemptedXSS $event)
+    public function handle(AttemptedBrokenAccessControl $event)
     {
-        $name = $event->user ? $event->user->getOriginal('name') : 'guest';
         $attempt = Attempt::create($event->attempt);
 
-        Log::info("$name AttemptedXSS from IP $attempt->ip_address via URL $attempt->url with PAYLOAD $attempt->payload");
+        Log::info("guest AttemptedBrokenAccessControl from IP $attempt->ip_address via URL $attempt->url with PAYLOAD $attempt->payload");
     }
 }

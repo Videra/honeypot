@@ -12,7 +12,7 @@ class SQLInjection implements Rule
     /**
      * Create a new rule instance.
      *
-     * @param User|Authenticatable $user
+     * @param User|Authenticatable|null $user
      * @return void
      */
     public function __construct($user, $payload)

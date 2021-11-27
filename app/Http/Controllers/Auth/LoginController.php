@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Events\AttemptedBrokenAuth;
+use App\Events\AchievedBrokenAccessControl;
+use App\Events\AttemptedBrokenAccessControl;
 use App\Events\AttemptedMassAssignment;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
+use App\Rules\SQLInjection;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -34,26 +33,39 @@ class LoginController extends Controller
 
     protected function validateLogin(Request $request)
     {
-        if ($invalidInputs = is_mass_assignment($request->all())) {
-            event(new AttemptedMassAssignment(null, $invalidInputs));
+        $attributes = $request->all();
+
+        if ($invalidInputs = is_mass_assignment($attributes)) {
+            event(new AttemptedMassAssignment(null, "[$invalidInputs]"));
+        }
+
+        if ($request->name == 'admin') {
+            event(new AttemptedBrokenAccessControl("[$request->name/$request->password]"));
         }
 
         $request->validate([
-            $this->username() => 'required|string',
-            'password' => 'required|string',
+            $this->username() => [
+                new SQLInjection(Auth()->user(), "[$request->name]"),
+                'required',
+                'string',
+            ],
+            'password' => [
+                new SQLInjection(Auth()->user(), "[$request->password]"),
+                'required',
+                'string',
+            ],
         ]);
     }
 
     /**
      * @param Request $request
-     * @param $user
+     * @param User $user
      * @return RedirectResponse
      */
-    protected function authenticated(Request $request, $user)
+    protected function authenticated(Request $request, $user): RedirectResponse
     {
-        /** @var User $user */
         if ($user->isHoneypotAdmin()) {
-            event(new AttemptedBrokenAuth($user, 'Brute-force'));
+            event(new AchievedBrokenAccessControl($user, "[$user->name/$request->password]"));
         }
 
         if ($user->isAdmin()) {

@@ -2,8 +2,8 @@
 
 namespace App\Listeners;
 
-use App\Models\Challenge;
-use Illuminate\Auth\Access\AuthorizationException;
+use App\Events\AchievedSQLi;
+use App\Events\AttemptedSQLi;
 use Illuminate\Auth\Events\Attempting;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
@@ -37,17 +37,21 @@ class LogAuthenticationAttempt
     /**
      * Handle the event.
      *
-     * @param  Attempting $event
+     * @param Attempting $event
      * @return void
      */
     public function handle(Attempting $event)
     {
-        if (is_challenge_sql_injection($event->credentials['name'])) {
-            Log::info("{$event->credentials['name']} SQLInjectionAttempt from IP $this->ip via URL $this->url");
-            $challenge = Challenge::where('id', 4)->first(); // 4 = 'SQL Injection'
-            throw new AuthorizationException("Hacking attempt detected! Flag=$challenge->flag");
-        }
+        Log::info("guest AuthenticationAttempt from IP $this->ip via URL $this->url");
 
-        Log::info("{$event->credentials['name']} AuthenticationAttempt from IP $this->ip via URL $this->url");
+        if (is_sql_injection($event->credentials['name'])) {
+
+            event(new AttemptedSQLi(null, '['.$event->credentials['name'].']'));
+
+        } elseif (is_challenge_sql_injection($event->credentials['name'])) {
+
+            event(new AchievedSQLi(null, '['.$event->credentials['name'].']'));
+
+        }
     }
 }

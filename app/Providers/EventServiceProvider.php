@@ -2,15 +2,21 @@
 
 namespace App\Providers;
 
+use App\Events\AchievedBrokenAccessControl;
+use App\Events\AchievedMassAssignment;
+use App\Events\AchievedSQLi;
 use App\Events\ChallengeAttempted;
 use App\Events\ChallengeCompleted;
 use App\Events\CreatedUser;
 use App\Events\DeletedUser;
-use App\Events\AttemptedBrokenAuth;
+use App\Events\AttemptedBrokenAccessControl;
 use App\Events\AttemptedMassAssignment;
 use App\Events\AttemptedSQLi;
 use App\Events\UpdatedUser;
 use App\Events\AttemptedXSS;
+use App\Listeners\LogAchievedBrokenAccessControl;
+use App\Listeners\LogAchievedMassAssignment;
+use App\Listeners\LogAchievedSQLi;
 use App\Listeners\LogAuthenticated;
 use App\Listeners\LogAuthenticationAttempt;
 use App\Listeners\LogChallengeAttempted;
@@ -19,7 +25,7 @@ use App\Listeners\LogCreatedUser;
 use App\Listeners\LogCurrentDeviceLogout;
 use App\Listeners\LogDeletedUser;
 use App\Listeners\LogFailedLogin;
-use App\Listeners\LogAttemptedBrokenAuth;
+use App\Listeners\LogAttemptedBrokenAccessControl;
 use App\Listeners\LogLockout;
 use App\Listeners\LogAttemptedMassAssignment;
 use App\Listeners\LogOtherDeviceLogout;
@@ -99,8 +105,19 @@ class EventServiceProvider extends ServiceProvider
         ChallengeCompleted::class => [
             LogChallengeCompleted::class,
         ],
-        AttemptedBrokenAuth::class => [
-            LogAttemptedBrokenAuth::class,
+        UpdatedUser::class => [
+            LogUpdatedUser::class,
+        ],
+        CreatedUser::class => [
+            LogCreatedUser::class,
+        ],
+        DeletedUser::class => [
+            LogDeletedUser::class,
+        ],
+
+        // Challenges Attempts
+        AttemptedBrokenAccessControl::class => [
+            LogAttemptedBrokenAccessControl::class,
         ],
         AttemptedXSS::class => [
             LogAttemptedXSS::class,
@@ -111,14 +128,16 @@ class EventServiceProvider extends ServiceProvider
         AttemptedMassAssignment::class => [
             LogAttemptedMassAssignment::class,
         ],
-        UpdatedUser::class => [
-            LogUpdatedUser::class,
+
+        // Challenges Successes
+        AchievedBrokenAccessControl::class => [
+            LogAchievedBrokenAccessControl::class,
         ],
-        CreatedUser::class => [
-            LogCreatedUser::class,
+        AchievedSQLi::class => [
+            LogAchievedSQLi::class,
         ],
-        DeletedUser::class => [
-            LogDeletedUser::class,
+        AchievedMassAssignment::class => [
+            LogAchievedMassAssignment::class,
         ],
     ];
 

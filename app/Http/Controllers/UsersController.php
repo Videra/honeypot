@@ -21,6 +21,11 @@ class UsersController extends Controller
         $this->middleware(['auth', 'enabled']);
     }
 
+    /**
+     * Display the Ranking page
+     *
+     * @return Application|Factory|View
+     */
     public function index()
     {
         $users = User::withCount('successes')
