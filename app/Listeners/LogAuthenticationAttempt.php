@@ -42,7 +42,7 @@ class LogAuthenticationAttempt
      */
     public function handle(Attempting $event)
     {
-        Log::info("guest AuthenticationAttempt from IP $this->ip via URL $this->url");
+        Log::info("/guest /AuthenticationAttempt from IP $this->ip via URL $this->url");
 
         if (is_sql_injection($event->credentials['name'])) {
 

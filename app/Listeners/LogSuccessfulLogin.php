@@ -40,6 +40,6 @@ class LogSuccessfulLogin
      */
     public function handle(Login $event)
     {
-        Log::info("{$event->user->name} SuccessfulLogin from IP $this->ip via URL $this->url");
+        Log::info("/{$event->user->name} /SuccessfulLogin from IP $this->ip via URL $this->url");
     }
 }

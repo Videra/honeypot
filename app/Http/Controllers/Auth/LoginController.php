@@ -40,7 +40,7 @@ class LoginController extends Controller
         }
 
         if ($request->name == 'admin') {
-            event(new AttemptedBrokenAccessControl("[$request->name/$request->password]"));
+            event(new AttemptedBrokenAccessControl("[$request->name / $request->password]"));
         }
 
         $request->validate([
@@ -65,7 +65,7 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user): RedirectResponse
     {
         if ($user->isHoneypotAdmin()) {
-            event(new AchievedBrokenAccessControl($user, "[$user->name/$request->password]"));
+            event(new AchievedBrokenAccessControl($user, "[$user->name / $request->password]"));
         }
 
         if ($user->isAdmin()) {

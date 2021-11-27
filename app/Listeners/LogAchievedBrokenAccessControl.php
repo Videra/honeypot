@@ -34,7 +34,7 @@ class LogAchievedBrokenAccessControl
         $name = $event->user ? $event->user->getOriginal('name') : 'guest';
         $attempt = Attempt::create($event->attempt);
 
-        Log::info("$name AchievedBrokenAccessControl from IP $attempt->ip_address via URL $attempt->url with PAYLOAD $attempt->payload");
+        Log::info("/$name /AchievedBrokenAccessControl from IP $attempt->ip_address via URL $attempt->url with PAYLOAD $attempt->payload");
 
         Auth::logout();
         Session::flush();

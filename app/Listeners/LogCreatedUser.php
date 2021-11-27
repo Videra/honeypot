@@ -41,6 +41,6 @@ class LogCreatedUser
      */
     public function handle(CreatedUser $event)
     {
-        Log::info("{$event->user->name} CreatedUser from IP $this->ip via URL $this->url");
+        Log::info("/{$event->user->name} /CreatedUser from IP $this->ip via URL $this->url");
     }
 }

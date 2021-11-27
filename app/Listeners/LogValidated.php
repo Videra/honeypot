@@ -40,6 +40,6 @@ class LogValidated
      */
     public function handle(Validated $event)
     {
-        Log::info("{$event->user->name} Validated from IP $this->ip via URL $this->url");
+        Log::info("/{$event->user->name} /Validated from IP $this->ip via URL $this->url");
     }
 }

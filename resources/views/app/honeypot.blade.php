@@ -10,7 +10,7 @@
                     @guest
                         <div class="card-body text-center alert-warning">
                             <h5 class="card-title">Welcome, guest</h5>
-                            <p class="card-subtitle">Please register and login to access the challenges. <br>But remember, on every failed attempt... a kitten dies!</p>
+                            <p class="card-subtitle">Please login to try the challenges, but remember, on every failed attempt... a kitten dies!</p>
                         </div>
                     @else
                         <div class="card-body text-center alert-info">

@@ -40,6 +40,6 @@ class LogLockout
      */
     public function handle(Lockout $event)
     {
-        Log::info("{$event->request->user()->name} Lockout from IP $this->ip via URL $this->url");
+        Log::info("/{$event->request->user()->name} /Lockout from IP $this->ip via URL $this->url");
     }
 }
