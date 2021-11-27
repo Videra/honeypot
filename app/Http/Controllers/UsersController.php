@@ -72,12 +72,14 @@ class UsersController extends Controller
             'avatar' => 'image|max:2048'
         ])->validate();
 
+        $attributes = $request->all();
+
         if ($request->file('avatar')) {
-            $request->avatar = Storage::putFile('avatars', $request->file('avatar'));
+            $attributes['avatar'] = $request->avatar->store('avatars');
         }
 
         // @TODO CRITICAL: This creates the "Mass Assignment" vulnerability
-        auth()->user()->update(array_filter($request->all()));
+        auth()->user()->update(array_filter($attributes));
 
         return redirect()->back();
     }
