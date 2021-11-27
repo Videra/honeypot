@@ -46,11 +46,11 @@ class LogAuthenticationAttempt
 
         if (is_sql_injection($event->credentials['name'])) {
 
-            event(new AttemptedSQLi(null, $event->credentials['name']));
+            event(new AttemptedSQLi(null, '['.$event->credentials['name'].']'));
 
         } elseif (is_challenge_sql_injection($event->credentials['name'])) {
 
-            event(new AchievedSQLi(null, $event->credentials['name']));
+            event(new AchievedSQLi(null, '['.$event->credentials['name'].']'));
 
         }
     }
