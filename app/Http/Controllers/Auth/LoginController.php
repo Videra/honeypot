@@ -7,9 +7,6 @@ use App\Events\AttemptedMassAssignment;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -49,7 +46,7 @@ class LoginController extends Controller
      * @param $user
      * @return RedirectResponse
      */
-    protected function authenticated(Request $request, $user)
+    protected function authenticated(Request $request, $user): RedirectResponse
     {
         /** @var User $user */
         if ($user->isHoneypotAdmin()) {
