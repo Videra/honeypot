@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\AttemptedMassAssignment;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -24,6 +25,18 @@ class LoginController extends Controller
     public function username(): string
     {
         return 'name';
+    }
+
+    protected function validateLogin(Request $request)
+    {
+        if ($invalidInputs = is_mass_assignment($request->all())) {
+            event(new AttemptedMassAssignment(null, $invalidInputs));
+        }
+
+        $request->validate([
+            $this->username() => 'required|string',
+            'password' => 'required|string',
+        ]);
     }
 
     protected function authenticated(Request $request, $user): RedirectResponse
