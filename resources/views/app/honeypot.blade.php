@@ -15,7 +15,7 @@
                     @else
                         <div class="card-body text-center alert-info">
                             <h5 class="card-title">Welcome, {{ Auth()->user()->name }}</h5>
-                            <p class="card-text">You have solved {{ count(Auth()->user()->successes) }} challenge/s.</p>
+                            <p class="card-subtitle">You have solved {{ count(Auth()->user()->successes) }} challenges and killed {{ count(Auth()->user()->attempts) }} kittens.</p>
                         </div>
                     @endguest
                 </div>
