@@ -2,44 +2,21 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\AttemptedMassAssignment;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
     use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
     protected $redirectTo = RouteServiceProvider::HOME;
-
-    // Throttling control
     protected $maxAttempts = 50; // Default is 5
     protected $decayMinutes = 1; // Default is 1
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
@@ -50,15 +27,24 @@ class LoginController extends Controller
         return 'name';
     }
 
-    protected function authenticated(Request $request, $user)
+    protected function validateLogin(Request $request)
+    {
+        if ($invalidInputs = is_mass_assignment($request->all())) {
+            event(new AttemptedMassAssignment(null, $invalidInputs));
+        }
+
+        $request->validate([
+            $this->username() => 'required|string',
+            'password' => 'required|string',
+        ]);
+    }
+
+    protected function authenticated(Request $request, $user): RedirectResponse
     {
         if ($user->isAdmin()) {
-            return redirect('users');
+            return redirect()->route('users.index');
         }
-        /** @var User $user */
-        $user = Auth()->user();
-        $user_ip_add = \Request::getClientIp(true);
-        Log::info("[login] /$user->name $user_ip_add [user logged in]");
-        return redirect('home');
+
+        return redirect()->route('challenges.index');
     }
 }

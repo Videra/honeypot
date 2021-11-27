@@ -2,71 +2,39 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\AttemptedMassAssignment;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
-    /*
-     * test
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
     use RegistersUsers;
 
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
     protected $redirectTo = RouteServiceProvider::HOME;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data): \Illuminate\Contracts\Validation\Validator
+    protected function validator(array $data)
     {
+        if ($invalidInputs = is_mass_assignment($data)) {
+            event(new AttemptedMassAssignment(null, $invalidInputs));
+        }
+
         return Validator::make($data, [
-            'name' => ['required', 'string', 'min:4', 'max:100', 'unique:users'],
+            'name' => ['required', 'alpha_num', 'min:4', 'max:100', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return User
-     */
     protected function create(array $data): User
     {
-        $user_ip_add = \Request::getClientIp(true);
-        Log::info("[register] /$data[name] $user_ip_add [new user account created]");
         return User::create([
             'name' => $data['name'],
             'password' => Hash::make($data['password']),

@@ -15,6 +15,7 @@ use Illuminate\Notifications\Notifiable;
  * @method static create(array $array)
  * @method static has(string $string)
  * @method static paginate(int $int)
+ * @method static withCount(string $string)
  * @property mixed $is_enabled
  * @property mixed $is_admin
  * @property mixed $created_at
@@ -34,7 +35,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'password',
-        'avatar'
+        'avatar',
+        'is_admin'
     ];
 
     /**
@@ -94,5 +96,15 @@ class User extends Authenticatable
     public function registrationDate(): string
     {
         return Carbon::parse($this->created_at)->format('Y-m-d');
+    }
+
+    public function successes(): hasMany
+    {
+        return $this->hasMany(Success::class);
+    }
+
+    public function attempts(): HasMany
+    {
+        return $this->hasMany(Attempt::class);
     }
 }
