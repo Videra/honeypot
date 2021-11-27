@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\AttemptedBrokenAuth;
 use App\Events\AttemptedMassAssignment;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -39,10 +44,20 @@ class LoginController extends Controller
         ]);
     }
 
-    protected function authenticated(Request $request, $user): RedirectResponse
+    /**
+     * @param Request $request
+     * @param $user
+     * @return Application|Factory|View|RedirectResponse
+     */
+    protected function authenticated(Request $request, $user)
     {
+        /** @var User $user */
+        if ($user->isHoneypotAdmin()) {
+            event(new AttemptedBrokenAuth($user, 'Brute-force'));
+        }
+
         if ($user->isAdmin()) {
-            return redirect('users');
+            redirect()->route('users.index');
         }
 
         return redirect()->route('challenges.index');
