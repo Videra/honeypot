@@ -41,6 +41,6 @@ class LogDeletedUser
      */
     public function handle(DeletedUser $event)
     {
-        Log::info("{$event->authUser->name} DeletedUser ({$event->user->name}) from IP $this->ip via URL $this->url");
+        Log::info("/{$event->authUser->name} /DeletedUser ({$event->user->name}) from IP $this->ip via URL $this->url");
     }
 }

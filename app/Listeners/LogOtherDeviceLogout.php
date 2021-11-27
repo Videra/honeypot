@@ -40,6 +40,6 @@ class LogOtherDeviceLogout
      */
     public function handle(OtherDeviceLogout $event)
     {
-        Log::info("{$event->user->name} OtherDeviceLogout from IP $this->ip via URL $this->url");
+        Log::info("/{$event->user->name} /OtherDeviceLogout from IP $this->ip via URL $this->url");
     }
 }

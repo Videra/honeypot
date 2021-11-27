@@ -40,6 +40,6 @@ class LogFailedLogin
      */
     public function handle(Failed $event)
     {
-        Log::info("{$event->credentials['name']} FailedLogin from IP $this->ip via URL $this->url");
+        Log::info("/{$event->credentials['name']} /FailedLogin from IP $this->ip via URL $this->url");
     }
 }

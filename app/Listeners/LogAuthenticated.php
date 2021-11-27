@@ -40,6 +40,6 @@ class LogAuthenticated
      */
     public function handle(Authenticated $event)
     {
-        Log::info("{$event->user->name} Authenticated from IP $this->ip via URL $this->url");
+        Log::info("/{$event->user->name} /Authenticated from IP $this->ip via URL $this->url");
     }
 }

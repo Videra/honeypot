@@ -27,6 +27,6 @@ class LogChallengeCompleted
      */
     public function handle(ChallengeCompleted $event)
     {
-        Log::info("{$event->user->name} ChallengeCompleted ({$event->challenge->name}) from IP $this->ip via URL $this->url");
+        Log::info("/{$event->user->name} /ChallengeCompleted ({$event->challenge->name}) from IP $this->ip via URL $this->url");
     }
 }

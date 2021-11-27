@@ -40,6 +40,6 @@ class LogPasswordReset
      */
     public function handle(PasswordReset $event)
     {
-        Log::info("{$event->user->name} PasswordReset from IP $this->ip via URL $this->url");
+        Log::info("/{$event->user->name} /PasswordReset from IP $this->ip via URL $this->url");
     }
 }

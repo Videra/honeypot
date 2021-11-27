@@ -29,6 +29,6 @@ class LogSuccessfulLogout
         $ip = Request::ip();
         $url = Request::url();
 
-        Log::info("{$event->user->name} SuccessfulLogout from IP $ip via URL $url");
+        Log::info("/{$event->user->name} /SuccessfulLogout from IP $ip via URL $url");
     }
 }
