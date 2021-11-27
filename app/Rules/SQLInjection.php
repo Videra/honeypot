@@ -2,7 +2,7 @@
 
 namespace App\Rules;
 
-use App\Events\SQLInjectionAttempt;
+use App\Events\AttemptedSQLi;
 use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Validation\Rule;
@@ -15,9 +15,10 @@ class SQLInjection implements Rule
      * @param User|Authenticatable $user
      * @return void
      */
-    public function __construct($user, string $payload)
+    public function __construct($user, $payload)
     {
-        event(new SQLInjectionAttempt($user, $payload));
+        $this->user = $user;
+        $this->payload = $payload;
     }
 
     /**
@@ -39,6 +40,8 @@ class SQLInjection implements Rule
      */
     public function message(): string
     {
+        event(new AttemptedSQLi($this->user, $this->payload));
+
         return 'SQL Injection attempt failed, a kitten died.';
     }
 }

@@ -24,7 +24,7 @@ class Challenge extends Model
         'flag'
     ];
 
-    public function success(): HasMany
+    public function successes(): HasMany
     {
         return $this->hasMany(Success::class);
     }
@@ -32,5 +32,10 @@ class Challenge extends Model
     public function user(): HasOneThrough
     {
         return $this->hasOneThrough(User::class, Success::class);
+    }
+
+    public function attempts(): HasMany
+    {
+        return $this->hasMany(Attempt::class);
     }
 }

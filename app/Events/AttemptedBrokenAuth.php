@@ -12,17 +12,39 @@ use Illuminate\Queue\SerializesModels;
 /**
  * @property User $user
  */
-class HoneypotAdminRetrieved
+class AttemptedBrokenAuth
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    /**
+     * @var array
+     */
+    public $attempt;
+    /**
+     * @var string|null
+     */
+    public $payload;
+    /**
+     * @var User
+     */
+    public $user;
 
     /**
      * @param User $user
+     * @param string|null $payload
      */
-    public function __construct(User $user)
+    public function __construct(User $user, ?string $payload)
     {
         $this->user = $user;
+        $this->payload = $payload;
+        $this->attempt = [
+            'challenge_id' => id_broken_access_control(),
+            'user_id' => $this->user->id,
+            'payload' => $payload,
+            'ip_address' => Request()->getClientIp(),
+            'user_agent' => Request()->userAgent(),
+            'url' => Request()->url()
+        ];
     }
 
     /**

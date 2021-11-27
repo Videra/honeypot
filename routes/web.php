@@ -1,13 +1,14 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AttemptController;
 use App\Http\Controllers\ChallengesController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [UsersController::class, 'index'])->name('challenges.index')
+Route::get('/', [UsersController::class, 'index'])->name('users.challenges')
     ->withoutMiddleware(['auth', 'enabled']);
 
 Auth::routes([
@@ -19,6 +20,8 @@ Auth::routes([
 Route::get('/home', function () {
     return redirect()->to('challenges');
 })->name('home');
+
+Route::get('attempts', [AttemptController::class, 'index'])->name('attempts.index');
 
 Route::get('challenges', [ChallengesController::class, 'index'])->name('challenges.index');
 Route::post('challenges', [ChallengesController::class, 'attempt'])->name('challenges.attempt');

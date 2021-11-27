@@ -2,6 +2,8 @@
 
 namespace App\Rules;
 
+use App\Events\AttemptedSQLi;
+use App\Events\AttemptedXSS;
 use Illuminate\Contracts\Validation\Rule;
 
 class XSS implements Rule
@@ -11,9 +13,10 @@ class XSS implements Rule
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($user, $payload)
     {
-        //
+        $this->user = $user;
+        $this->payload = $payload;
     }
 
     /**
@@ -35,6 +38,8 @@ class XSS implements Rule
      */
     public function message(): string
     {
+        event(new AttemptedXSS($this->user, $this->payload));
+
         return 'XSS attempt failed, a kitten died.';
     }
 }

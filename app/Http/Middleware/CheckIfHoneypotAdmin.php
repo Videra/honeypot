@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Events\HoneypotAdminRetrieved;
+use App\Events\AttemptedBrokenAuth;
 use App\Models\Challenge;
 use App\Models\User;
 use Closure;
@@ -29,7 +29,7 @@ class CheckIfHoneypotAdmin
             Auth::logout();
             Session::flush();
 
-            event(new HoneypotAdminRetrieved($user));
+            event(new AttemptedBrokenAuth($user));
 
             $challenge = Challenge::where('id', 1)->first(); // 1 = 'Broken Access Control'
             throw new AuthorizationException("Hacking attempt detected! Flag=$challenge->flag");

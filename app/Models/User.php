@@ -102,4 +102,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Success::class);
     }
+
+    public function attempts(): HasMany
+    {
+        return $this->hasMany(Attempt::class);
+    }
 }

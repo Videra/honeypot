@@ -6,11 +6,11 @@ use App\Events\ChallengeAttempted;
 use App\Events\ChallengeCompleted;
 use App\Events\CreatedUser;
 use App\Events\DeletedUser;
-use App\Events\HoneypotAdminRetrieved;
-use App\Events\MassAssignmentAttempt;
-use App\Events\SQLInjectionAttempt;
+use App\Events\AttemptedBrokenAuth;
+use App\Events\AttemptedMassAssignment;
+use App\Events\AttemptedSQLi;
 use App\Events\UpdatedUser;
-use App\Events\XSSAttempt;
+use App\Events\AttemptedXSS;
 use App\Listeners\LogAuthenticated;
 use App\Listeners\LogAuthenticationAttempt;
 use App\Listeners\LogChallengeAttempted;
@@ -19,19 +19,19 @@ use App\Listeners\LogCreatedUser;
 use App\Listeners\LogCurrentDeviceLogout;
 use App\Listeners\LogDeletedUser;
 use App\Listeners\LogFailedLogin;
-use App\Listeners\LogHoneypotAdminRetrieved;
+use App\Listeners\LogAttemptedBrokenAuth;
 use App\Listeners\LogLockout;
-use App\Listeners\LogMassAssignmentAttempt;
+use App\Listeners\LogAttemptedMassAssignment;
 use App\Listeners\LogOtherDeviceLogout;
 use App\Listeners\LogPasswordReset;
 use App\Listeners\LogRegisteredUser;
-use App\Listeners\LogSQLInjectionAttempt;
+use App\Listeners\LogAttemptedSQLi;
 use App\Listeners\LogSuccessfulLogin;
 use App\Listeners\LogSuccessfulLogout;
 use App\Listeners\LogUpdatedUser;
 use App\Listeners\LogValidated;
 use App\Listeners\LogVerified;
-use App\Listeners\LogXSSAttempt;
+use App\Listeners\LogAttemptedXSS;
 use Illuminate\Auth\Events\Attempting;
 use Illuminate\Auth\Events\Authenticated;
 use Illuminate\Auth\Events\CurrentDeviceLogout;
@@ -99,17 +99,17 @@ class EventServiceProvider extends ServiceProvider
         ChallengeCompleted::class => [
             LogChallengeCompleted::class,
         ],
-        HoneypotAdminRetrieved::class => [
-            LogHoneypotAdminRetrieved::class,
+        AttemptedBrokenAuth::class => [
+            LogAttemptedBrokenAuth::class,
         ],
-        XSSAttempt::class => [
-            LogXSSAttempt::class,
+        AttemptedXSS::class => [
+            LogAttemptedXSS::class,
         ],
-        SQLInjectionAttempt::class => [
-            LogSQLInjectionAttempt::class,
+        AttemptedSQLi::class => [
+            LogAttemptedSQLi::class,
         ],
-        MassAssignmentAttempt::class => [
-            LogMassAssignmentAttempt::class,
+        AttemptedMassAssignment::class => [
+            LogAttemptedMassAssignment::class,
         ],
         UpdatedUser::class => [
             LogUpdatedUser::class,

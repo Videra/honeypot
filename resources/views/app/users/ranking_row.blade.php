@@ -12,4 +12,6 @@
     <td class="align-middle">{{ $user->latestActivity() }}</td>
 
     <td class="align-middle">{{ count($user->successes) }} </td>
+
+    <td class="align-middle">{{ count($user->attempts) }} </td>
 </tr>

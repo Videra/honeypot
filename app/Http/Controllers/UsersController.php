@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\MassAssignmentAttempt;
+use App\Events\AttemptedMassAssignment;
 use App\Models\User;
 use App\Rules\SQLInjection;
 use Illuminate\Contracts\Foundation\Application;
@@ -51,7 +51,7 @@ class UsersController extends Controller
     public function update(Request $request): RedirectResponse
     {
         if ($invalidInputs = is_mass_assignment($request->all())) {
-            event(new MassAssignmentAttempt(Auth()->user(), $invalidInputs));
+            event(new AttemptedMassAssignment(Auth()->user(), $invalidInputs));
             return redirect()->back()->withErrors(['name' => 'Mass Assignment attempt failed, a kitten died.']);
         }
 

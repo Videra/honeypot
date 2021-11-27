@@ -26,8 +26,8 @@
             @forelse ($sessions as $session)
                 @include('app.sessions.row')
             @empty
-                <tr>
-                    <td colspan="5"><em>'No sessions found'</em></td>
+                <tr class="text-center">
+                    <td colspan="5"><em>No sessions found</em></td>
                 </tr>
             @endforelse
         @endisset

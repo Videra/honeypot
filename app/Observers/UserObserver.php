@@ -5,7 +5,7 @@ namespace App\Observers;
 use App\Events\CreatedUser;
 use App\Events\DeletedUser;
 use App\Events\UpdatedUser;
-use App\Events\XSSAttempt;
+use App\Events\AttemptedXSS;
 use App\Exceptions\ObservableException;
 use App\Models\Challenge;
 use App\Models\User;
@@ -38,7 +38,7 @@ class UserObserver
         if (is_challenge_xss($user->name)) {
             User::where('id', $user->id)->update(['is_enabled' => 0]);
 
-            event(new XSSAttempt($user, $user->name));
+            event(new AttemptedXSS($user, $user->name));
         }
     }
 
@@ -52,9 +52,9 @@ class UserObserver
     public function updating(User $user)
     {
         if (is_challenge_xss($user->name)) {
-            event(new XSSAttempt($user, $user->name));
+            event(new AttemptedXSS($user, $user->name));
 
-            $challenge = Challenge::where('id', 2)->first(); // 2 = 'Persistent XSS'
+            $challenge = Challenge::where('id', id_persistent_xss())->first();
 
             throw new AuthorizationException("Hacking attempt detected! Flag=$challenge->flag");
         }
@@ -83,7 +83,7 @@ class UserObserver
         }
 
         if (is_challenge_xss($user->name)) {
-            event(new XSSAttempt($actionUser, $user->name));
+            event(new AttemptedXSS($actionUser, $user->name));
 
             throw new AuthorizationException("Hacking attempt detected!");
         }
@@ -117,7 +117,7 @@ class UserObserver
     public function saving(User $user)
     {
         if ($user->is_admin == 1) {
-            $challenge = Challenge::where('id', 3)->first(); // 3 = 'Mass Assignation'
+            $challenge = Challenge::where('id', id_mass_assignment())->first();
             throw new AuthorizationException("Hacking attempt detected! Flag=$challenge->flag");
         }
 

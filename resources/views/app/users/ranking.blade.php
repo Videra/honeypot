@@ -8,6 +8,7 @@
                 <th>Status</th>
                 <th>Latest activity</th>
                 <th>Solved Challenges</th>
+                <th>Kittens killed</th>
             </tr>
         </thead>
         <tbody>
@@ -15,7 +16,7 @@
             @forelse ($users as $user)
                 @include('app.users.ranking_row')
             @empty
-                <tr>
+                <tr class="text-center">
                     <td colspan="8"><em>No users found</em></td>
                 </tr>
             @endforelse

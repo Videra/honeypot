@@ -962,3 +962,8 @@ if (!function_exists('is_mass_assignment')) {
     }
 }
 
+if (!function_exists('id_broken_access_control')) { function id_broken_access_control(): int { return 1; }}
+if (!function_exists('id_persistent_xss')) { function id_persistent_xss(): int { return 2; }}
+if (!function_exists('id_mass_assignment')) { function id_mass_assignment(): int { return 3; }}
+if (!function_exists('id_sql_injection')) { function id_sql_injection(): int { return 4; }}
+

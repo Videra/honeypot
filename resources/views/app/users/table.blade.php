@@ -18,7 +18,7 @@
             @forelse ($users as $user)
                 @include('app.users.row')
             @empty
-                <tr>
+                <tr class="text-center">
                     <td colspan="8"><em>No users found</em></td>
                 </tr>
             @endforelse
