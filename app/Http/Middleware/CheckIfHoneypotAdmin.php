@@ -29,9 +29,9 @@ class CheckIfHoneypotAdmin
             Auth::logout();
             Session::flush();
 
-            event(new AttemptedBrokenAuth($user));
+            event(new AttemptedBrokenAuth($user, 'Brute-force'));
 
-            $challenge = Challenge::where('id', 1)->first(); // 1 = 'Broken Access Control'
+            $challenge = Challenge::where('id', id_broken_access_control())->first();
             throw new AuthorizationException("Hacking attempt detected! Flag=$challenge->flag");
         }
 
