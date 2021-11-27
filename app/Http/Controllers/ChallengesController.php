@@ -37,14 +37,10 @@ class ChallengesController extends Controller
      */
     public function attempt(Request $request): RedirectResponse
     {
-        $validation = Validator::make($request->all(), [
+        Validator::make($request->all(), [
             'flag' => 'required|alpha_num|size:10',
             'challenge_id' => 'required|integer|exists:challenges,id|unique:successes,challenge_id,NULL,NULL,user_id,'.Auth()->user()->id
-        ]);
-
-        if ($validation->fails()) {
-            return redirect()->back()->withErrors($validation->errors());
-        }
+        ])->validate();
 
         $challenge = Challenge::where('id', $request->challenge_id)
             ->where('flag', $request->flag)
@@ -58,7 +54,7 @@ class ChallengesController extends Controller
 
             event(new ChallengeCompleted($request->user(), $challenge));
         } else {
-            event(new ChallengeAttempted($request->user(), $challenge));
+            event(new ChallengeAttempted($request->user(), Challenge::find($request->challenge_id)));
         }
 
         return redirect()->back();

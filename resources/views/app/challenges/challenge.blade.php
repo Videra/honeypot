@@ -18,15 +18,7 @@
                 <label for="challenge_id" class="sr-only">Flag</label>
                 <input type="hidden" class="form-control" name="challenge_id" id="challenge_id" value="{{ $challenge->id }}">
                 <label for="flag" class="sr-only">Flag</label>
-                <input type="text" name="flag" id="flag"
-                       placeholder="Enter your flag here..."
-                       class="form-control @error('flag') is-invalid @enderror
-                       @error('challenge_id') is-invalid @enderror">
-                @if ($errors->any())
-                    @foreach ($errors->all() as $error)
-                        <span class="invalid-feedback" role="alert"><strong>{{ $error }}</strong></span>
-                    @endforeach
-                @endif
+                <input type="text" name="flag" id="flag" placeholder="Enter your flag here..." class="form-control">
             </div>
             <button type="submit" class="btn btn-primary my-1 align-top">Send</button>
         </form>
