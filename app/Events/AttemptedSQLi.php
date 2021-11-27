@@ -32,7 +32,7 @@ class AttemptedSQLi
         $this->user = $user;
         $this->attempt = [
             'challenge_id' => id_sql_injection(),
-            'user_id' => $this->user->id,
+            'user_id' => $user ? $user->id : null,
             'payload' => $payload,
             'ip_address' => Request()->ip(),
             'user_agent' => Request()->userAgent(),

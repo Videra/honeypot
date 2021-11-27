@@ -31,10 +31,9 @@ class AttemptedXSS
     public function __construct($user, string $payload)
     {
         $this->user = $user;
-        $this->payload = $payload;
         $this->attempt = [
             'challenge_id' => id_persistent_xss(),
-            'user_id' => $this->user->id,
+            'user_id' => $user ? $user->id : null,
             'payload' => $payload,
             'ip_address' => Request()->getClientIp(),
             'user_agent' => Request()->userAgent(),

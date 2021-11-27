@@ -35,7 +35,7 @@ class AttemptedBrokenAuth
         $this->user = $user;
         $this->attempt = [
             'challenge_id' => id_broken_access_control(),
-            'user_id' => $this->user->id,
+            'user_id' => $user ? $user->id : null,
             'payload' => $payload,
             'ip_address' => Request()->getClientIp(),
             'user_agent' => Request()->userAgent(),
