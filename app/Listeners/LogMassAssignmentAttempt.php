@@ -1,0 +1,45 @@
+<?php
+
+namespace App\Listeners;
+
+use App\Events\MassAssignmentAttempt;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Request;
+use Jenssegers\Agent\Agent;
+
+/**
+ * @property Agent $agent
+ * @property string $userAgent
+ * @property bool|string $device
+ * @property bool|string $browser
+ * @property string $url
+ * @property string|null $ip
+ */
+class LogMassAssignmentAttempt
+{
+    /**
+     * Create the event listener.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->agent = new Agent();
+        $this->agent->setUserAgent(Request::userAgent());
+        $this->browser = $this->agent->browser();
+        $this->device = $this->agent->device();
+        $this->ip = Request::ip();
+        $this->url = Request::url();
+    }
+
+    /**
+     * Handle the event.
+     *
+     * @param  MassAssignmentAttempt $event
+     * @return void
+     */
+    public function handle(MassAssignmentAttempt $event)
+    {
+        Log::info("{$event->user->getOriginal('name')} MassAssignmentAttempt from IP $this->ip via URL $this->url with PAYLOAD {$event->payload}");
+    }
+}
