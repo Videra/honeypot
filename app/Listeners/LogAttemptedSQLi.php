@@ -29,6 +29,6 @@ class LogAttemptedSQLi
         $name = $event->user ? $event->user->getOriginal('name') : 'guest';
         $attempt = Attempt::create($event->attempt);
 
-        Log::info("/$name from $attempt->ip_address visited $attempt->url and /AttemptedSQLi using [$attempt->payload]");
+        Log::info("/$name from $attempt->ip_address visited $attempt->url and /AttemptedSQLi [$attempt->payload]");
     }
 }

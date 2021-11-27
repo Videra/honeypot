@@ -27,6 +27,6 @@ class LogRegisteredUser
      */
     public function handle(Registered $event)
     {
-        Log::info("/{$event->user->name} from $this->ip visited $this->url and RegisteredUser $event->user->name");
+        Log::info("/guest from $this->ip visited $this->url and RegisteredUser {$event->user->name}");
     }
 }
