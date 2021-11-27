@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\AttemptedBrokenAuth;
+use App\Events\AchievedBrokenAccessControl;
 use App\Models\Attempt;
 use App\Models\Challenge;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
-class LogAttemptedBrokenAuth
+class LogAchievedBrokenAccessControl
 {
     /**
      * Create the event listener.
@@ -25,19 +25,22 @@ class LogAttemptedBrokenAuth
     /**
      * Handle the event.
      *
-     * @param  AttemptedBrokenAuth $event
+     * @param AchievedBrokenAccessControl $event
      * @return void
+     * @throws AuthorizationException
      */
-    public function handle(AttemptedBrokenAuth $event)
+    public function handle(AchievedBrokenAccessControl $event)
     {
         $name = $event->user ? $event->user->getOriginal('name') : 'guest';
         $attempt = Attempt::create($event->attempt);
 
-        Log::info("$name AttemptedBrokenAuth from IP $attempt->ip_address via URL $attempt->url with PAYLOAD $attempt->payload");
+        Log::info("$name AchievedBrokenAccessControl from IP $attempt->ip_address via URL $attempt->url with PAYLOAD $attempt->payload");
 
         Auth::logout();
         Session::flush();
-        $challenge = Challenge::where('id', id_broken_access_control())->first();
-        throw new AuthorizationException("Hacking attempt detected! Flag=$challenge->flag");
+
+        $challenge = new Challenge();
+        $flag = $challenge->brokenAccessControl()->flag;
+        throw new AuthorizationException("Broken Access Control achieved! Flag=$flag");
     }
 }

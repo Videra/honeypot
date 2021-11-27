@@ -13,7 +13,7 @@ use Illuminate\Queue\SerializesModels;
 /**
  * @property User $user
  */
-class AttemptedBrokenAuth
+class AchievedBrokenAccessControl
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -28,9 +28,9 @@ class AttemptedBrokenAuth
 
     /**
      * @param User|Authenticatable|null $user
-     * @param string $payload
+     * @param string|null $payload
      */
-    public function __construct($user, string $payload)
+    public function __construct($user, ?string $payload)
     {
         $this->user = $user;
         $this->attempt = [

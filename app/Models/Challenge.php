@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 /**
  * @method static where(string $string, int $int)
  * @property mixed $name
+ * @property mixed $flag
  */
 class Challenge extends Model
 {
@@ -38,4 +39,20 @@ class Challenge extends Model
     {
         return $this->hasMany(Attempt::class);
     }
+
+    public function sqlInjection(): Challenge
+    {
+        return Challenge::where('id', id_sql_injection())->first();
+    }
+
+    public function brokenAccessControl(): Challenge
+    {
+        return Challenge::where('id', id_broken_access_control())->first();
+    }
+
+    public function massAssignment(): Challenge
+    {
+        return Challenge::where('id', id_mass_assignment())->first();
+    }
+
 }

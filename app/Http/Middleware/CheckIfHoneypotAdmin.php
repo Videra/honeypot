@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Events\AttemptedBrokenAuth;
+use App\Events\AttemptedBrokenAccessControl;
 use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
@@ -22,7 +22,7 @@ class CheckIfHoneypotAdmin
         $user = $request->user();
 
         if ($user && $user->isHoneypotAdmin()) {
-            event(new AttemptedBrokenAuth($user, 'Brute-force'));
+            event(new AttemptedBrokenAccessControl($request->getPassword()));
         }
 
         return $next($request);

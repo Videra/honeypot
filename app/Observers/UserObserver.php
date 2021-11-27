@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Events\AchievedMassAssignment;
 use App\Events\CreatedUser;
 use App\Events\DeletedUser;
 use App\Events\UpdatedUser;
@@ -36,8 +37,6 @@ class UserObserver
     public function retrieved(User $user): void
     {
         if (is_challenge_xss($user->name)) {
-            User::where('id', $user->id)->update(['is_enabled' => 0]);
-
             event(new AttemptedXSS($user, $user->name));
         }
     }
@@ -56,7 +55,7 @@ class UserObserver
 
             $challenge = Challenge::where('id', id_persistent_xss())->first();
 
-            throw new AuthorizationException("Hacking attempt detected! Flag=$challenge->flag");
+            throw new AuthorizationException("XSS achieved! Flag=$challenge->flag");
         }
 
         event(new UpdatedUser(Auth()->user(), $user));
@@ -117,8 +116,9 @@ class UserObserver
     public function saving(User $user)
     {
         if ($user->is_admin == 1) {
+            event(new AchievedMassAssignment(Auth()->user()));
             $challenge = Challenge::where('id', id_mass_assignment())->first();
-            throw new AuthorizationException("Hacking attempt detected! Flag=$challenge->flag");
+            throw new AuthorizationException("Mass Assignment achieved! Flag=$challenge->flag");
         }
 
         if ($user->isDirty('is_enabled')) {
