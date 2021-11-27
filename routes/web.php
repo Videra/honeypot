@@ -21,8 +21,6 @@ Route::get('/home', function () {
     return redirect()->to('challenges');
 })->name('home');
 
-Route::get('attempts', [AttemptController::class, 'index'])->name('attempts.index');
-
 Route::get('challenges', [ChallengesController::class, 'index'])->name('challenges.index');
 Route::post('challenges', [ChallengesController::class, 'attempt'])->name('challenges.attempt');
 
