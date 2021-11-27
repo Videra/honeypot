@@ -3,13 +3,9 @@
 namespace App\Http\Middleware;
 
 use App\Events\AttemptedBrokenAuth;
-use App\Models\Challenge;
 use App\Models\User;
 use Closure;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 
 class CheckIfHoneypotAdmin
 {
@@ -19,20 +15,14 @@ class CheckIfHoneypotAdmin
      * @param Request $request
      * @param Closure $next
      * @return mixed
-     * @throws AuthorizationException
      */
     public function handle(Request $request, Closure $next)
     {
+        /** @var User $user */
         $user = $request->user();
 
         if ($user && $user->isHoneypotAdmin()) {
-            Auth::logout();
-            Session::flush();
-
             event(new AttemptedBrokenAuth($user, 'Brute-force'));
-
-            $challenge = Challenge::where('id', id_broken_access_control())->first();
-            throw new AuthorizationException("Hacking attempt detected! Flag=$challenge->flag");
         }
 
         return $next($request);

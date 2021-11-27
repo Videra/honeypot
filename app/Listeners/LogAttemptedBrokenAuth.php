@@ -4,7 +4,11 @@ namespace App\Listeners;
 
 use App\Events\AttemptedBrokenAuth;
 use App\Models\Attempt;
+use App\Models\Challenge;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class LogAttemptedBrokenAuth
 {
@@ -30,5 +34,10 @@ class LogAttemptedBrokenAuth
         $attempt = Attempt::create($event->attempt);
 
         Log::info("$name AttemptedMassAssignment from IP $attempt->ip_address via URL $attempt->url with PAYLOAD $attempt->payload");
+
+        Auth::logout();
+        Session::flush();
+        $challenge = Challenge::where('id', id_broken_access_control())->first();
+        throw new AuthorizationException("Hacking attempt detected! Flag=$challenge->flag");
     }
 }
