@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\AttemptedMassAssignment;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
@@ -20,8 +21,12 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
-    protected function validator(array $data): \Illuminate\Contracts\Validation\Validator
+    protected function validator(array $data)
     {
+        if ($invalidInputs = is_mass_assignment($data)) {
+            event(new AttemptedMassAssignment(null, $invalidInputs));
+        }
+
         return Validator::make($data, [
             'name' => ['required', 'alpha', 'min:4', 'max:100', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
