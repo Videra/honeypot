@@ -38,7 +38,7 @@ class ChallengesController extends Controller
     public function attempt(Request $request): RedirectResponse
     {
         $validation = Validator::make($request->all(), [
-            'flag' => 'required|string|size:10',
+            'flag' => 'required|alpha_num|size:10',
             'challenge_id' => 'required|integer|exists:challenges,id|unique:successes,challenge_id,NULL,NULL,user_id,'.Auth()->user()->id
         ]);
 
