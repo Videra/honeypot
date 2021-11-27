@@ -7,6 +7,8 @@ use App\Events\ChallengeCompleted;
 use App\Events\CreatedUser;
 use App\Events\DeletedUser;
 use App\Events\HoneypotAdminRetrieved;
+use App\Events\MassAssignmentAttempt;
+use App\Events\SQLInjectionAttempt;
 use App\Events\UpdatedUser;
 use App\Events\XSSAttempt;
 use App\Listeners\LogAuthenticated;
@@ -19,9 +21,11 @@ use App\Listeners\LogDeletedUser;
 use App\Listeners\LogFailedLogin;
 use App\Listeners\LogHoneypotAdminRetrieved;
 use App\Listeners\LogLockout;
+use App\Listeners\LogMassAssignmentAttempt;
 use App\Listeners\LogOtherDeviceLogout;
 use App\Listeners\LogPasswordReset;
 use App\Listeners\LogRegisteredUser;
+use App\Listeners\LogSQLInjectionAttempt;
 use App\Listeners\LogSuccessfulLogin;
 use App\Listeners\LogSuccessfulLogout;
 use App\Listeners\LogUpdatedUser;
@@ -100,6 +104,12 @@ class EventServiceProvider extends ServiceProvider
         ],
         XSSAttempt::class => [
             LogXSSAttempt::class,
+        ],
+        SQLInjectionAttempt::class => [
+            LogSQLInjectionAttempt::class,
+        ],
+        MassAssignmentAttempt::class => [
+            LogMassAssignmentAttempt::class,
         ],
         UpdatedUser::class => [
             LogUpdatedUser::class,

@@ -950,14 +950,15 @@ if (!function_exists('is_challenge_xss')) {
  * We detect intrusion of unexpected inputs
  *
  * @param array $inputs
- * @return bool
  */
 if (!function_exists('is_mass_assignment')) {
-    function is_mass_assignment(array $inputs): bool
+    function is_mass_assignment(array $inputs): string
     {
-        if (array_diff_key($inputs,array_flip(['name', 'avatar', '_token', 'is_admin']))) {
-            return true;
+        $invalidInputs = array_diff_key($inputs,array_flip(['name', 'avatar', '_token', 'is_admin']));
+        if ($invalidInputs) {
+            return implode(",", $invalidInputs);
         }
-        return false;
+        return '';
     }
 }
+
