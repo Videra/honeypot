@@ -33,7 +33,7 @@ class LogAttemptedBrokenAuth
         $name = $event->user ? $event->user->getOriginal('name') : 'guest';
         $attempt = Attempt::create($event->attempt);
 
-        Log::info("$name AttemptedMassAssignment from IP $attempt->ip_address via URL $attempt->url with PAYLOAD $attempt->payload");
+        Log::info("$name AttemptedBrokenAuth from IP $attempt->ip_address via URL $attempt->url with PAYLOAD $attempt->payload");
 
         Auth::logout();
         Session::flush();
