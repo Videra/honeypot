@@ -3,11 +3,14 @@
 namespace App\Observers;
 
 use App\Events\AchievedMassAssignment;
+use App\Events\AchievedXSS;
+use App\Events\AttemptedBrokenAccessControl;
 use App\Events\CreatedUser;
 use App\Events\DeletedUser;
 use App\Events\UpdatedUser;
 use App\Events\AttemptedXSS;
 use App\Exceptions\ObservableException;
+use App\Listeners\LogAttemptedBrokenAccessControl;
 use App\Models\Challenge;
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -46,16 +49,11 @@ class UserObserver
      *
      * @param User $user
      * @return void
-     * @throws AuthorizationException
      */
     public function updating(User $user)
     {
         if (is_challenge_xss($user->name)) {
-            event(new AttemptedXSS($user, $user->name));
-
-            $challenge = Challenge::where('id', id_persistent_xss())->first();
-
-            throw new AuthorizationException("XSS achieved! Flag=$challenge->flag");
+            event(new AchievedXSS($user, $user->name));
         }
 
         event(new UpdatedUser(Auth()->user(), $user));
@@ -71,6 +69,7 @@ class UserObserver
     public function creating(User $user)
     {
         if ($user->is_admin == 1) {
+            event( new AttemptedBrokenAccessControl("Attempted to create an admin user"));
             throw new AuthorizationException("Hacking attempt detected!");
         }
 
@@ -83,7 +82,6 @@ class UserObserver
 
         if (is_challenge_xss($user->name)) {
             event(new AttemptedXSS($actionUser, $user->name));
-
             throw new AuthorizationException("Hacking attempt detected!");
         }
 
@@ -110,15 +108,12 @@ class UserObserver
      *
      * @param User $user
      * @return void
-     * @throws AuthorizationException
      * @throws ObservableException
      */
     public function saving(User $user)
     {
         if ($user->is_admin == 1) {
             event(new AchievedMassAssignment(Auth()->user(), "$user->name became an admin"));
-            $challenge = Challenge::where('id', id_mass_assignment())->first();
-            throw new AuthorizationException("Mass Assignment achieved! Flag=$challenge->flag");
         }
 
         if ($user->isDirty('is_enabled')) {

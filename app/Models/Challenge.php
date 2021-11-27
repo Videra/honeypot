@@ -55,4 +55,8 @@ class Challenge extends Model
         return Challenge::where('id', id_mass_assignment())->first();
     }
 
+    public function xss(): Challenge
+    {
+        return Challenge::where('id', id_persistent_xss())->first();
+    }
 }

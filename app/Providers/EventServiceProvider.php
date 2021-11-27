@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Events\AchievedBrokenAccessControl;
 use App\Events\AchievedMassAssignment;
 use App\Events\AchievedSQLi;
+use App\Events\AchievedXSS;
 use App\Events\ChallengeAttempted;
 use App\Events\ChallengeCompleted;
 use App\Events\CreatedUser;
@@ -17,6 +18,7 @@ use App\Events\AttemptedXSS;
 use App\Listeners\LogAchievedBrokenAccessControl;
 use App\Listeners\LogAchievedMassAssignment;
 use App\Listeners\LogAchievedSQLi;
+use App\Listeners\LogAchievedXSS;
 use App\Listeners\LogAuthenticated;
 use App\Listeners\LogAuthenticationAttempt;
 use App\Listeners\LogChallengeAttempted;
@@ -138,6 +140,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         AchievedMassAssignment::class => [
             LogAchievedMassAssignment::class,
+        ],
+        AchievedXSS::class => [
+            LogAchievedXSS::class,
         ],
     ];
 

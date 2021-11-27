@@ -60,11 +60,9 @@ class UsersController extends Controller
             return redirect()->back()->withErrors(['name' => 'Mass Assignment attempt failed, a kitten died.']);
         }
 
-        // @TODO CRITICAL: This creates the "Persistent XSS" vulnerability
         Validator::make($request->all(), [
             'name' => [
-                new SQLInjection(Auth()->user(), $request->name),
-                'string',
+                'string', // @TODO "Persistent XSS" vulnerability
                 'nullable',
                 'min:4',
                 'unique:users,name,' . Auth()->user()->id,
@@ -78,8 +76,7 @@ class UsersController extends Controller
             $attributes['avatar'] = $request->avatar->store('avatars');
         }
 
-        // @TODO CRITICAL: This creates the "Mass Assignment" vulnerability
-        auth()->user()->update(array_filter($attributes));
+        auth()->user()->update(array_filter($attributes)); // @TODO "Mass Assignment" vulnerability
 
         return redirect()->back();
     }
