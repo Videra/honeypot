@@ -34,6 +34,7 @@ class ChallengesController extends Controller
     /**
      * @param Request $request
      * @return RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function attempt(Request $request): RedirectResponse
     {

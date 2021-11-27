@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AttemptController;
 use App\Http\Controllers\ChallengesController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\UsersController;
