@@ -58,7 +58,7 @@ class ChallengesController extends Controller
 
             event(new ChallengeCompleted($request->user(), $challenge));
         } else {
-            event(new ChallengeAttempted($request->user(), $challenge));
+            event(new ChallengeAttempted($request->user(), Challenge::find($request->challenge_id)));
         }
 
         return redirect()->back();
