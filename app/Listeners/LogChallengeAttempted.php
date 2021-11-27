@@ -22,11 +22,11 @@ class LogChallengeAttempted
     /**
      * Handle the event.
      *
-     * @param  ChallengeAttempted $event
+     * @param ChallengeAttempted $event
      * @return void
      */
     public function handle(ChallengeAttempted $event)
     {
-        Log::info("/{$event->user->name} /ChallengeAttempted ({$event->challenge->name}) from IP $this->ip via URL $this->url");
+        Log::info("/{$event->user->name} from $this->ip visited $this->url and ChallengeAttempted {$event->challenge->name}");
     }
 }

@@ -21,7 +21,7 @@ class LogAttemptedMassAssignment
     /**
      * Handle the event.
      *
-     * @param  AttemptedMassAssignment $event
+     * @param AttemptedMassAssignment $event
      * @return void
      */
     public function handle(AttemptedMassAssignment $event)
@@ -29,6 +29,6 @@ class LogAttemptedMassAssignment
         $name = $event->user ? $event->user->getOriginal('name') : 'guest';
         $attempt = Attempt::create($event->attempt);
 
-        Log::info("/$name /AttemptedMassAssignment from IP $attempt->ip_address via URL $attempt->url with PAYLOAD [$attempt->payload]");
+        Log::info("/$name from $attempt->ip_address visited $attempt->url and /AttemptedMassAssignment using [$attempt->payload]");
     }
 }

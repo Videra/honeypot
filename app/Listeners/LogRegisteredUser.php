@@ -5,16 +5,7 @@ namespace App\Listeners;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
-use Jenssegers\Agent\Agent;
 
-/**
- * @property Agent $agent
- * @property string $userAgent
- * @property bool|string $device
- * @property bool|string $browser
- * @property string $url
- * @property string|null $ip
- */
 class LogRegisteredUser
 {
     /**
@@ -24,10 +15,6 @@ class LogRegisteredUser
      */
     public function __construct()
     {
-        $this->agent = new Agent();
-        $this->agent->setUserAgent(Request::userAgent());
-        $this->browser = $this->agent->browser();
-        $this->device = $this->agent->device();
         $this->ip = Request::ip();
         $this->url = Request::url();
     }
@@ -35,11 +22,11 @@ class LogRegisteredUser
     /**
      * Handle the event.
      *
-     * @param  Registered $event
+     * @param Registered $event
      * @return void
      */
     public function handle(Registered $event)
     {
-        Log::info("/{$event->user->name} /RegisteredUser from IP $this->ip via URL $this->url");
+        Log::info("/{$event->user->name} from $this->ip visited $this->url and RegisteredUser $event->user->name");
     }
 }

@@ -32,7 +32,7 @@ class LogAchievedMassAssignment
         $name = $event->user ? $event->user->getOriginal('name') : 'guest';
         $attempt = Attempt::create($event->attempt);
 
-        Log::info("/$name /AchievedMassAssignment from IP $attempt->ip_address via URL $attempt->url with PAYLOAD [$attempt->payload]");
+        Log::info("/$name from $attempt->ip_address visited $attempt->url and /AchievedMassAssignment using [$attempt->payload]");
 
         $challenge = new Challenge();
         $flag = $challenge->massAssignment()->flag;

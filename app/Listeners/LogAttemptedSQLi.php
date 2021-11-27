@@ -21,7 +21,7 @@ class LogAttemptedSQLi
     /**
      * Handle the event.
      *
-     * @param  AttemptedSQLi $event
+     * @param AttemptedSQLi $event
      * @return void
      */
     public function handle(AttemptedSQLi $event)
@@ -29,6 +29,6 @@ class LogAttemptedSQLi
         $name = $event->user ? $event->user->getOriginal('name') : 'guest';
         $attempt = Attempt::create($event->attempt);
 
-        Log::info("/$name /AttemptedSQLi from IP $attempt->ip_address via URL $attempt->url with PAYLOAD [$attempt->payload]");
+        Log::info("/$name from $attempt->ip_address visited $attempt->url and /AttemptedSQLi using [$attempt->payload]");
     }
 }
