@@ -67,9 +67,24 @@ class UsersController extends Controller
                 'min:4',
                 'unique:users,name,' . Auth()->user()->id,
             ],
-            'avatar' => 'image|max:2048' //jpg, jpeg, png, bmp, gif, svg, or webp)
+            'avatar' => 'image|max:2048' //jpg, jpeg, png, bmp, gif, svg, or webp
         ])->validate();
 
+        $attributes = $this->uploadAvatar($request);
+
+        auth()->user()->update(array_filter($attributes)); // @TODO "Mass Assignment" vulnerability
+
+        return redirect()->back();
+    }
+
+    /**
+     * Upload the avatar and check for the Challenge
+     *
+     * @param Request $request
+     * @return array
+     */
+    private function uploadAvatar(Request $request): array
+    {
         $attributes = $request->all();
 
         if ($request->file('avatar')) {
@@ -85,8 +100,6 @@ class UsersController extends Controller
             $attributes['avatar'] = $request->avatar->storeAs('avatars', $name);
         }
 
-        auth()->user()->update(array_filter($attributes)); // @TODO "Mass Assignment" vulnerability
-
-        return redirect()->back();
+        return $attributes;
     }
 }
