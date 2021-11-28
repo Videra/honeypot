@@ -2,11 +2,11 @@
 
 namespace App\Listeners;
 
-use Illuminate\Auth\Events\Authenticated;
+use App\Events\SessionClosedUser;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 
-class LogAuthenticated
+class LogSessionClosedUser
 {
     /**
      * Create the event listener.
@@ -22,11 +22,13 @@ class LogAuthenticated
     /**
      * Handle the event.
      *
-     * @param Authenticated $event
+     * @param SessionClosedUser $event
      * @return void
      */
-    public function handle(Authenticated $event)
+    public function handle(SessionClosedUser $event)
     {
-        Log::info("/{$event->user->name} from $this->ip visited $this->url and Authenticated");
+        $user = $event->user ? $event->user->name : 'guest';
+        $authUser = auth()->user();
+        Log::info("/$authUser from $this->ip visited $this->url and SessionClosedUser $user");
     }
 }

@@ -3,9 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Challenge;
-use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class ChallengesSeeder extends Seeder
@@ -37,8 +35,8 @@ class ChallengesSeeder extends Seeder
                 'flag' => Str::random(10)
             ],
             [
-                'name' => 'This is a test',
-                'description' => 'Interfere with the queries that the web makes to its database to login with the default administrator account.',
+                'name' => 'Image Upload Bypass',
+                'description' => 'Bypass the validation in the avatar uploader to send a file that is not an image.',
                 'flag' => Str::random(10)
             ],
         ];

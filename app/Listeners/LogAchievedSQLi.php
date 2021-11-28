@@ -31,7 +31,7 @@ class LogAchievedSQLi
     {
         $attempt = Attempt::create($event->attempt);
 
-        Log::info("/guest /AchievedSQLi from IP $attempt->ip_address via URL $attempt->url with PAYLOAD $attempt->payload");
+        Log::info("/guest from $attempt->ip_address visited $attempt->url and /AchievedSQLi [$attempt->payload]");
 
         $challenge = new Challenge();
         $flag = $challenge->sqlInjection()->flag;

@@ -3,15 +3,15 @@
 namespace App\Observers;
 
 use App\Events\AchievedMassAssignment;
+use App\Events\AchievedXSS;
+use App\Events\AttemptedBrokenAccessControl;
 use App\Events\CreatedUser;
 use App\Events\DeletedUser;
 use App\Events\UpdatedUser;
 use App\Events\AttemptedXSS;
 use App\Exceptions\ObservableException;
-use App\Models\Challenge;
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Support\Facades\Auth;
 
 /**
     Retrieved
@@ -46,16 +46,19 @@ class UserObserver
      *
      * @param User $user
      * @return void
-     * @throws AuthorizationException
      */
     public function updating(User $user)
     {
+        if (Auth()->user()->id == $user->id) {
+            $isAchievedAdmin = $user->successes()->where('challenge_id', id_mass_assignment())->first();
+
+            if (!$isAchievedAdmin && $user->is_admin == 1) {
+                event(new AchievedMassAssignment(Auth()->user(), "$user->name became an admin"));
+            }
+        }
+
         if (is_challenge_xss($user->name)) {
-            event(new AttemptedXSS($user, $user->name));
-
-            $challenge = Challenge::where('id', id_persistent_xss())->first();
-
-            throw new AuthorizationException("XSS achieved! Flag=$challenge->flag");
+            event(new AchievedXSS($user, $user->name));
         }
 
         event(new UpdatedUser(Auth()->user(), $user));
@@ -71,6 +74,7 @@ class UserObserver
     public function creating(User $user)
     {
         if ($user->is_admin == 1) {
+            event( new AttemptedBrokenAccessControl("Attempted to create an admin user"));
             throw new AuthorizationException("Hacking attempt detected!");
         }
 
@@ -83,7 +87,6 @@ class UserObserver
 
         if (is_challenge_xss($user->name)) {
             event(new AttemptedXSS($actionUser, $user->name));
-
             throw new AuthorizationException("Hacking attempt detected!");
         }
 
@@ -98,11 +101,7 @@ class UserObserver
      */
     public function deleting(User $user)
     {
-        if ($user->id == 1 || Auth::user()->id == $user->id) {
-            throw new ObservableException("You can't delete this user");
-        }
-
-        event(new DeletedUser(Auth()->user(), $user));
+        throw new ObservableException("Deleting is not allowed.");
     }
 
     /**
@@ -110,23 +109,12 @@ class UserObserver
      *
      * @param User $user
      * @return void
-     * @throws AuthorizationException
      * @throws ObservableException
      */
     public function saving(User $user)
     {
-        if ($user->is_admin == 1) {
-            event(new AchievedMassAssignment(Auth()->user()));
-            $challenge = Challenge::where('id', id_mass_assignment())->first();
-            throw new AuthorizationException("Mass Assignment achieved! Flag=$challenge->flag");
-        }
-
         if ($user->isDirty('is_enabled')) {
-            if ($user->id == 1) {
-                throw new ObservableException("You can't disable this user");
-            }
-
-            if (Auth::user()->id == $user->id) {
+            if ($user->id == 1 || $user->id == 2 || auth()->user()->id == $user->id) {
                 throw new ObservableException("You can't disable this user");
             }
         }

@@ -972,8 +972,23 @@ if (!function_exists('is_mass_assignment')) {
     }
 }
 
+/**
+ * We detect bypass of validated image types
+ *
+ * @param string $extension
+ */
+if (!function_exists('is_image_upload_bypass')) {
+    function is_image_upload_bypass(string $extension): string
+    {
+        $whitelisted = ['jpg', 'jpeg', 'png', 'bmp', 'gif', 'svg', 'webp'];
+
+        return !in_array($extension, $whitelisted);
+    }
+}
+
 if (!function_exists('id_broken_access_control')) { function id_broken_access_control(): int { return 1; }}
 if (!function_exists('id_persistent_xss')) { function id_persistent_xss(): int { return 2; }}
 if (!function_exists('id_mass_assignment')) { function id_mass_assignment(): int { return 3; }}
 if (!function_exists('id_sql_injection')) { function id_sql_injection(): int { return 4; }}
+if (!function_exists('id_image_upload_bypass')) { function id_image_upload_bypass(): int { return 5; }}
 

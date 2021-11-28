@@ -28,6 +28,6 @@ class LogAttemptedBrokenAccessControl
     {
         $attempt = Attempt::create($event->attempt);
 
-        Log::info("/guest /AttemptedBrokenAccessControl from IP $attempt->ip_address via URL $attempt->url with PAYLOAD $attempt->payload");
+        Log::info("/guest from $attempt->ip_address visited $attempt->url and /AttemptedBrokenAccessControl [$attempt->payload]");
     }
 }

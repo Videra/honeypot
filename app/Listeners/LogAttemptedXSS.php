@@ -21,7 +21,7 @@ class LogAttemptedXSS
     /**
      * Handle the event.
      *
-     * @param  AttemptedXSS $event
+     * @param AttemptedXSS $event
      * @return void
      */
     public function handle(AttemptedXSS $event)
@@ -29,6 +29,6 @@ class LogAttemptedXSS
         $name = $event->user ? $event->user->getOriginal('name') : 'guest';
         $attempt = Attempt::create($event->attempt);
 
-        Log::info("/$name /AttemptedXSS from IP $attempt->ip_address via URL $attempt->url with PAYLOAD $attempt->payload");
+        Log::info("/$name from $attempt->ip_address visited $attempt->url and /AttemptedXSS [$attempt->payload]");
     }
 }

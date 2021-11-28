@@ -36,21 +36,21 @@ class LoginController extends Controller
         $attributes = $request->all();
 
         if ($invalidInputs = is_mass_assignment($attributes)) {
-            event(new AttemptedMassAssignment(null, "[$invalidInputs]"));
+            event(new AttemptedMassAssignment(null, $invalidInputs));
         }
 
         if ($request->name == 'admin') {
-            event(new AttemptedBrokenAccessControl("[$request->name / $request->password]"));
+            event(new AttemptedBrokenAccessControl($request->name.'/'.$request->password));
         }
 
         $request->validate([
             $this->username() => [
-                new SQLInjection(Auth()->user(), "[$request->name]"),
+                new SQLInjection(Auth()->user(), $request->name),
                 'required',
                 'string',
             ],
             'password' => [
-                new SQLInjection(Auth()->user(), "[$request->password]"),
+                new SQLInjection(Auth()->user(), $request->password),
                 'required',
                 'string',
             ],
@@ -65,7 +65,7 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user): RedirectResponse
     {
         if ($user->isHoneypotAdmin()) {
-            event(new AchievedBrokenAccessControl($user, "[$user->name / $request->password]"));
+            event(new AchievedBrokenAccessControl($user, $user->name.'/'.$request->password));
         }
 
         if ($user->isAdmin()) {

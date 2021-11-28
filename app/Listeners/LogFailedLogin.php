@@ -5,16 +5,7 @@ namespace App\Listeners;
 use Illuminate\Auth\Events\Failed;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
-use Jenssegers\Agent\Agent;
 
-/**
- * @property Agent $agent
- * @property string $userAgent
- * @property bool|string $device
- * @property bool|string $browser
- * @property string $url
- * @property string|null $ip
- */
 class LogFailedLogin
 {
     /**
@@ -24,10 +15,6 @@ class LogFailedLogin
      */
     public function __construct()
     {
-        $this->agent = new Agent();
-        $this->agent->setUserAgent(Request::userAgent());
-        $this->browser = $this->agent->browser();
-        $this->device = $this->agent->device();
         $this->ip = Request::ip();
         $this->url = Request::url();
     }
@@ -35,11 +22,11 @@ class LogFailedLogin
     /**
      * Handle the event.
      *
-     * @param  Failed $event
+     * @param Failed $event
      * @return void
      */
     public function handle(Failed $event)
     {
-        Log::info("/{$event->credentials['name']} /FailedLogin from IP $this->ip via URL $this->url");
+        Log::info("/guest from $this->ip visited $this->url and FailedLogin using [{$event->credentials['name']}/{$event->credentials['password']}]");
     }
 }

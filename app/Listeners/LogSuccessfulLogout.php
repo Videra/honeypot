@@ -15,20 +15,18 @@ class LogSuccessfulLogout
      */
     public function __construct()
     {
-        //
+        $this->ip = Request::ip();
+        $this->url = Request::url();
     }
 
     /**
      * Handle the event.
      *
-     * @param  Logout $event
+     * @param Logout $event
      * @return void
      */
     public function handle(Logout $event)
     {
-        $ip = Request::ip();
-        $url = Request::url();
-
-        Log::info("/{$event->user->name} /SuccessfulLogout from IP $ip via URL $url");
+        Log::info("/{$event->user->name} from $this->ip visited $this->url and SuccessfulLogout");
     }
 }

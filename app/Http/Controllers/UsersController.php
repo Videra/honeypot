@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\AchievedImageUploadBypass;
+use App\Events\AttemptedImageUploadBypass;
 use App\Events\AttemptedMassAssignment;
 use App\Models\User;
-use App\Rules\SQLInjection;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
@@ -60,25 +60,53 @@ class UsersController extends Controller
             return redirect()->back()->withErrors(['name' => 'Mass Assignment attempt failed, a kitten died.']);
         }
 
-        // @TODO CRITICAL: This creates the "Persistent XSS" vulnerability
-        Validator::make($request->all(), [
+        $validation = Validator::make($request->all(), [
             'name' => [
-                new SQLInjection(Auth()->user(), $request->name),
-                'string',
+                'string', // @TODO "Persistent XSS" vulnerability
                 'nullable',
                 'min:4',
                 'unique:users,name,' . Auth()->user()->id,
             ],
-            'avatar' => 'image|max:2048'
-        ])->validate();
+            'avatar' => 'image|max:2048' //jpg, jpeg, png, bmp, gif, svg, or webp
+        ]);
 
-        if ($request->file('avatar')) {
-            $request->avatar = Storage::putFile('avatars', $request->file('avatar'));
+        if ($validation->fails()) {
+            if ($validation->errors()->get('avatar')) {
+                $file = $request->file('avatar');
+                $name = $file->getClientOriginalName();
+                event(new AttemptedImageUploadBypass(Auth()->user(), $name));
+            }
+            return redirect()->back()->withErrors($validation)->withInput();
         }
 
-        // @TODO CRITICAL: This creates the "Mass Assignment" vulnerability
-        auth()->user()->update(array_filter($request->all()));
+        $attributes = $this->uploadAvatar($request);
+        auth()->user()->update(array_filter($attributes)); // @TODO "Mass Assignment" vulnerability
 
         return redirect()->back();
+    }
+
+    /**
+     * Upload the avatar and check for the Challenge
+     *
+     * @param Request $request
+     * @return array
+     */
+    private function uploadAvatar(Request $request): array
+    {
+        $attributes = $request->all();
+
+        if ($request->file('avatar')) {
+            $file = $request->file('avatar');
+            $name = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+
+            if (is_image_upload_bypass($extension)) {
+                event(new AchievedImageUploadBypass(auth()->user(), $name));
+            }
+
+            $attributes['avatar'] = $request->avatar->storeAs('avatars', $name);
+        }
+
+        return $attributes;
     }
 }

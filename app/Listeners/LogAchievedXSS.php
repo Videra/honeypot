@@ -2,13 +2,14 @@
 
 namespace App\Listeners;
 
-use App\Events\AchievedMassAssignment;
+use App\Events\AchievedSQLi;
+use App\Events\AchievedXSS;
 use App\Models\Attempt;
 use App\Models\Challenge;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\Log;
 
-class LogAchievedMassAssignment
+class LogAchievedXSS
 {
     /**
      * Create the event listener.
@@ -23,19 +24,18 @@ class LogAchievedMassAssignment
     /**
      * Handle the event.
      *
-     * @param AchievedMassAssignment $event
+     * @param AchievedXSS $event
      * @return void
      * @throws AuthorizationException
      */
-    public function handle(AchievedMassAssignment $event)
+    public function handle(AchievedXSS $event)
     {
-        $name = $event->user ? $event->user->getOriginal('name') : 'guest';
         $attempt = Attempt::create($event->attempt);
 
-        Log::info("/$name from $attempt->ip_address visited $attempt->url and /AchievedMassAssignment [$attempt->payload]");
+        Log::info("/guest from $attempt->ip_address visited $attempt->url and /AchievedXSS [$attempt->payload]");
 
         $challenge = new Challenge();
-        $flag = $challenge->massAssignment()->flag;
-        throw new AuthorizationException("Mass Assignment achieved! Flag=$flag");
+        $flag = $challenge->xss()->flag;
+        throw new AuthorizationException("XSS achieved! Flag=$flag");
     }
 }

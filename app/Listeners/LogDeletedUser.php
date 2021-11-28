@@ -6,16 +6,7 @@ use App\Events\DeletedUser;
 use App\Events\UpdatedUser;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
-use Jenssegers\Agent\Agent;
 
-/**
- * @property Agent $agent
- * @property string $userAgent
- * @property bool|string $device
- * @property bool|string $browser
- * @property string $url
- * @property string|null $ip
- */
 class LogDeletedUser
 {
     /**
@@ -25,10 +16,6 @@ class LogDeletedUser
      */
     public function __construct()
     {
-        $this->agent = new Agent();
-        $this->agent->setUserAgent(Request::userAgent());
-        $this->browser = $this->agent->browser();
-        $this->device = $this->agent->device();
         $this->ip = Request::ip();
         $this->url = Request::url();
     }
@@ -36,11 +23,11 @@ class LogDeletedUser
     /**
      * Handle the event.
      *
-     * @param  DeletedUser $event
+     * @param DeletedUser $event
      * @return void
      */
     public function handle(DeletedUser $event)
     {
-        Log::info("/{$event->authUser->name} /DeletedUser ({$event->user->name}) from IP $this->ip via URL $this->url");
+        Log::info("/{$event->authUser->name} from $this->ip visited $this->url and DeletedUser {$event->user->name}");
     }
 }
