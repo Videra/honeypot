@@ -10,11 +10,8 @@ use App\Events\DeletedUser;
 use App\Events\UpdatedUser;
 use App\Events\AttemptedXSS;
 use App\Exceptions\ObservableException;
-use App\Listeners\LogAttemptedBrokenAccessControl;
-use App\Models\Challenge;
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Support\Facades\Auth;
 
 /**
     Retrieved
@@ -52,6 +49,14 @@ class UserObserver
      */
     public function updating(User $user)
     {
+        if (Auth()->user()->id == $user->id) {
+            $isAchievedAdmin = $user->successes()->where('challenge_id', id_mass_assignment())->first();
+
+            if (!$isAchievedAdmin && $user->is_admin == 1) {
+                event(new AchievedMassAssignment(Auth()->user(), "$user->name became an admin"));
+            }
+        }
+
         if (is_challenge_xss($user->name)) {
             event(new AchievedXSS($user, $user->name));
         }
@@ -96,11 +101,7 @@ class UserObserver
      */
     public function deleting(User $user)
     {
-        if ($user->id == 1 || Auth::user()->id == $user->id) {
-            throw new ObservableException("You can't delete this user");
-        }
-
-        event(new DeletedUser(Auth()->user(), $user));
+        throw new ObservableException("Deleting is not allowed.");
     }
 
     /**
@@ -112,16 +113,8 @@ class UserObserver
      */
     public function saving(User $user)
     {
-        if ($user->is_admin == 1) {
-            event(new AchievedMassAssignment(Auth()->user(), "$user->name became an admin"));
-        }
-
         if ($user->isDirty('is_enabled')) {
-            if ($user->id == 1) {
-                throw new ObservableException("You can't disable this user");
-            }
-
-            if (Auth::user()->id == $user->id) {
+            if ($user->id == 1 || $user->id == 2 || auth()->user()->id == $user->id) {
                 throw new ObservableException("You can't disable this user");
             }
         }

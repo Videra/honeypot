@@ -3,11 +3,12 @@
         <thead>
             <tr>
                 <th></th>
+                <th>Id</th>
                 <th>Name</th>
                 <th>Role</th>
                 <th>Registration date</th>
                 <th>Status</th>
-                <th>Latest activity</th>
+                <th>Last activity</th>
                 <th>Challenges</th>
                 <th>Access</th>
                 <th>Actions</th>

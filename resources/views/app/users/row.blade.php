@@ -3,6 +3,8 @@
         <img class="rounded-circle img-responsive" width="40" src="{{ asset('/'. $user->avatar) }}" alt="">
     </td>
 
+    <td class="align-middle">{{ $user->id }}</td>
+
     <td class="align-middle">{{ $user->name }}</td>
 
     <td class="align-middle">{{ $user->role() }}</td>
@@ -11,7 +13,7 @@
 
     <td class="align-middle">{{ $user->status() }} </td>
 
-    <td class="align-middle">{{ $user->latestActivity() }}</td>
+    <td class="align-middle">{{ $user->lastActivity() }}</td>
 
     <td class="align-middle">{{ count($user->successes) }} </td>
 

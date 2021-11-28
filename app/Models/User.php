@@ -36,7 +36,7 @@ class User extends Authenticatable
         'name',
         'password',
         'avatar',
-        'is_admin'
+        'is_admin' // @TODO "Mass Assignment" vulnerability
     ];
 
     /**
@@ -82,10 +82,10 @@ class User extends Authenticatable
 
     public function status(): string
     {
-        return $this->latestActivity() ? 'Logged in' : 'Logged out';
+        return $this->lastActivity() ? 'Logged in' : 'Logged out';
     }
 
-    public function latestActivity(): string
+    public function lastActivity(): string
     {
         if($this->latestSession()) {
             return Carbon::parse($this->latestSession()->last_activity)->diffForHumans();

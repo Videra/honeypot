@@ -9,7 +9,7 @@
 
     <td class="align-middle">{{ $user->isEnabled() ? $user->status() : 'Disabled' }} </td>
 
-    <td class="align-middle">{{ $user->latestActivity() }}</td>
+    <td class="align-middle">{{ $user->lastActivity() }}</td>
 
     <td class="align-middle">{{ count($user->successes) }} </td>
 
