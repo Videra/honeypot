@@ -60,7 +60,7 @@ class UsersController extends Controller
             return redirect()->back()->withErrors(['name' => 'Mass Assignment attempt failed, a kitten died.']);
         }
 
-        Validator::make($request->all(), [
+        $validation = Validator::make($request->all(), [
             'name' => [
                 'string', // @TODO "Persistent XSS" vulnerability
                 'nullable',
@@ -68,10 +68,18 @@ class UsersController extends Controller
                 'unique:users,name,' . Auth()->user()->id,
             ],
             'avatar' => 'image|max:2048' //jpg, jpeg, png, bmp, gif, svg, or webp
-        ])->validate();
+        ]);
+
+        if ($validation->fails()) {
+            if ($validation->errors()->get('avatar')) {
+                $file = $request->file('avatar');
+                $name = $file->getClientOriginalName();
+                event(new AttemptedImageUploadBypass(Auth()->user(), $name));
+            }
+            return redirect()->back()->withErrors($validation)->withInput();
+        }
 
         $attributes = $this->uploadAvatar($request);
-
         auth()->user()->update(array_filter($attributes)); // @TODO "Mass Assignment" vulnerability
 
         return redirect()->back();
@@ -96,7 +104,6 @@ class UsersController extends Controller
                 event(new AchievedImageUploadBypass(auth()->user(), $name));
             }
 
-            event(new AttemptedImageUploadBypass(Auth()->user(), $name));
             $attributes['avatar'] = $request->avatar->storeAs('avatars', $name);
         }
 
