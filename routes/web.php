@@ -30,7 +30,7 @@ Route::get('sessions', [SessionsController::class, 'index'])->name('sessions');
 Route::delete('sessions/{id}', [SessionsController::class, 'delete'])->name('sessions.delete');
 
 Route::get('sessions/user/{user_id}', [SessionsController::class, 'show'])->name('sessions.user')
-    ->middleware('admin');
+->middleware('admin');
 
 Route::get('users', [AdminController::class, 'index'])->name('users.index');
 Route::get('users/user', [AdminController::class, 'indexUsers'])->name('users.user');
