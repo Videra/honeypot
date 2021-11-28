@@ -7,6 +7,7 @@ use App\Events\AchievedImageUploadBypass;
 use App\Events\AchievedMassAssignment;
 use App\Events\AchievedSQLi;
 use App\Events\AchievedXSS;
+use App\Events\AttemptedImageUploadBypass;
 use App\Events\ChallengeAttempted;
 use App\Events\ChallengeCompleted;
 use App\Events\CreatedUser;
@@ -21,6 +22,7 @@ use App\Listeners\LogAchievedImageUploadBypass;
 use App\Listeners\LogAchievedMassAssignment;
 use App\Listeners\LogAchievedSQLi;
 use App\Listeners\LogAchievedXSS;
+use App\Listeners\LogAttemptedImageUploadBypass;
 use App\Listeners\LogAuthenticated;
 use App\Listeners\LogAuthenticationAttempt;
 use App\Listeners\LogChallengeAttempted;
@@ -131,6 +133,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         AttemptedMassAssignment::class => [
             LogAttemptedMassAssignment::class,
+        ],
+        AttemptedImageUploadBypass::class => [
+            LogAttemptedImageUploadBypass::class,
         ],
 
         // Challenges Successes

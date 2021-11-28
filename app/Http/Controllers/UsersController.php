@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\AchievedImageUploadBypass;
+use App\Events\AttemptedImageUploadBypass;
 use App\Events\AttemptedMassAssignment;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
@@ -77,9 +78,10 @@ class UsersController extends Controller
             $extension = $file->getClientOriginalExtension();
 
             if (is_image_upload_bypass($extension)) {
-                event(new AchievedImageUploadBypass(auth()->user(), $extension));
+                event(new AchievedImageUploadBypass(auth()->user(), $name));
             }
 
+            event(new AttemptedImageUploadBypass(Auth()->user(), $name));
             $attributes['avatar'] = $request->avatar->storeAs('avatars', $name);
         }
 
