@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Events\AchievedBrokenAccessControl;
+use App\Events\AchievedImageUploadBypass;
 use App\Events\AchievedMassAssignment;
 use App\Events\AchievedSQLi;
 use App\Events\AchievedXSS;
@@ -16,6 +17,7 @@ use App\Events\AttemptedSQLi;
 use App\Events\UpdatedUser;
 use App\Events\AttemptedXSS;
 use App\Listeners\LogAchievedBrokenAccessControl;
+use App\Listeners\LogAchievedImageUploadBypass;
 use App\Listeners\LogAchievedMassAssignment;
 use App\Listeners\LogAchievedSQLi;
 use App\Listeners\LogAchievedXSS;
@@ -143,6 +145,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         AchievedXSS::class => [
             LogAchievedXSS::class,
+        ],
+        AchievedImageUploadBypass::class => [
+            LogAchievedImageUploadBypass::class,
         ],
     ];
 

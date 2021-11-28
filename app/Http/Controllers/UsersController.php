@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\AchievedImageUploadBypass;
 use App\Events\AttemptedMassAssignment;
 use App\Models\User;
-use App\Rules\SQLInjection;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
@@ -67,13 +66,21 @@ class UsersController extends Controller
                 'min:4',
                 'unique:users,name,' . Auth()->user()->id,
             ],
-            'avatar' => 'image|max:2048'
+            'avatar' => 'image|max:2048' //jpg, jpeg, png, bmp, gif, svg, or webp)
         ])->validate();
 
         $attributes = $request->all();
 
         if ($request->file('avatar')) {
-            $attributes['avatar'] = $request->avatar->store('avatars');
+            $file = $request->file('avatar');
+            $name = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+
+            if (is_image_upload_bypass($extension)) {
+                event(new AchievedImageUploadBypass(auth()->user(), $extension));
+            }
+
+            $attributes['avatar'] = $request->avatar->storeAs('avatars', $name);
         }
 
         auth()->user()->update(array_filter($attributes)); // @TODO "Mass Assignment" vulnerability

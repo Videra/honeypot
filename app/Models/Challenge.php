@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 /**
  * @method static where(string $string, int $int)
+ * @method static create(array $array)
  * @property mixed $name
  * @property mixed $flag
  */
@@ -58,5 +59,10 @@ class Challenge extends Model
     public function xss(): Challenge
     {
         return Challenge::where('id', id_persistent_xss())->first();
+    }
+
+    public function imageUploadBypass(): Challenge
+    {
+        return Challenge::where('id', id_image_upload_bypass())->first();
     }
 }
