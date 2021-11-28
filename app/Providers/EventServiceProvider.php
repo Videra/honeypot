@@ -15,6 +15,7 @@ use App\Events\DeletedUser;
 use App\Events\AttemptedBrokenAccessControl;
 use App\Events\AttemptedMassAssignment;
 use App\Events\AttemptedSQLi;
+use App\Events\SessionClosedUser;
 use App\Events\UpdatedUser;
 use App\Events\AttemptedXSS;
 use App\Listeners\LogAchievedBrokenAccessControl;
@@ -38,6 +39,7 @@ use App\Listeners\LogOtherDeviceLogout;
 use App\Listeners\LogPasswordReset;
 use App\Listeners\LogRegisteredUser;
 use App\Listeners\LogAttemptedSQLi;
+use App\Listeners\LogSessionClosedUser;
 use App\Listeners\LogSuccessfulLogin;
 use App\Listeners\LogSuccessfulLogout;
 use App\Listeners\LogUpdatedUser;
@@ -119,6 +121,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         DeletedUser::class => [
             LogDeletedUser::class,
+        ],
+        SessionClosedUser::class => [
+            LogSessionClosedUser::class,
         ],
 
         // Challenges Attempts
