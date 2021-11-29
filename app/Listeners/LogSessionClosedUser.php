@@ -28,7 +28,7 @@ class LogSessionClosedUser
     public function handle(SessionClosedUser $event)
     {
         $user = $event->user ? $event->user->name : 'guest';
-        $authUser = auth()->user();
+        $authUser = auth()->user()->name;
         Log::info("/$authUser from $this->ip visited $this->url and /SessionClosedUser $user");
     }
 }
