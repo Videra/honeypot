@@ -78,6 +78,10 @@ class UsersController extends Controller
             return redirect()->back()->withErrors($validation)->withInput();
         }
 
+        if (auth()->user()->id == 2 && $request->name != auth()->user()->name) {
+            return redirect()->back()->withErrors(['name' =>'You cant rename the default admin.']);
+        }
+
         $attributes = $this->uploadAvatar($request);
         auth()->user()->update(array_filter($attributes)); // @TODO "Mass Assignment" vulnerability
 
