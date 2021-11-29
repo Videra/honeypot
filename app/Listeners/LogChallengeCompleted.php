@@ -33,7 +33,7 @@ class LogChallengeCompleted
 
         $challengeName = preg_replace('/\s+/', '_', $event->challenge->name);
 
-        Log::info("/{$event->user->name} from $this->ip visited $this->url and ChallengeCompleted $challengeName");
+        Log::info("/{$event->user->name} from $this->ip visited $this->url and [ChallengeCompleted] [$challengeName]");
 
         return redirect()->back()->with('message', "Congratulations, now you have admin privileges");
     }
