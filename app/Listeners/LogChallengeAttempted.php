@@ -27,6 +27,8 @@ class LogChallengeAttempted
      */
     public function handle(ChallengeAttempted $event)
     {
-        Log::info("/{$event->user->name} from $this->ip visited $this->url and [ChallengeAttempted] /{$event->challenge->name}");
+        $challengeName = preg_replace('/\s+/', '_', $event->challenge->name);
+
+        Log::info("/{$event->user->name} from $this->ip visited $this->url and [ChallengeAttempted] [$challengeName]");
     }
 }
