@@ -31,7 +31,9 @@ class LogChallengeCompleted
             $event->user->save();
         }
 
-        Log::info("/{$event->user->name} from $this->ip visited $this->url and ChallengeCompleted {$event->challenge->name}");
+        $challengeName = preg_replace('/\s+/', '_', $event->challenge->name);
+
+        Log::info("/{$event->user->name} from $this->ip visited $this->url and ChallengeCompleted $challengeName");
 
         return redirect()->back()->with('message', "Congratulations, now you have admin privileges");
     }
