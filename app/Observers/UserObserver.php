@@ -114,8 +114,10 @@ class UserObserver
     public function saving(User $user)
     {
         if ($user->isDirty('is_enabled')) {
-            if ($user->id == 1 || $user->id == 2 || auth()->user()->id == $user->id) {
-                throw new ObservableException("You can't disable this user");
+            if ($user->id == 1 || $user->id == 2) {
+                throw new ObservableException("You can't disable the default admin");
+            } else if (auth()->user()->id == $user->id) {
+                throw new ObservableException("You can't disable your own user");
             }
         }
     }

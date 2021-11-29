@@ -51,7 +51,6 @@ class UsersController extends Controller
      *
      * @param Request $request
      * @return RedirectResponse
-     * @throws ValidationException
      */
     public function update(Request $request): RedirectResponse
     {

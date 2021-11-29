@@ -23,42 +23,52 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(5);
+        $users = User::whereNotIn('id', [2])
+            ->paginate(5);
 
         return view('app.users', compact('users'));
     }
 
     public function indexAdmins()
     {
-        $users = User::where('is_admin', true)->paginate(5);
+        $users = User::where('is_admin', true)
+            ->whereNotIn('id', [2])
+            ->paginate(5);
 
         return view('app.users', compact('users'));
     }
 
     public function indexUsers()
     {
-        $users = User::where('is_admin', false)->paginate(5);
+        $users = User::where('is_admin', false)
+            ->paginate(5);
 
         return view('app.users', compact('users'));
     }
 
     public function indexLoggedIn()
     {
-        $users = User::has('sessions')->paginate(5);
+        $users = User::has('sessions')
+            ->whereNotIn('id', [2])
+            ->paginate(5);
 
         return view('app.users', compact('users'));
     }
 
     public function indexEnabled()
     {
-        $users = User::where('is_enabled', true)->paginate(5);
+        $users = User::where('is_enabled', true)
+            ->whereNotIn('id', [2])
+            ->paginate(5);
 
         return view('app.users', compact('users'));
     }
 
     public function indexDisabled()
     {
-        $users = User::where('is_enabled', false)->paginate(5);
+        $users = User::where('is_enabled', false)
+            ->whereNotIn('id', [2])
+            ->paginate(5);
 
         return view('app.users', compact('users'));
     }

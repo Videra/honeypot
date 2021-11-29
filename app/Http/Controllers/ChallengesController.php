@@ -12,6 +12,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class ChallengesController extends Controller
 {
@@ -34,7 +35,7 @@ class ChallengesController extends Controller
     /**
      * @param Request $request
      * @return RedirectResponse
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function attempt(Request $request): RedirectResponse
     {
@@ -56,6 +57,17 @@ class ChallengesController extends Controller
             event(new ChallengeCompleted($request->user(), $challenge));
         } else {
             event(new ChallengeAttempted($request->user(), Challenge::find($request->challenge_id)));
+        }
+
+        return redirect()->back();
+    }
+
+    public function completed()
+    {
+        $count = Success::where('user_id', Auth()->user()->id)->count();
+
+        if ($count > 4) {
+            return view('app.challenges.completed');
         }
 
         return redirect()->back();

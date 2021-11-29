@@ -6,7 +6,7 @@
         <div class="col-md-8">
             @if(auth()->user()->isAdmin())
                 <div class="card-body text-center alert-success mb-2">
-                    <h5 class="card-subtitle">Welcome, admin</h5>
+                    <h5 class="card-subtitle">You have administrator privileges</h5>
                     <p class="card-subtitle">{{ session('message') }}</p>
                 </div>
             @endif

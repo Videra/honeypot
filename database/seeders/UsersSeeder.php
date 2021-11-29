@@ -15,39 +15,15 @@ class UsersSeeder extends Seeder
     public function run() {
         $users = [
             [
-                'name' => 'admin',
-                'password' => '1234567890',
+                'name' => env('ADMIN_NAME'),
+                'password' => env('ADMIN_PASSWORD'),
                 'is_admin' => true,
                 'is_enabled' => true
             ],
             [
-                'name' => 'Hacker',
-                'password' => 'myverysafelaravelpassword',
+                'name' => env('ADMIN_HIDDEN_NAME'),
+                'password' => env('ADMIN_HIDDEN_PASSWORD'),
                 'is_admin' => true,
-                'is_enabled' => true
-            ],
-            [
-                'name' => 'Natalia',
-                'password' => 'user1234',
-                'is_admin' => false,
-                'is_enabled' => true
-            ],
-            [
-                'name' => 'Carlos',
-                'password' => 'user1234',
-                'is_admin' => false,
-                'is_enabled' => true
-            ],
-            [
-                'name' => 'John',
-                'password' => 'user1234',
-                'is_admin' => false,
-                'is_enabled' => false
-            ],
-            [
-                'name' => 'Laura',
-                'password' => 'user1234',
-                'is_admin' => false,
                 'is_enabled' => true
             ]
         ];

@@ -16,6 +16,7 @@ use Illuminate\Notifications\Notifiable;
  * @method static has(string $string)
  * @method static paginate(int $int)
  * @method static withCount(string $string)
+ * @method static whereNotIn(string $string, int[] $array)
  * @property mixed $is_enabled
  * @property mixed $is_admin
  * @property mixed $created_at

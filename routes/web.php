@@ -22,6 +22,7 @@ Route::get('/home', function () {
 
 Route::get('challenges', [ChallengesController::class, 'index'])->name('challenges.index');
 Route::post('challenges', [ChallengesController::class, 'attempt'])->name('challenges.attempt');
+Route::get('challenges/completed', [ChallengesController::class, 'completed'])->name('challenges.completed');
 
 Route::get('profile', [UsersController::class, 'show'])->name('user.show');
 Route::post('profile', [UsersController::class, 'update'])->name('user.update');

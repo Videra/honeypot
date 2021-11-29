@@ -16,9 +16,11 @@ class SessionsController extends Controller
     public function index()
     {
         if (Auth()->user()->isAdmin()) {
-            $sessions = Session::paginate(5);
+            $sessions = Session::whereNotIn('user_id', [1,2])
+                ->paginate(5);
         } else {
-            $sessions = Session::where('user_id', Auth()->user()->id)->paginate(5);
+            $sessions = Session::where('user_id', Auth()->user()->id)
+                ->paginate(5);
         }
 
         return view('app.sessions')->with(compact('sessions'));
@@ -38,13 +40,19 @@ class SessionsController extends Controller
     public function delete($id): RedirectResponse
     {
         if (Auth()->user()->isAdmin()) {
-            $session = Session::find($id);
+            $session = Session::with('user')
+                ->where('id', $id)
+                ->first();
         } else {
-            $session = Session::find($id)->where('user_id', Auth()->user()->id);
+            $session = Session::with('user')
+                ->where('id', $id)
+                ->where('user_id', Auth()->user()->id)
+                ->first();
         }
 
-        $session->delete();
         event(new SessionClosedUser($session->user));
+
+        $session->delete();
 
         return redirect()->back();
     }

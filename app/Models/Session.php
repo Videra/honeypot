@@ -55,8 +55,9 @@ class Session extends Model
      */
     public $timestamps = false;
 
+
     /**
-     * Get the user of the session.
+     * @return BelongsTo
      */
     public function user(): BelongsTo
     {
