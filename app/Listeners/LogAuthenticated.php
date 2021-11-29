@@ -27,6 +27,6 @@ class LogAuthenticated
      */
     public function handle(Authenticated $event)
     {
-        Log::info("/{$event->user->name} from $this->ip visited $this->url and Authenticated");
+        Log::info("/{$event->user->name} from $this->ip visited $this->url and /Authenticated");
     }
 }

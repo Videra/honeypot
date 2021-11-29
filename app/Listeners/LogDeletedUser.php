@@ -28,6 +28,6 @@ class LogDeletedUser
      */
     public function handle(DeletedUser $event)
     {
-        Log::info("/{$event->authUser->name} from $this->ip visited $this->url and DeletedUser {$event->user->name}");
+        Log::info("/{$event->authUser->name} from $this->ip visited $this->url and /DeletedUser {$event->user->name}");
     }
 }

@@ -27,6 +27,6 @@ class LogLockout
      */
     public function handle(Lockout $event)
     {
-        Log::info("/{$event->request->user()->name} from $this->ip visited $this->url and Lockout");
+        Log::info("/{$event->request->user()->name} from $this->ip visited $this->url and /Lockout");
     }
 }

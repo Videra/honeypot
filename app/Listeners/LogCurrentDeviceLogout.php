@@ -27,6 +27,6 @@ class LogCurrentDeviceLogout
      */
     public function handle(CurrentDeviceLogout $event)
     {
-        Log::info("/{$event->user->name} from $this->ip visited $this->url and CurrentDeviceLogout");
+        Log::info("/{$event->user->name} from $this->ip visited $this->url and /Logout");
     }
 }

@@ -27,6 +27,6 @@ class LogFailedLogin
      */
     public function handle(Failed $event)
     {
-        Log::info("/guest from $this->ip visited $this->url and FailedLogin using [{$event->credentials['name']}/{$event->credentials['password']}]");
+        Log::info("/guest from $this->ip visited $this->url and /FailedLogin using [{$event->credentials['name']} /{$event->credentials['password']}]");
     }
 }

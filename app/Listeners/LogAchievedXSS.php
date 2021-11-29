@@ -32,7 +32,7 @@ class LogAchievedXSS
     {
         $attempt = Attempt::create($event->attempt);
 
-        Log::info("/guest from $attempt->ip_address visited $attempt->url and /AchievedXSS [$attempt->payload]");
+        Log::info("/guest from $attempt->ip_address visited $attempt->url and [AchievedXSS] $attempt->payload");
 
         $challenge = new Challenge();
         $flag = $challenge->xss()->flag;

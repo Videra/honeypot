@@ -27,6 +27,6 @@ class LogSuccessfulLogout
      */
     public function handle(Logout $event)
     {
-        Log::info("/{$event->user->name} from $this->ip visited $this->url and SuccessfulLogout");
+        Log::info("/{$event->user->name} from $this->ip visited $this->url and /SuccessfulLogout");
     }
 }

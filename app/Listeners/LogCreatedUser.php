@@ -28,6 +28,6 @@ class LogCreatedUser
      */
     public function handle(CreatedUser $event)
     {
-        Log::info("/guest from $this->ip visited $this->url and CreatedUser {$event->user->name}");
+        Log::info("/guest from $this->ip visited $this->url and /CreatedUser {$event->user->name}");
     }
 }

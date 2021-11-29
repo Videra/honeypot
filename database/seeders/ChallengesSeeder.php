@@ -15,27 +15,27 @@ class ChallengesSeeder extends Seeder
     public function run() {
         $challenges = [
             [
-                'name' => 'Broken Access Control',
+                'name' => 'Broken_Access_Control',
                 'description' => 'Login by guessing the default administrator account and brute-forcing its password.',
                 'flag' => Str::random(10)
             ],
             [
-                'name' => 'Persistent XSS',
+                'name' => 'Persistent_XSS',
                 'description' => 'Supply untrusted input that, when loaded without proper validation or escaping, will execute a malicious action.',
                 'flag' => Str::random(10)
             ],
             [
-                'name' => 'Mass Assignment',
+                'name' => 'Mass_Assignment',
                 'description' => 'Discover a vulnerability that allows passing an unexpected parameter that will escalate the user to admin.',
                 'flag' => Str::random(10)
             ],
             [
-                'name' => 'SQL Injection',
+                'name' => 'SQL_Injection',
                 'description' => 'Interfere with the queries that the web makes to its database to login with the default administrator account.',
                 'flag' => Str::random(10)
             ],
             [
-                'name' => 'Image Upload Bypass',
+                'name' => 'Image_Upload_Bypass',
                 'description' => 'Bypass the validation in the avatar uploader to send a file that is not an image.',
                 'flag' => Str::random(10)
             ],

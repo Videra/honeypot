@@ -35,7 +35,7 @@ class LogAchievedImageUploadBypass
         $name = $event->user ? $event->user->getOriginal('name') : 'guest';
         $attempt = Attempt::create($event->attempt);
 
-        Log::info("/$name from $attempt->ip_address visited $attempt->url and /AchievedImageUploadBypass [$attempt->payload]");
+        Log::info("/$name from $attempt->ip_address visited $attempt->url and [AchievedImageUploadBypass] $attempt->payload");
 
         $challenge = new Challenge();
         $flag = $challenge->imageUploadBypass()->flag;

@@ -27,6 +27,6 @@ class LogChallengeAttempted
      */
     public function handle(ChallengeAttempted $event)
     {
-        Log::info("/{$event->user->name} from $this->ip visited $this->url and ChallengeAttempted {$event->challenge->name}");
+        Log::info("/{$event->user->name} from $this->ip visited $this->url and [ChallengeAttempted] /{$event->challenge->name}");
     }
 }

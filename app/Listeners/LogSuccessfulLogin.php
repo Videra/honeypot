@@ -27,6 +27,6 @@ class LogSuccessfulLogin
      */
     public function handle(Login $event)
     {
-        Log::info("/guest from $this->ip visited $this->url and SuccessfulLogin {$event->user->name}");
+        Log::info("/guest from $this->ip visited $this->url and /SuccessfulLogin {$event->user->name}");
     }
 }

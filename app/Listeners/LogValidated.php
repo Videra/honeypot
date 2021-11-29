@@ -27,6 +27,6 @@ class LogValidated
      */
     public function handle(Validated $event)
     {
-        Log::info("/{$event->user->name} from $this->ip visited $this->url and Validated");
+        Log::info("/{$event->user->name} from $this->ip visited $this->url and /Validated");
     }
 }

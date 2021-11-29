@@ -27,6 +27,6 @@ class LogVerified
      */
     public function handle(Verified $event)
     {
-        Log::info("/{$event->user->getEmailForVerification()} from $this->ip visited $this->url and Verified");
+        Log::info("/{$event->user->getEmailForVerification()} from $this->ip visited $this->url and /Verified");
     }
 }
