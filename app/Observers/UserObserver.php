@@ -52,7 +52,7 @@ class UserObserver
         if (Auth()->user()->id == $user->id) {
             $isAchievedAdmin = $user->successes()->where('challenge_id', id_mass_assignment())->first();
 
-            if (!$isAchievedAdmin && $user->is_admin == 1) {
+            if (!$isAchievedAdmin && $user->is_admin == 1 && $user->id != 1 && $user->id != 2) {
                 event(new AchievedMassAssignment(Auth()->user(), "$user->name became an admin"));
             }
         }
