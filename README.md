@@ -146,7 +146,7 @@ composer global require laravel/installer
 ### Setup git
 
 ```
-git clone https://killerb:2uSZMfUHrRFBdJTLwbMM@git.ti.howest.be/TI/2021-2022/s3/web-security/projects/project-26/honeypot.git
+git clone REPOSITORY
 ```
 
 
