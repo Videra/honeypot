@@ -26,9 +26,9 @@ Our five exposed security vulnerabilities are:
 
 
 ## Technology stack
-The technology stack used on the server side (Debian 11.x) is based on these dependencies:
+The technology stack used on the server side (Debian 12) is based on these dependencies:
 - apache2
-- php7.4
+- PHP 8.2.7
 - mariadb
 - laravel
 - composer
@@ -52,152 +52,84 @@ The technology stack used on the server side (Debian 11.x) is based on these dep
 
 **Ansible** is a software tool that provides simple but powerful automation for cross-platform computer support.
 
-## Developers
-
-This application was created by Group 04, formed by the second-year Computer Science cybersecurity students Eric Anllo, David Prada and Hossein Azar.
-
-
 ## Setup process
-If you are interested in how to manually Setup this whole project in a fresh Debian 11.x machine, this is how:
 
-
-
-
-### Connect via ssh
+### Connect via ssh to your VM
 ```
-ssh killerb@rgp04.hp.ti.howest.be
+ssh debian@IP_OF_YOUR_VM
 ```
 
-
-
-
-### Install Apache2
+Debian 12 might not come with the package `sudo` pre-installed. For this reason, at the start, we change to the `root` user using the command `su -`. Once the package `sudo` has been installed and the user `debian` is added to the group `sudo`, we keep using the user `debian`in the next steps. 
 
 ```
-sudo apt install -y apache2
+su -;
+
+apt update;
+
+apt install -y sudo apache2 php php-bcmath php-ctype php-fileinfo php-json php-mbstring php-mysql php-tokenizer php-xml php-curl composer mariadb-server npm;
+
+echo 'export PATH="$PATH:$HOME/.config/composer/vendor/bin"' >> ~/.bashrc && export PATH=~/.config/composer/vendor/bin:$PATH;
+
+composer global require laravel/installer;
+
+usermod -a -G sudo debian
+
+su debian;
 ```
 
+# Creating the database
 
-
-
-### Install PHP
-
-```
-sudo apt install -y php php-bcmath php-ctype php-fileinfo php-json php-mbstring php-mysql php-tokenizer php-xml php-curl
-```
-
-
-
-
-### Install Composer
+Laravel's configuration file `.env` contains the required values that allow Laravel connecting to MariaDB. There, we choose that the database's user was `root`, with password `honeypot`. And that the database's name was `honeypot`.
 
 ```
-sudo apt install -y composer
+sudo mysql_secure_installation;
+
+	Enter current password for root (enter for none): 
+	Switch to unix_socket authentication [Y/n] n
+	Change the root password? [Y/n] Y
+	New password:  honeypot
+	Re-enter new password: honeypot
+	Remove anonymous users? [Y/n] Y
+	Disallow root login remotely? [Y/n] Y
+	Remove test database and access to it? [Y/n] Y
+	Reload privilege tables now? [Y/n] Y
+
+sudo mysql -uroot -e "create database honeypot";
 ```
 
-Add Composer to the PATH
-```
-echo 'export PATH="$PATH:$HOME/.config/composer/vendor/bin"' >> ~/.bashrc
+If you made changes to the previous step, don't forget to update the `.env` file that will be installed in the next step of **Deploying the project**. Otherwise, Laravel will give you a database connection error.
 
-export PATH=~/.config/composer/vendor/bin:$PATH
-```
+# Deploying the project
 
-
-
-
-### Install MariaDB
+The website itself, has a fake admin named `admin`, with password `admin`. And a real admin with name `superadmin`, with password `superadmin`.
 
 ```
-sudo apt install -y mariadb-server
+git clone https://github.com/Videra/honeypot.git /var/www/honeypot
+
+cd $HOME/honeypot
+
+composer update;
+
+npm install;
+npm run dev;
+
+sudo chown -R $USER:www-data /var/www/honeypot/storage;
+sudo chown -R $USER:www-data /var/www/honeypot/bootstrap/cache;
+sudo chmod -R 775 /var/www/honeypot/storage;
+sudo chmod -R 775 /var/www/honeypot/bootstrap/cache;
+
+php artisan migrate:fresh --seed;
+php artisan storage:link;
 ```
 
-Create honeypot database
 ```
-sudo mysql -uroot -e "create database honeypot"
-```
+sudo nano /etc/apache2/sites-available/honeypot.conf;
 
-Configure a secure installation
-```
-sudo mysql_secure_installation
-```
-
-
-
-
-### Install NPM
-
-```
-sudo apt install -y npm
-```
-
-
-
-
-### Install Laravel
-
-The package can be installed via composer
-```
-composer global require laravel/installer
-```
-
-
-
-
-### Setup git
-
-```
-git clone REPOSITORY
-```
-
-
-
-
-### Install dependencies
-
-```
-cd ~/honeypot
-
-composer update
-
-npm install
-```
-
-Compile CSS and JS
-```
-npm run dev
-```
-
-### Modify credentials in Laravel's .env file
-```
-nano ~/honeypot/.env
-```
-
-### Run project database migrations
-```
-php artisan migrate:fresh --seed
-```
-
-###  Create Symlinks
-Link the private avatars folder to the project's public folder
-```
-php artisan storage:link
-```
-
-Link the project files into apache2 websites folder
-```
-sudo ln -s ~/honeypot /var/www/honeypot
-```
-
-### Configure apache2 honeypot website
-```
-sudo nano /etc/apache2/sites-available/honeypot.conf
-```
-- Paste this content into the honeypot.conf file:
-```
 <VirtualHost *:80>
     ServerName honeypot
-    ServerAdmin admin@example.com
+    ServerAdmin admin@howest.be
     DocumentRoot /var/www/honeypot/public
+    Redirect / https://honeypot
 
     <Directory /var/www/honeypot>
         Options FollowSymLinks
@@ -210,48 +142,13 @@ sudo nano /etc/apache2/sites-available/honeypot.conf
 </VirtualHost>
 ```
 
-Enable apache2 rewrite module (for having pretty URLs without .php ending)
 ```
-sudo a2enmod rewrite
-```
+sudo nano /etc/apache2/sites-available/honeypot-ssl.conf;
 
-Disable apache2 default site
-```
-sudo a2dissite 000-default.conf
-```
-
-Enable apache2 honeypot site
-```
-sudo a2ensite honeypot
-```
-
-Restart apache
-```
-sudo systemctl restart apache2
-```
-
-### Configure project's folder and file permissions
-```
-sudo chown -R www-data:www-data ~/honeypot/storage
-sudo chown -R www-data:www-data ~/honeypot/bootstrap
-
-sudo chmod -R ugo+rw ~/honeypot/storage
-sudo chmod -R ugo+rw ~/honeypot/bootstrap
-```
-
-Honeypot should be visible  http://rgp04.hp.ti.howest.be
-
-### Enabling HTTPS
-
-```
-sudo nano /etc/apache2/sites-available/honeypot-ssl.conf
-```
-
-```
 <IfModule mod_ssl.c>
     <VirtualHost *:443>
         ServerName honeypot
-        ServerAdmin admin@rgp04.hp.ti.howest.be/
+        ServerAdmin admin@howest.be
         DocumentRoot /var/www/honeypot/public
     
         <Directory /var/www/honeypot>
@@ -277,43 +174,16 @@ sudo nano /etc/apache2/sites-available/honeypot-ssl.conf
 </IfModule>
 ```
 
-Enable SSL module in Apache2
 ```
-sudo a2enmod ssl
+sudo a2enmod rewrite;
+sudo a2enmod ssl;
+sudo a2ensite honeypot;
+sudo a2ensite honeypot-ssl;
+
+sudo systemctl restart apache2;
 ```
 
-Enable honepot-ssl in Apache2
-```
-sudo a2ensite honeypot-ssl
-```
-
-Edit honeypot.conf
-```
-Redirect / https://rgp04.hp.ti.howest.be/
-```
-
-Disable honepot in Apache2
-```
-sudo a2ensite honeypot
-```
-
-Restart Apache2
-```
-sudo systemctl restart apache2
-```
-
-Enable honepot in Apache2
-```
-sudo a2ensite honeypot
-```
-
-Restart Apache2
-```
-sudo systemctl restart apache2
-```
-
-Honeypot http should redirect to https  http://rgp04.hp.ti.howest.be
-Honeypot https should be visible  https://rgp04.hp.ti.howest.be
+Now you can visit your website at https://IP_OF_YOUR_VM
 
 ### Disable Apache2 signatures
 We Hide Apache displays name & version by using ServerSignature Off in /etc/apache2/conf-enabled/security.conf
@@ -617,4 +487,4 @@ getTokenJS();
 
 That is all, thank you for reading.
 
-###### David, Eric & Hossein
+
